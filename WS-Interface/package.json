@@ -1,0 +1,20 @@
+{
+    "name": "wsinterface",
+    "description": "The Websocket Interface",
+    "keywords": [
+        "Node.js",
+        "Websocket",
+        "sql"
+    ],
+    "author": "Mayar Hanhon",
+    "dependencies": {
+        "all": "^0.0.0",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "mysql2": "^2.3.3",
+        "ws": "^8.11.0"
+    },
+    "devDependencies": {
+        "why-is-node-running": "^2.2.2"
+    }
+}

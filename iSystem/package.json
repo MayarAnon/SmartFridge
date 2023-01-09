@@ -1,0 +1,17 @@
+{
+    "name": "alertservice",
+    "description": "The Alertservice",
+    "keywords": [
+        "Node.js",
+        "MQTT",
+        "Pub/Sub",
+        "message",
+        "transport"
+    ],
+    "author": "Mayar Hanhon",
+    "dependencies": {
+        "async-mqtt": "^2.6.3",
+        "dotenv": "^16.0.3",
+        "mqtt": "^4.3.7"
+    }
+}
