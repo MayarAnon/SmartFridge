@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    
+</head>
+<body>
+    
+    
+    <h1>Smartfridge</h1>
+    <div>Settings</div>
+
+    <a href = '/monitoring'>Monitoring</a>
+    <a href = '/camera'>Kamera</a>
+    <a href = '/home'>Startseite</a>
+    <a href = '/settings'>Einstellungen</a>
+    <br>
+    <div >
+      <h2>Speicherintervall</h2>
+      <button id="intervall10s">10s</button>
+      <button id = "intervall10min">10min</button>
+      <button id = "intervall1h">1h</button>
+    </div>
+
+    <div>
+      <h2>Temperaturschwellwert</h2>
+      
+        <input type = "text" id="inputfield"></input>
+        <button id="inputfield_submit">Submit answer</button>
+      </form>
+    </div>
+
+    <div>
+      <h2>Benachrichtigungsverlauf herunterladen</h2>
+      <button  id="herunterladen">jetzt Herunterladen </button>
+    </div>
+
+   
+
+
+
+
+
+
+    <style >
+      .div{display: inline-block}
+    
+    </style>
+
+    <script >
+        document.getElementById('inputfield_submit').addEventListener('click', () => {
+          transmit('settings/tempLimitValue',document.getElementById('inputfield').value);
+        });    
+        document.getElementById('herunterladen').addEventListener('click', () => {
+          transmit('settings/downloadLog','true');
+        });   
+        document.getElementById('intervall10s').addEventListener('click',() =>
+          transmit('settings/timeIntervall','10'));
+        document.getElementById('intervall10min').addEventListener('click',() =>
+          transmit('settings/timeIntervall','600'));
+        document.getElementById('intervall1h').addEventListener('click',() =>
+          transmit('settings/timeIntervall','3600'));
+        
+        function transmit(adress,container,value){
+          let object ={container , value};
+          fetch(adress, {
+            method: 'POST',
+            body: JSON.stringify(object),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+        }
+        
+    </script>
+
+</body>
+</html>
