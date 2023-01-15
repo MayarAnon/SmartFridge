@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>NodeJS WebSocket Server</title>
+</head>
+<body>
+	<h1>Hello world</h1>
+    <table id="myTable" border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <th style="width: 90px">Customer Id</th>
+                <th style="width: 120px">Name</th>
+                <th style="width: 90px">Country</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>John Hammond</td>
+                <td>United States</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Mudassar Khan</td>
+                <td>India</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Suzanne Mathews</td>
+                <td>France</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Robert Schidner</td>
+                <td>Russia</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr />
+  <script>
+    const ws = new WebSocket('ws://localhost:3001');
+    ws.addEventListener("open", () =>{
+        console.log("We are connected!!");
+        ws.send("Client connected!!");
+    });
+    
+    var tbodyRef = document.getElementById('myTable').getElementsByTagName('tbody')[0];
+
+    // Insert a row at the end of table
+    var newRow = tbodyRef.insertRow();
+
+    // Insert a cell at the end of the row  
+    var newCell = newRow.insertCell();
+
+    // Append a text node to the cell
+    
+    ws.onmessage = function (messageEvent) {
+        const data = JSON.parse(messageEvent.data);
+        console.log(`Neue Nachricht empfangen`, data.message,data.topic)
+        var newText = document.createTextNode(data.message);
+        newCell.appendChild(newText);
+        
+    }
+    
+    // alle Zeilen löschen
+    function DeleteRows() {
+        var rowCount = myTable.rows.length;
+        for (var i = rowCount - 1; i > 0; i--) {
+            myTable.deleteRow(i);
+        }
+    }
+    
+  </script>
+  <input type="button" id="btnDelete" value="Delete Rows" onclick="DeleteRows()" />
+</body>
+</html>
+
+
+
+
+
+ 
+ 

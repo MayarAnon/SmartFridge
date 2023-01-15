@@ -16,7 +16,6 @@
     "author": "Mayar Hanhon",
     "dependencies": {
         "async-mqtt": "^2.6.3",
-        "dotenv": "^16.0.3",
-        "mqtt": "^4.3.7"
+        "dotenv": "^16.0.3"
     }
 }

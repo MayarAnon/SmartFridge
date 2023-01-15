@@ -1,76 +1,4 @@
-// const MQTT = require("async-mqtt");
-// const alertLog = require("./AlertLog");
-// const topic_list={alertTempLimit: "alertTempLimit",
-//                 alertTimeLimit: "alertTimeLimit",
-//                 deleteHistory: "deleteHistory",
-//                 doorState: "doorState",
-//                 timeLimitValue: "timeLimitValue",
-//                 tempLimitValue: "tempLimitValue",
-//                 tempInside: "tempInside"
-//                 };
-// class Alert{
-//     TempLimit = 0.0;
-//     TimeLimit = 0;
-//     starttime = 0;          //für den Timer für Doorstate
-//     timeDiff = 0;           //die Zeit seitdem die Tür geöffnet ist
-//     Logger = new alertLog();
-//     lastDoorState ="undefined"; //hilfsvariable für den Timer
-//     constructor(client){
-//         this.client = client;
-//     }
-    
-    
-//     setLimits(topic,message){
-//         if(topic == "tempLimitValue"){
-//             this.TempLimit = message;
-//         }
-//         if(topic == "timeLimitValue"){
-//             this.TimeLimit = message;
-//         }
-//     }
-
-//     checkTemp(topic,message){
-//         if(topic == "tempInside"){
-//             if(Math.round(parseFloat(message)) >= Math.round(parseFloat(this.TempLimit))){
-//                 //console.log(topic_list.alertTempLimit, "Tempinside= "+this.message+" Schwellwert: "+this.TempLimit + ">>>>> surpassed")
-//                 this.client.publish(topic_list.alertTempLimit, "Tempinside= "+message+" Schwellwert: "+this.TempLimit + ">>>>> surpassed");
-//                 this.Logger.writeLog("Die Innentemperatur hat den Schwellwert überschritten",topic,message);
-
-//             }else{
-//                 //console.log(topic_list.alertTempLimit, "Tempinside= "+this.message+" Schwellwert: "+this.TempLimit+ ">>>>> under ")
-//                 this.client.publish(topic_list.alertTempLimit, "Tempinside= "+message+" Schwellwert: "+this.TempLimit+ ">>>>> under ");
-//             }
-//         }
-//     }
-//     checkTime(topic,message){
-//         if(topic == "doorState"){
-//             if(message == "open" & this.lastDoorState!="open"){
-//                 this.starttime = Date.now();
-//                 this.lastDoorState = "open";
-//             }
-//             if(message == "closed"){
-//                 this.starttime = Date.now();
-//             }
-//             this.timeDiff = Date.now() - this.starttime;
-//             if(this.timeDiff>this.TimeLimit*1000){
-//                 this.client.publish(topic_list.alertTimeLimit, "doorstate= "+message+" TimeLimit: "+this.TimeLimit+ " TimeDiff: "+this.timeDiff/1000+ ">>>>> surpassed");
-//                 this.Logger.writeLog("Die maximale Öffnungszeit wurde überschritten",topic,message);
-//             }else{
-//                 this.client.publish(topic_list.alertTimeLimit, "doorstate= "+message+" TimeLimit: "+this.TimeLimit+ " TimeDiff: "+this.timeDiff/1000 +">>>>> under ");
-//             }
-    
-//         }
-//     }
-    
-// }
-
-
-// module.exports = Alert;
-
-
-
-
-
+// Die Klasse Alert ist zuständig für das Auslösen der Alarme 
 const alertLog = require('./AlertLog');
 
 const topics = {
@@ -82,9 +10,12 @@ const topics = {
   tempLimitValue: 'tempLimitValue',
   tempInside: 'tempInside'
 };
-
-class Alert {
-  constructor(client) {
+//Die Klasse analysiert die Daten vom MQTT-Broker und löst Alarme aus, falls Limits überschritten wurden
+//Der Alert-service-MQTT-Client muss übergeben werden
+class Alert 
+{
+  constructor(client) 
+  {
     this.TempLimit = 0.0;
     this.TimeLimit = 0;
     this.startTime = 0;
@@ -93,8 +24,10 @@ class Alert {
     this.lastDoorState = 'undefined';
     this.client = client;
   }
-
-  setLimits(topic, message) {
+  // Die Methode ermittelt die Schwellwert(TempLimit/TimeLimit) aus den MQTT-Nachrichten
+  // Topic und Message von MQTT müssen übergeben werden
+  setLimits(topic, message) 
+  {
     if (topic === 'tempLimitValue') {
       this.TempLimit = message;
     }
@@ -102,8 +35,10 @@ class Alert {
       this.TimeLimit = message;
     }
   }
-
-  checkTemp(topic, message) {
+  //Die Methode überprüft, ob der TemperaturSchwellwert überschritten wurde und löst ein Alarm aus/ schreibt einen Rekord im Log
+  // Topic und Message von MQTT müssen übergeben werden
+  checkTemp(topic, message) 
+  {
     if (topic === 'tempInside') {
       const temp = parseFloat(message);
       if (Math.round(temp) >= Math.round(this.TempLimit)) {
@@ -124,9 +59,14 @@ class Alert {
       }
     }
   }
-
-  checkTime(topic, message) {
+  //Die Methode überprüft, ob der maximalen Öffnungszeit überschritten wurde und löst ein Alarm aus/ schreibt einen Rekord im Log
+    // Topic und Message von MQTT müssen übergeben werden
+  checkTime(topic, message) 
+  {
     if (topic === 'doorState') {
+      // Ist der aktuelle Zustand = "open" und die Tür davor "Closed" war, dann wird ein Timer gestart >>> timeDiff=0
+      // Ist der aktuelle Zustand = "open" und die Tür davor auch "open" war, dann läuft der Timer weiter >>> timeDiff>0
+      // ist der aktuelle Zustand = "closed" wird der Timer rückgesetzt >>> timeDiff=0      
       if (message === 'open' && this.lastDoorState === 'closed') {
         this.startTime = Date.now();
         this.lastDoorState = 'open';
