@@ -34,6 +34,14 @@
     </div>
 
     <div>
+      <h2>Mailadress</h2>
+      
+        <input type = "text" id="mailinputfield"></input>
+        <button id="mailinputfield_submit">Submit answer</button>
+      </form>
+    </div>
+
+    <div>
       <h2>Benachrichtigungsverlauf herunterladen</h2>
       <button  id="herunterladen">jetzt Herunterladen </button>
     </div>
@@ -53,7 +61,10 @@
     <script >
         document.getElementById('inputfield_submit').addEventListener('click', () => {
           transmit('settings/tempLimitValue',document.getElementById('inputfield').value);
-        });    
+        });  
+        document.getElementById('mailinputfield_submit').addEventListener('click', () => {
+          transmit('settings/mailAdressRecipient',document.getElementById('mailinputfield').value);
+        });   
         document.getElementById('herunterladen').addEventListener('click', () => {
           transmit('settings/downloadLog','true');
         });   

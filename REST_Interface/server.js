@@ -16,8 +16,10 @@ const homeRouter = require('./routes/home');
 const cameraRouter = require('./routes/camera');
 const monitoringRouter = require('./routes/monitoring');
 const settingsRouter = require('./routes/settings');
+const RestAPI = require('./routes/restAPI');
 
 app.use('/home',homeRouter );
 app.use('/camera',cameraRouter);
 app.use('/monitoring',monitoringRouter);
 app.use('/settings', settingsRouter);
+app.use('/api',RestAPI);

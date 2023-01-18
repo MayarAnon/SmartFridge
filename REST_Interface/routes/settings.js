@@ -1,11 +1,14 @@
 //Einbinden der benötigten Bibliotheken 
 
-const express = require('express'); 
-const path = require('path'); 
+const express = require('express') 
+const path = require('path')
+const mqtt = require("async-mqtt")
+const emailValidation = require('email-validator')
+
 
 //Router erstellen(Miniapplikation)
 
-const settingsRouter = express.Router();
+const settingsRouter = express.Router()
 
 //Zugriff auf HTML Elemente ermöglichen 
 
@@ -13,13 +16,13 @@ settingsRouter.use(express.urlencoded({extended: false}))
 
 //Pfad zur HTML Seite ermittlen 
 
-const currentDir = __dirname;                       // __dirname ist der aktuelle Pfad
-const parentDir = path.resolve(currentDir, '..');   //auf den Übergeordneten Ordner wechseln 
+const currentDir = __dirname                        // __dirname ist der aktuelle Pfad
+const parentDir = path.resolve(currentDir, '..')    //auf den Übergeordneten Ordner wechseln 
 
 //HTML Seite laden 
 
-settingsRouter.get('/',(req,res)=>{
-    
+settingsRouter.get('/',(req,res)=>
+{
     res.sendFile(parentDir + '/views/settings.html') 
 });
 
@@ -27,43 +30,66 @@ settingsRouter.get('/',(req,res)=>{
 
 settingsRouter.use(express.json()); // Ermöglicht das Auslesen von JSON-Daten aus dem Request-Body
 
+//Funktion für das senden für MQTT Nachrichten 
+
+async function sendMqttMessage(topic,message)
+{
+    const mqttClient = await mqtt.connectAsync("127.0.0.1:1883")
+    console.log("Starting")
+    try
+    {
+        await mqttClient.publish(topic, message)
+        await mqttClient.end()
+
+    } catch(error)
+    {
+        process.exit()
+    }
+}
+
 // Endpunkt zum Erfassen der Speicherzeit intervalls
 
 settingsRouter.post('/timeIntervall',(req,res) => {
     
     //Erfassen der Nachricht und umwandlung von einem String in eine Zahl
 
-    let logtime = Number(req.body.container) 
+    let logTime = Number(req.body.container) 
 
-    //Prüfen der eingabe ob es sich um eine Zahl handelt oder nicht
+    //Prüfen der Eingabe ob es sich um eine Zahl handelt oder nicht
 
-    if(isNaN(logtime)){
-        console.log("Keine Zahl!")
-        //hier eine antwort an den Client einfügen 
+    if(isNaN(logTime))
+    {
+        console.log("Keine Zahl!") //hier eine antwort an den Client einfügen 
     }
     else{
-        console.log(logtime)
-        //hier dann den MQTT Publish befehl einfügen
+        sendMqttMessage("timeIntervall",`${logTime}`)
     }
 });
 
 // Endpunkt zum Erfassen ob die gespeicherten Ereignisse gelöscht werden solle
 
-settingsRouter.post('/deleteHistory',(req,res) => {
+settingsRouter.post('/deleteHistory',(req,res) => 
+{
     let answer = req.body.container
 
-    if(answer === 'true'){
-        //Programm welches den Verlauf löscht
+    if(answer === 'true')
+    {
+        sendMqttMessage("deleteHistory","true")
+    }else
+    {
+        sendMqttMessage("deleteHistory","false")
     }
+
+
 });
 
 // Endpunkt zum Erfassen des eingestellten Temperaturlimits
 
 settingsRouter.post('/tempLimitValue',(req,res) => {
     
-    //Erfassen der Nachricht und umwandlung von einem String in eine Zahl
+    //Erfassen der Nachricht und umwandlung von einem String in eine Zahl und auf eine Nachkommastelle runden
 
-    let tempLimit = Number(req.body.container) 
+    let tempLimit = Number(req.body.container).toFixed(1) 
 
     //Prüfen der eingabe ob es sich um eine Zahl handelt oder nicht
 
@@ -73,7 +99,7 @@ settingsRouter.post('/tempLimitValue',(req,res) => {
     }
     else{
         console.log(tempLimit)
-        //hier dann den MQTT Publish befehl einfügen
+        sendMqttMessage("tempLimitValue",`${tempLimit}`)
     }
 });
 
@@ -92,8 +118,7 @@ settingsRouter.post('/timeLimitValue',(req,res) => {
         //hier eine antwort an den Client einfügen 
     }
     else{
-        console.log(timeLimit)
-        //hier dann den MQTT Publish befehl einfügen
+        sendMqttMessage("timeLimitValue",`${timeLimit}`)
     }
 });
 
@@ -101,27 +126,13 @@ settingsRouter.post('/timeLimitValue',(req,res) => {
 
 settingsRouter.post('/mailAdressRecipient',(req,res) => {
     let mailAdress = req.body.container
-
-});
-
-// Endpunkt zum Erfassen ob die Die Log Datei heruntergeladen werden soll
-
-settingsRouter.post('/downloadLog',(req,res) => {
-    let answer = req.body.container
-    if(answer === 'true'){
-        //stell die Datei zum Download bereit 
+    //Validierung der E-Mail-Adresse
+    if(emailValidation.validate(mailAdress))
+    {
+        sendMqttMessage("mailAdressRecipient",`${mailAdress}`)
     }
 
 });
-
-settingsRouter.post('/test', (req, res) => {
-    console.log("angekommen" );
-    console.log(req.body.container);
-    console.log(typeof(req.body.container))
-    //hier dann den MQTT Publish befehl einfügen
-    
-  });
-
 
 
 //Modul exportieren 
@@ -150,39 +161,3 @@ document.getElementById('intervall10s').addEventListener('click',() =>
           transmit('settings/intervall','10s'));
 */
 
-
-
-
-
-
-
-/*
-settingsRouter.post('/test', (req, res) => {
-  console.log("angekommen" );
-  console.log(req.body.container);
-  console.log(typeof(req.body.container))
-  //hier dann den MQTT Publish befehl einfügen
-  
-});
-
-settingsRouter.post('/intervall', (req, res) => {
-    console.log("angekommen" );
-    console.log(req.body.container);
-    console.log(typeof(req.body.container))
-    //hier dann den MQTT Publish befehl einfügen
-  });
-
-settingsRouter.post('/temperaturboader', (req, res) => {
-    let temperatureLimit = Number(req.body.container)
-
-    //Prüfen der eingabe ob es sich um eine Zahl handelt oder nicht
-
-    if(isNaN(temperatureLimit)){
-        console.log("Keine Zahl!")
-    }
-    else{
-        console.log(temperatureLimit)
-        //hier dann den MQTT Publish befehl einfügen
-    }
-});
-*/
