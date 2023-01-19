@@ -1,0 +1,5 @@
+table struktur um Elemente legen, 
+zum Beispiel bei den Zuständen auf der Startseite
+
+Footer
+

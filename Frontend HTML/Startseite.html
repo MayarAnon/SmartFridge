@@ -1,0 +1,111 @@
+<!--Der Graph für den zeitlichen Verlauf fehlt noch-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <title>Startseite</title>
+</head>
+
+<body>
+  <!--ausklappbare Navigationsleiste mit dauerhaftem oberem Rand-->
+  <!-- Always shows a header, even in smaller screens. -->
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title"><h5>Smart Fridge <p>Startseite</p></h5>  </span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation. We hide it in small screens. -->
+      <!--<nav class="mdl-navigation mdl-layout--large-screen-only">
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+      </nav> -->
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Menü </span>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" id="startSeite" href="">Startseite</a>
+      <a class="mdl-navigation__link" id="kameraSeite" href="">Kamera</a>
+      <a class="mdl-navigation__link" id="monitoringSeite" href="">Monitoring</a>
+      <a class="mdl-navigation__link" id="einstellungenSeite" href="">Einstellungen</a>
+    </nav>
+  </div>
+  <main class="mdl-layout__content">
+    <div class="page-content">
+      <table>
+        <img src="kamerabild.jpg" height="400" width="300">
+      </table>
+
+      <!--Liste der aktuellen Daten -->
+    <style>
+    .demo-list-item {
+    width: 300px;
+    }
+    </style>
+
+    <table>
+    <ul class="demo-list-item mdl-list">
+    <li class="mdl-list__item">
+      <span class="mdl-list__item-primary-content">
+          Zustand:
+      </span>
+    </li>
+    <li class="mdl-list__item">
+      <span class="mdl-list__item-primary-content">
+        Raumtemperatur
+      </span>
+    </li>
+    <li class="mdl-list__item">
+      <span class="mdl-list__item-primary-content">
+        Kühlschranktemperatur
+      </span>
+      <li class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+          Maximum 
+        </span>
+      </li>
+      <li class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+          Minimum: 
+        </span>
+      </li>
+      <li class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+          Mittelwert: 
+        </span>
+      </li>
+    </li>
+    </ul>
+    </table>
+      
+      <!-- Hier kommt der Inhalt der Seite hin-->
+      <style>
+        .footer{
+        width: 100vw;
+        height: 10vh;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        
+        font-size: 2em;
+        font-family: sans-serif;
+        text-align: center;
+}
+      </style>
+      <div class="footer">
+        Version 0.9 SmartFridge DATUM&UHRZEIT</div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>
