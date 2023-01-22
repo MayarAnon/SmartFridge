@@ -1,3 +1,18 @@
 {
-  "email": "mayar1@gmail.com"
+  "name": "smartfridge",
+  "mailAdressRecipient": "dennisroth.4.2001@gmail.com",
+  "lastDeleteHistory": "22.1.2023, 22:34:42",
+  "loginDataDatabase": {
+    "host": "127.0.0.1",
+    "user": "root",
+    "password": "raspberry",
+    "database": "smartfridge"
+  },
+  "configManager": {
+    "clientId": "configManager",
+    "relaventTopics": [
+      "mailAdressRecipient",
+      "deleteHistory"
+    ]
+  }
 }
