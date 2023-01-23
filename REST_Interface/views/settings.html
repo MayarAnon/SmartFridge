@@ -46,7 +46,10 @@
       <button  id="herunterladen">jetzt Herunterladen </button>
     </div>
 
-   
+    <div>
+      <h2>deleteHistory</h2>
+      <button  id="deleteHistory">jetzt Herunterladen </button>
+    </div>
 
 
 
@@ -70,6 +73,8 @@
         });   
         document.getElementById('intervall10s').addEventListener('click',() =>
           transmit('api/timeIntervall','10'));
+          document.getElementById('deleteHistory').addEventListener('click',() =>
+          transmit('api/deleteHistory','true'));
         document.getElementById('intervall10min').addEventListener('click',() =>
           transmit('api/timeIntervall','600'));
         document.getElementById('intervall1h').addEventListener('click',() =>

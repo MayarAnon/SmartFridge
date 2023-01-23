@@ -1,9 +1,10 @@
 //Die Klasse AlertLog stellt den Log-Manager dar
 const fs = require('fs');
-// const MariaDB = require("../WS-Interface/MariaDB");
-const configManager = new (require("../Configmanager/configmanager"))();
-const logPath =configManager.get('Log:path')
-const dbConnection = new(require('../DB_Connection/mariaDB'))()
+const db = require("../WS-Interface/WSDB");
+
+//const configManager = new (require("../Configmanager/configmanager"))();
+const logPath = "../Log/Log.txt"//configManager.get('Log:path')
+
 //Die Klasse formattiert die Log-Rekords und schreibt alle Rekords in der Datei Log.txt. Die Klasse ist auch für das Löschen der Daten
 //aus der LogDatei und aus der Datenbank 
 class AlertLog 
@@ -30,8 +31,8 @@ class AlertLog
             console.error(err);
           }
         });
-        
-        dbConnection.deleteTable();
+      //   const dbConnection = new db()
+      //   dbConnection.deleteTable();
       }
     });
   }

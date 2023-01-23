@@ -60,4 +60,3 @@ async function runAlertService()
 
 
 runAlertService();
-console.log(Date.now())

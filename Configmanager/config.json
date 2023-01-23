@@ -1,7 +1,7 @@
 {
   "name": "smartfridge",
   "mailAdressRecipient": "dennisroth.4.2001@gmail.com",
-  "lastDeleteHistory": "22.1.2023, 22:34:42",
+  "lastDeleteHistory": "23.1.2023, 22:06:31",
   "loginDataDatabase": {
     "host": "127.0.0.1",
     "user": "root",
@@ -15,12 +15,12 @@
       "deleteHistory"
     ]
   },
-  "mqttClient" : {
-    "brokerHostUrl" : "tcp://localhost:1883",
-    "username" : "smartfridge",
+  "mqttClient": {
+    "brokerHostUrl": "tcp://localhost:1883",
+    "username": "smartfridge",
     "password": "safePassword"
   },
-  "Log" : {
-    "path":"../Log/Log.txt"
+  "Log": {
+    "path": "../Log/Log.txt"
   }
 }

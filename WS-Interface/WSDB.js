@@ -1,7 +1,7 @@
 
-const MariaDB = require('./mariadbDennis');
+const MariaDB = require('../DB_Connection/mariaDB');
 
-require('dotenv').config({path:__dirname+'/../.env'});
+
 
 class WSDB extends MariaDB
 {
@@ -72,21 +72,15 @@ class WSDB extends MariaDB
 
 }
 
-// const DB = new MariaDB();
-// DB.deleteTable();
-// DB.sendLatestRow().then(x => {
-//    console.log(x);
-//  })
 
-
-// DB.sendMetrics().then(x => {
-//  console.log(x);
-//  })
 module.exports= WSDB;
 
+// const db = new WSDB()
 
 
-
+// db.sendLatestRow().then(x => {
+//     console.log(x);
+//   })
 
 
 
