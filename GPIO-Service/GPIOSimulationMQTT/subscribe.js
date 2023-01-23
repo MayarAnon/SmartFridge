@@ -1,14 +1,12 @@
 //Kopiert von Stefan Stumpf's Git
-//Und async von chatGPT
 
 const mqtt = require('async-mqtt');
 
 const mqttUrl = "mqtt://localhost";
 
-const mqttTopic1 = "alertTimeLimit"; //alertTimeLimit -> surpassed/under
-const mqttTopic2 = "alertTempLimit"; //alertTempLimit -> surpassed/under
-const mqttTopic3 = "timeIntervall"; //timeIntervall -> Wie oft gespeichert werden soll in Sekunden
-
+const mqttTopic1 = "alertTimeLimit";//->surpassed/under
+const mqttTopic2 = "alertTempLimit";//->surpassed/under
+const mqttTopic3 = "timeIntervall"; //->Wie oft gespeichert werden soll in Sekunden
 const mqttClient = mqtt.connect(mqttUrl);
 
 //Abonniert die drei Topics
@@ -18,10 +16,8 @@ mqttClientSubscribeToTopic = (topic) =>
   {
     if (granted !== null) 
     {
-      console.log(
-        `Subscription erfolgreich erstellt. Topic = ${topic}`
-      );
-    } 
+      console.log("Subscription erfolgreich erstellt. Topic = " + topic);
+    }
     else 
     {
       console.error("Subscription konnte nicht erstellt werden.");
@@ -44,7 +40,7 @@ let zwischenSpeicher = null;
 //Funktion, welche bei einer neuen MQTT Nachricht in dem Subscription Topic ausgeführt wird.
 mqttClient.on("message", (topic, message) => {
   zwischenSpeicher = message.toString().trim().split('"').join("");
-  console.log('Wert erhalten:', zwischenSpeicher, 'on topic', topic);
+  console.log('Wert erhalten: ', zwischenSpeicher, ' on topic ', topic);
   switch (topic) 
   {
       case 'alertTimeLimit':
@@ -60,9 +56,10 @@ mqttClient.on("message", (topic, message) => {
           console.log('topic3: ' + zwischenSpeicher);
           break;
   }
+  ledsAktivieren();
 });
 
-ledsAktivieren() //Die Funktion muss noch an der richtigen Stelle verwendet werden und die Variablen müssen übergeben werden
+function ledsAktivieren() //Die Funktion muss noch an der richtigen Stelle verwendet werden und die Variablen müssen übergeben werden
 {
   if(timeMessage == 'surpassed')
   {
