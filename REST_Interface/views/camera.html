@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kamera</title>
+</head>
+<body>
+    <h1>Smartfridge</h1>
+    <div>Kamera</div>
+
+    <a href = '/monitoring'>Monitoring</a>
+    <a href = '/camera'>Kamera</a>
+    <a href = '/home'>Startseite</a>
+    <a href = '/settings'>Einstellungen</a>
+
+
+    <video id="videoElement" autoplay></video>
+    <script>
+      // Get a reference to the video element on the webpage
+      const videoElement = document.getElementById("videoElement");
+
+      // Request access to the webcam
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+          // Set the srcObject property of the video element to the stream from the webcam
+          videoElement.srcObject = stream;
+        })
+        .catch(function(error) {
+          console.error("Oops. Something is broken.", error);
+        });
+    </script>
+</body>
+</html>
