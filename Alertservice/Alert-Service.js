@@ -1,12 +1,15 @@
 //Das Alert-Service stellt ein MQTT-Broker dar. Es löst Alarme aus, wenn Schwellwerte überschritten wurden. Außerdem ist das Service für
 //das Löschen der Daten aus dem Datenbank und aus dem Log zuständig 
 
-const MQTT = require("async-mqtt");
+const MQTT = require('../mqttClient/mqttClient')
 const Alert= require('./Alert');
+const configManager = new (require("../Configmanager/configmanager"))();
 
 
 const alertLog = require("./AlertLog");
-require('dotenv').config({path:__dirname+'/../.env'});
+
+
+const mqttClient = new MQTT("Alert-Service",configManager.get('mqttClient'))
 const topicList = {
     alertTempLimit: "alertTempLimit",
     alertTimeLimit: "alertTimeLimit",
@@ -21,18 +24,17 @@ const topicList = {
 //asyncmqtt referenz: https://github.com/mqttjs/async-mqtt
 async function runAlertService() 
 {
-    client = await MQTT.connectAsync(process.env.BROKER_URL)
 	try 
     {
         const topics = Object.values(topicList);
-        await client.subscribe(topics);
+        await mqttClient.subscribe(topics);
 
         const Logger = new alertLog();
-        await Logger.deleteLog(client);
+        await Logger.deleteLog(mqttClient);
         
-        const thisAlert = new Alert(client);
+        const thisAlert = new Alert(mqttClient);
 
-        await client.on('message', async function(topic, message) 
+        await mqttClient.on('message', async function(topic, message) 
         {
             console.log(`${topic}>>>>>> ${message}`);
             try 
@@ -58,3 +60,4 @@ async function runAlertService()
 
 
 runAlertService();
+console.log(Date.now())

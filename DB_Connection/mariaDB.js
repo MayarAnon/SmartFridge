@@ -121,7 +121,7 @@ const data = [];
 
 async function nameOfFunctionOne()
 {
-    const sqlResult = await instanceOne.query('SELECT * FROM testen');
+    const sqlResult = await instanceOne.query('SELECT * FROM messergebnisse');
     
     //Daten formatieren 
 

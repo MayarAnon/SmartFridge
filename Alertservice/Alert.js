@@ -18,7 +18,7 @@ class Alert
   {
     this.TempLimit = 0.0;
     this.TimeLimit = 0;
-    this.startTime = 0;
+    this.startTime = Date.now();
     this.timeDiff = 0;
     this.Logger = new alertLog();
     this.lastDoorState = 'undefined';
@@ -40,7 +40,7 @@ class Alert
   checkTemp(topic, message) 
   {
     if (topic === 'tempInside') {
-      const temp = parseFloat(message);
+      const temp = parseFloat(JSON.parse(message));
       if (Math.round(temp) >= Math.round(this.TempLimit)) {
         this.client.publish(
           topics.alertTempLimit,

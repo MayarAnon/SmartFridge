@@ -22,8 +22,8 @@ const loginData =
 }
 
 
-const mqtt = require('async-mqtt');
-const dataBase = require('./mariaDB') //ZEILE 132 NOCH ÜBERGABEWERTE UND TIME INTERVALL BERÜCKSICHTIGEN
+//const mqtt = require('async-mqtt');
+const dbConnection = new(require('../../DB_Connection/mariaDB'))() //ZEILE 132 NOCH ÜBERGABEWERTE UND TIME INTERVALL BERÜCKSICHTIGEN
 
 const mqttUrl = "mqtt://localhost";
 const mqttTopic1 = "tempInside"; //tempInside 
@@ -32,22 +32,22 @@ const mqttTopic2 = "doorState"; //->open/closed
 const mqttTopic3 = "alertTimeLimit";//->surpassed/under
 const mqttTopic4 = "alertTempLimit";//->surpassed/under
 const mqttTopic5 = "timeIntervall"; //->Wie oft gespeichert werden soll in Sekunden
-const mqttClient = mqtt.connect(mqttUrl);
-
+//const mqttClient = mqtt.connect(mqttUrl);
+const config = new(require('../../Configmanager/configManager'))()
+const mqttClient = new(require('../../mqttClient/mqttClient'))("Restful_Schnittstelle",config.get('mqttClient'))
 const interval = 2000; //Intervall für random Funktion in ms
 
 let timeMessage = "under"; //Als under initialisieren, damit keine Fehlermeldung zum Start kommt.
 let tempMessage = "under";
 let timeIntervallMessage = null;
 
-const instanceOne = new dataBase(loginData)
-const table = 'testen'
-const currentID = 8
-const currentTempValue = 9
 
-async function nameOfFunctionTwo(tempInside, doorState)
+const table = 'messergebnisse'
+
+
+async function nameOfFunctionTwo(tempInside)
 {
-    const result = await instanceOne.query(`INSERT INTO ${table} ('ID', 'timeStamp', 'tempValue') VALUES (${currentID}, NOW(), ${currentTempValue});`)
+    const result = await dbConnection.query(`INSERT INTO ${table} (Messwert) VALUES (${tempInside});`)
     console.log(result)
 }
 
@@ -83,10 +83,7 @@ function ledsAktivieren(timeMessage, tempMessage) //Die Funktion muss noch an de
 //INHALT von "Publish"
 
 //Funktion, welche beim erfolgreichen Verbinden mit dem MQTT Server abgearbeitet wird.
-mqttClient.on('connect', async () => {
-    console.log(`MQTT wurde erfolgreich verbunden. Adresse = ${mqttUrl}`); 
-  }, 4000);
-  
+
   //Referenz: https://www.geeksforgeeks.org/how-to-generate-random-number-in-given-range-using-javascript/
   function randomNumber(min, max) 
   {
@@ -131,15 +128,15 @@ mqttClient.on('connect', async () => {
         }, interval);
   }
   
-  read(function(err, temperature, doorState) 
+   read(function(err, temperature, doorState) 
   {
       if (!err) 
       {
           console.log('Temperature: ' + temperature + '°C');
-          mqttClient.publish(mqttTopic1, JSON.stringify(temperature));
+          mqttClient.publish(mqttTopic1, JSON.stringify(temperature)).then();
           console.log('Türstatus: ' + doorState);
-          mqttClient.publish(mqttTopic2, JSON.stringify(doorState));
-          //nameOfFunctionTwo()
+          mqttClient.publish(mqttTopic2, JSON.stringify(doorState)).then();
+          nameOfFunctionTwo(temperature).then(console.log("funktioniert"))
       }
   });
 

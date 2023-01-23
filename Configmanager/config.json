@@ -5,7 +5,7 @@
   "loginDataDatabase": {
     "host": "127.0.0.1",
     "user": "root",
-    "password": "raspberry",
+    "password": "password1234",
     "database": "smartfridge"
   },
   "configManager": {
@@ -19,5 +19,8 @@
     "brokerHostUrl" : "tcp://localhost:1883",
     "username" : "smartfridge",
     "password": "safePassword"
+  },
+  "Log" : {
+    "path":"../Log/Log.txt"
   }
 }
