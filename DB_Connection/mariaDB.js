@@ -1,15 +1,8 @@
 
 const mariadb = require('mariadb');
+const configManager = require('../Configmanager/configManager')
+const config = new configManager()
 
-//Objekt mit Daten welche bei der Anmeldung benötigt werden
-
-const loginData = 
-{
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'raspberry',
-    database: 'smartfridge'
-}
 
 // Klasse für die Verbindung mit der Datenbank mariaDB
 // Stellt sicher, dass nur eine Verbindung pro Service existiert
@@ -22,14 +15,16 @@ class dataBase
     //Stellt sicher das nur ein Objekt existiert in einem Service
     //Parameter: Login-Daten als Obejkt 
     
-    constructor(loginData)
+    constructor()
     {
         if (!dataBase.instance) 
         {
             dataBase.instance = this
         }
+
         
-        this.loginData = loginData
+        
+        this.loginData = config.get('loginDataDatabase')
         this.connection
         this.connectionCount = 0
 
@@ -120,7 +115,7 @@ module.exports = dataBase
 
 //Daten aus der Datenbank bekommen
 /*
-const instanceOne = new dataBase(loginData)
+const instanceOne = new dataBase()
 
 const data = [];
 

@@ -60,20 +60,20 @@
 
     <script >
         document.getElementById('inputfield_submit').addEventListener('click', () => {
-          transmit('settings/tempLimitValue',document.getElementById('inputfield').value);
+          transmit('api/tempLimitValue',document.getElementById('inputfield').value);
         });  
         document.getElementById('mailinputfield_submit').addEventListener('click', () => {
-          transmit('settings/mailAdressRecipient',document.getElementById('mailinputfield').value);
+          transmit('api/mailAdressRecipient',document.getElementById('mailinputfield').value);
         });   
         document.getElementById('herunterladen').addEventListener('click', () => {
-          transmit('settings/downloadLog','true');
+          transmit('api/downloadLog','true');
         });   
         document.getElementById('intervall10s').addEventListener('click',() =>
-          transmit('settings/timeIntervall','10'));
+          transmit('api/timeIntervall','10'));
         document.getElementById('intervall10min').addEventListener('click',() =>
-          transmit('settings/timeIntervall','600'));
+          transmit('api/timeIntervall','600'));
         document.getElementById('intervall1h').addEventListener('click',() =>
-          transmit('settings/timeIntervall','3600'));
+          transmit('api/timeIntervall','3600'));
         
         function transmit(adress,container,value){
           let object ={container , value};

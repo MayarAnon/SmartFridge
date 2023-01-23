@@ -14,5 +14,10 @@
       "mailAdressRecipient",
       "deleteHistory"
     ]
+  },
+  "mqttClient" : {
+    "brokerHostUrl" : "tcp://localhost:1883",
+    "username" : "smartfridge",
+    "password": "safePassword"
   }
 }

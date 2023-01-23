@@ -6,7 +6,7 @@
  //Vorteile: nur eine Instance pro Service, Eine Verbindung, Automatisches Reconnecten, automatische Sicherheit
 class mqttClient
 {
-    constructor(serviceName)
+    constructor(serviceName,loginData)
     {
         //Sicherstellen, dass nur eine Verbindung besteht 
         
@@ -17,7 +17,7 @@ class mqttClient
 
         //Optionen der Verbindung deklarieren
 
-        this.brokerHostUrl = "tcp://localhost:1883"
+        this.brokerHostUrl = loginData.brokerHostUrl
         
         this.options =
         {
@@ -25,8 +25,8 @@ class mqttClient
             reconnectPeriod: 1000, // falls Verbindung abbricht / Verbindungsversuch fehlschlägt => Zeit zwischen Versuchen in ms
             resubscribe : true, 
             clientId: serviceName, 
-            username: "smartfridge",
-            password: "safePassword"
+            username: loginData.username, //Parameter des Konstruktors
+            password: loginData.password
         }
 
         //Versuch Verbindungsaufbau
