@@ -60,7 +60,7 @@ class Alert
     }
   }
   //Die Methode überprüft, ob der maximalen Öffnungszeit überschritten wurde und löst ein Alarm aus/ schreibt einen Rekord im Log
-    // Topic und Message von MQTT müssen übergeben werden
+  // Topic und Message von MQTT müssen übergeben werden
   checkTime(topic, message) 
   {
     if (topic === 'doorState') {

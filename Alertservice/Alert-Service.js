@@ -2,7 +2,9 @@
 //das Löschen der Daten aus dem Datenbank und aus dem Log zuständig 
 
 const MQTT = require("async-mqtt");
-const Alert= require('./Alert')
+const Alert= require('./Alert');
+
+
 const alertLog = require("./AlertLog");
 require('dotenv').config({path:__dirname+'/../.env'});
 const topicList = {

@@ -1,7 +1,7 @@
 //Die Klasse AlertLog stellt den Log-Manager dar
 const fs = require('fs');
 require('dotenv').config({path:__dirname+'/../.env'});
-const MariaDB = require("../WS-Interface/MariaDB")
+const MariaDB = require("../WS-Interface/MariaDB");
 
 //Die Klasse formattiert die Log-Rekords und schreibt alle Rekords in der Datei Log.txt. Die Klasse ist auch für das Löschen der Daten
 //aus der LogDatei und aus der Datenbank 

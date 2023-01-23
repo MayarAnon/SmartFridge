@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>NodeJS WebSocket Server</title>
+    <style>
+        .chartBox {
+            width:700px;
+        }
+    </style> 
+</head>
+
+<body>
+    
+    <div>
+        <time id="datum" ></time>
+    </div>
+    <div>
+        <time id="uhrzeit" ></time>
+    </div>
+    <div class="Metrics">
+        Maximum: <input type="text" id="maximum" />
+        Minimum: <input type="text" id="minimum" />
+        Mittelwert: <input type="text" id="avg" />
+        Aktuelle Innentemperatur: <input type="text" id="tempinside" />
+        Öffnungszustand: <input type="text" id="doorstate" />
+    </div>
+    <div >
+        Temperaturschwellwert
+        Aktuell: <input type="text" id="akteullertempschwellwert" />
+        <input onchange="setTempLimitValue()" type="text" id="tempschwellwert" />
+    </div>
+    <div>
+        maximale Öffnungszeit
+        Aktuell: <input type="text" id="akteullemaxzeit" />
+        <input onchange="setTimeLimitValue()" type="text" id="maxzeit" />
+    </div>
+    <div >
+        System Historie löschen
+        Aktuell: <input type="text" id="lastdelete" />
+        <input onclick="deleteHistory()" type="button" value="Löschen" id="deletehistory" />
+    </div>
+    <div >
+        Event-Email-adresse
+        Aktuell: <input type="text" id="emailadresse" />
+        <input onchange="setEmailAdresse()" type="text" id="setemailadresse" />
+    </div>
+    <div>
+    <table id="messwertetabelle" border="1">
+        <tr>
+            <th>Erfassungszeit</th>
+            <th>Messwert</th>
+        </tr>
+    </div>
+    <div class="chartBox">
+        <canvas id="myChart"></canvas>
+    </div>
+    <input type="button" id="day" value="day" onclick="changeUnit(this.value)" />
+    <input type="button" id="hour" value="hour" onclick="changeUnit(this.value)" />
+    <input type="button" id="minute" value="minute" onclick="changeUnit(this.value)" />
+    <input type="button" id="second" value="second" onclick="changeUnit(this.value)" />
+    <div class="zeitraum">
+        Anfangszeit: <input onchange="filterData()" type="datetime-local" id="startTime"   step="1" />
+        endzeit: <input onchange="filterData()" type="datetime-local" id="endTime"  step="1"/>
+    </div>
+
+</body>
+<script src="skript.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="LineChart.js"></script>
+</html>
+
+
+
+ 
+ 
