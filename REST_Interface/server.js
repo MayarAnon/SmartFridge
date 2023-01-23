@@ -1,25 +1,39 @@
-// Bibliotheken einbinden
+const express = require('express')
 
-const express = require('express') 
+class webServer
+{
+    constructor()
+    {
+        if(!webServer.instance){
+            webServer.instance = this;
+        }
+        this.app = this.#setupServer()
+        this.#setupRouters()
 
-// Applikation erstellen 
+        return webServer.instance
+    }
 
-const app = express();
+    #setupServer()
+    {
+        // Applikation erstellen 
 
-//festlegen auf welchem Port die Applikation funktionieren soll 
+        const app = express();
 
-app.listen(3000) 
+        //festlegen auf welchem Port die Applikation funktionieren soll 
 
-//Unterteilung und Einbindung in Routes für erhöhte übersichtlichkeit (Routes == Miniapplikationen für Übersichtlichkeit)
+        app.listen(3000)
+        return app
+    }
 
-const homeRouter = require('./routes/home');
-const cameraRouter = require('./routes/camera');
-const monitoringRouter = require('./routes/monitoring');
-const settingsRouter = require('./routes/settings');
-const RestAPI = require('./routes/restAPI');
+    #setupRouters()
+    {
+        const viewsRouter = new (require('./router/views'))()
+        const restAPI = new (require('./router/restAPI'))()
 
-app.use('/home',homeRouter );
-app.use('/camera',cameraRouter);
-app.use('/monitoring',monitoringRouter);
-app.use('/settings', settingsRouter);
-app.use('/api',RestAPI);
+        this.app.use('/',viewsRouter)
+        this.app.use('/api',restAPI)
+        
+    }
+}
+
+const instance = new webServer()
