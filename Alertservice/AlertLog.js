@@ -1,8 +1,9 @@
 //Die Klasse AlertLog stellt den Log-Manager dar
 const fs = require('fs');
-require('dotenv').config({path:__dirname+'/../.env'});
-const MariaDB = require("../WS-Interface/MariaDB");
-
+// const MariaDB = require("../WS-Interface/MariaDB");
+const configManager = new (require("../Configmanager/configmanager"))();
+const logPath =configManager.get('Log:path')
+const dbConnection = new(require('../DB_Connection/mariaDB'))()
 //Die Klasse formattiert die Log-Rekords und schreibt alle Rekords in der Datei Log.txt. Die Klasse ist auch für das Löschen der Daten
 //aus der LogDatei und aus der Datenbank 
 class AlertLog 
@@ -14,7 +15,8 @@ class AlertLog
   // Übergeben muss man nur den String(Inhalt was im Log geschrieben werden muss)
   formatter(content)
   {
-    const timestamp = new Date().toISOString().replace(/T/, '     ').replace(/\..+/, '');
+    const time = new Date().toLocaleString('de-DE');
+    const timestamp= time
     return `${timestamp}      ${content}\n`;
   }
   // Die Funktion löscht den Inhalt des Logs und die Daten aus der DatenBank, wenn "true" unter dem Topic "deleteHistory" gesendet wird 
@@ -23,13 +25,13 @@ class AlertLog
   {
     client.on('message', (topic, message) => {
       if (topic === 'deleteHistory' && message.toString() === 'true') {
-        fs.writeFile(process.env.LOG_PATH, '', (err) => {
+        fs.writeFile(logPath, '', (err) => {
           if (err) {
             console.error(err);
           }
         });
-        const DB = new MariaDB();
-        DB.deleteTable();
+        
+        dbConnection.deleteTable();
       }
     });
   }
@@ -38,7 +40,7 @@ class AlertLog
   //Der Inhalt/Record wird der Funktion als String übergeben 
   writeLog(content) 
   {
-    fs.appendFile(process.env.LOG_PATH, this.formatter(content), (err) => {
+    fs.appendFile(logPath, this.formatter(content), (err) => {
       if (err) {
         console.error(err);
       }
