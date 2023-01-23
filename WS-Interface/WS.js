@@ -1,6 +1,6 @@
 "use strict";
 const WebSocket = require('ws');
-const MariaDB = require("./MariaDB");
+const MariaDB = require("./WSDB");
 const MQTT = require("async-mqtt");
 
 class WS 
@@ -9,7 +9,7 @@ class WS
     topicList = {
         doorState: "doorState"
       };
-    constructor(webServer) 
+    constructor(webServer)  
     {   
         this.creatWebsocketServer(webServer)
     }

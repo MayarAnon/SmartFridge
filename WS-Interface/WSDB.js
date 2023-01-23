@@ -1,27 +1,19 @@
-"use strict";
-const mariadb = require('mariadb');
+
+const MariaDB = require('./mariadbDennis');
 
 require('dotenv').config({path:__dirname+'/../.env'});
 
-class MariaDB 
+class WSDB extends MariaDB
 {
     
-  constructor() 
-  {
-    this.pool = mariadb.createPool({
-        user: process.env.Mysql_User,
-        password: process.env.Mysql_Password,
-        host: process.env.Mysql_Host,
-        port: 3306,
-        database: 'test'
-    });
+  constructor() {
+    super()
   }
 
- 
+
   //Die Funktion gibt das Max,Min und den Mittelwert der Messdaten für die letzten 24 stunden zurück
   async sendMetrics() 
   {
-    const conn = await this.pool.getConnection();
     try 
     {
       const query = `
@@ -29,7 +21,7 @@ class MariaDB
         FROM messergebnisse
         WHERE InDtTm BETWEEN NOW() - INTERVAL 60 DAY AND NOW();
       `;
-      const [results] = await conn.query(query);
+      const [results] = await super.query(query);
       
       return JSON.stringify(results);
 
@@ -38,19 +30,14 @@ class MariaDB
     {
       console.error(error);
     }
-    finally 
-    {
-      if (conn) conn.release();
-    }
   }
 //Die Funktion gibt den letzten Messwert aus der Tabelle zurück
   async sendLatestRow() 
   {
-    const conn = await this.pool.getConnection();
     try 
     {
       const query = 'SELECT * FROM messergebnisse ORDER BY ID DESC LIMIT 1';
-      const [row] = await conn.query(query);
+      const [row] = await super.query(query);
 
       //Zeile formatieren
       const formattedRow = JSON.stringify({
@@ -66,28 +53,20 @@ class MariaDB
         console.error(err);
     
       }
-      finally 
-      {
-        if (conn) conn.release();
-      }
     }
+  // Die Methode löscht den Inhalt der Tabelle
   async deleteTable() 
   {
-    const conn = await this.pool.getConnection();
     try 
     {
       const query = 'TRUNCATE TABLE messergebnisse';
-      await conn.query(query);
+      await super.query(query);
       console.log("Tabelle wurde geleert");
       } 
       catch (err) 
       {
         console.error(err);
     
-      }
-      finally 
-      {
-        if (conn) conn.release();
       }
   }
 
@@ -103,7 +82,7 @@ class MariaDB
 // DB.sendMetrics().then(x => {
 //  console.log(x);
 //  })
-module.exports= MariaDB;
+module.exports= WSDB;
 
 
 
