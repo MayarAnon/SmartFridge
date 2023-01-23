@@ -9,7 +9,7 @@ const config = new configManager()
 // Stellt sicher, dass die Verbindung aufrecht erhalten wird
 //Parameter: loginDaten als Objekt 
 
-class dataBase
+class dbConnection
 {
     //Initalisiert das Objekt 
     //Stellt sicher das nur ein Objekt existiert in einem Service
@@ -17,9 +17,9 @@ class dataBase
     
     constructor()
     {
-        if (!dataBase.instance) 
+        if (!dbConnection.instance) 
         {
-            dataBase.instance = this
+            dbConnection.instance = this
         }
 
         
@@ -28,7 +28,7 @@ class dataBase
         this.connection
         this.connectionCount = 0
 
-        return dataBase.instance
+        return dbConnection.instance
         
     }
 
@@ -97,7 +97,7 @@ class dataBase
 }
 
 
-module.exports = dataBase
+module.exports = dbConnection
 
 
 
@@ -115,7 +115,7 @@ module.exports = dataBase
 
 //Daten aus der Datenbank bekommen
 /*
-const instanceOne = new dataBase()
+const instanceOne = new dbConnection()
 
 const data = [];
 
@@ -146,7 +146,7 @@ nameOfFunctionOne()
 
 //Daten in die Datenbank hinzufügen 
 /*
-const instanceTwo = new dataBase(loginData)
+const instanceTwo = new dbConnection(loginData)
 
 const table = 'testen'
 const currentID = 8
