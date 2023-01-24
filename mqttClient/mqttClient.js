@@ -1,5 +1,4 @@
- "use strict"
- const mqtt = require("async-mqtt")
+const mqtt = require("async-mqtt")
 
 
  //Klasse für die erstellung einer MQTT Verbindung gibt eine MQTT-Client zurück mit allen funktionen von async Mqtt

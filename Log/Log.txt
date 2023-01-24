@@ -4,3 +4,35 @@
 23.1.2023, 21:50:50      Die Innentemperatur hat den Schwellwert überschritten
 23.1.2023, 21:50:52      Die Innentemperatur hat den Schwellwert überschritten
 23.1.2023, 21:50:52      Die maximale Öffnungszeit wurde überschritten
+24.1.2023, 12:55:41      Die maximale Öffnungszeit wurde überschritten
+24.1.2023, 12:55:41      Die Innentemperatur hat den Schwellwert überschritten
+24.1.2023, 12:57:05      Die maximale Öffnungszeit wurde überschritten
+24.1.2023, 12:57:05      Die Innentemperatur hat den Schwellwert überschritten
+24.1.2023, 13:36:28      Die maximale Öffnungszeit wurde überschritten
+24.1.2023, 13:36:28      Die Innentemperatur hat den Schwellwert überschritten
+24.1.2023, 13:36:30      Die Innentemperatur hat den Schwellwert überschritten
+24.1.2023, 13:36:30      Die maximale Öffnungszeit wurde überschritten
+24.1.2023, 13:36:32      Die Innentemperatur hat den Schwellwert überschritten
+24.1.2023, 13:36:32      Die maximale Öffnungszeit wurde überschritten
+24.1.2023, 13:36:34      Die maximale Öffnungszeit wurde überschritten
+24.1.2023, 13:36:34      Die Innentemperatur hat den Schwellwert überschritten
+24.1.2023, 13:47:31      Die maximale Öffnungszeit wurde überschritten
+24.1.2023, 13:47:32      Die Innentemperatur hat den Schwellwert überschritten
+24.1.2023, 13:47:33      Die maximale Öffnungszeit wurde überschritten
+24.1.2023, 13:47:33      Die Innentemperatur hat den Schwellwert überschritten
+24.1.2023, 13:47:35      Die maximale Öffnungszeit wurde überschritten
+24.1.2023, 13:47:35      Die Innentemperatur hat den Schwellwert überschritten
+24.1.2023, 13:47:37      Die Innentemperatur hat den Schwellwert überschritten
+24.1.2023, 13:47:37      Die maximale Öffnungszeit wurde überschritten
+24.1.2023, 13:47:39      Die Innentemperatur hat den Schwellwert überschritten
+24.1.2023, 13:47:39      Die maximale Öffnungszeit wurde überschritten
+24.1.2023, 13:49:29      Die maximale Öffnungszeit wurde überschritten
+24.1.2023, 13:49:29      Die Innentemperatur hat den Schwellwert überschritten
+24.1.2023, 13:49:31      Die Innentemperatur hat den Schwellwert überschritten
+24.1.2023, 13:49:31      Die maximale Öffnungszeit wurde überschritten
+24.1.2023, 13:59:07      Die maximale Öffnungszeit wurde überschritten
+24.1.2023, 13:59:07      Die Innentemperatur hat den Schwellwert überschritten
+24.1.2023, 13:59:09      Die maximale Öffnungszeit wurde überschritten
+24.1.2023, 13:59:09      Die Innentemperatur hat den Schwellwert überschritten
+24.1.2023, 14:04:45      Die Innentemperatur hat den Schwellwert überschritten
+24.1.2023, 14:04:45      Die maximale Öffnungszeit wurde überschritten

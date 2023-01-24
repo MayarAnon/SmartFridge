@@ -1,16 +1,19 @@
 //Die Klasse AlertLog stellt den Log-Manager dar
 const fs = require('fs');
-const db = require("../WS-Interface/WSDB");
 
 //const configManager = new (require("../Configmanager/configmanager"))();
 const logPath = "../Log/Log.txt"//configManager.get('Log:path')
 
 //Die Klasse formattiert die Log-Rekords und schreibt alle Rekords in der Datei Log.txt. Die Klasse ist auch für das Löschen der Daten
 //aus der LogDatei und aus der Datenbank 
+//Der Konstruktor bekommt eine Datenbankverbindung und ein MQTTclient als parameter
 class AlertLog 
 {
 
-  constructor(){}
+  constructor(dbConnection,client){
+    this.dbConnection = dbConnection;
+    this.client = client;
+  }
 
   //Die Funktion formatiert den Inhalt und fügt eine Zeitstempel zum Inhalt hinzu
   // Übergeben muss man nur den String(Inhalt was im Log geschrieben werden muss)
@@ -20,19 +23,33 @@ class AlertLog
     const timestamp= time
     return `${timestamp}      ${content}\n`;
   }
+  //Mit der Methode lässt sich die Datenbank löschen
+  async deleteTable() 
+  {
+    try 
+    {
+      const query = 'TRUNCATE TABLE messergebnisse';
+      this.dbConnection.query(query);
+      console.log("Tabelle wurde geleert");
+      } 
+      catch (err) 
+      {
+        console.error(err);
+    
+      }
+  }
   // Die Funktion löscht den Inhalt des Logs und die Daten aus der DatenBank, wenn "true" unter dem Topic "deleteHistory" gesendet wird 
   //Die Funktion erhält das Mqtt Client(Alert-Service) als Parameter
-  deleteLog(client) 
+  deleteLog() 
   {
-    client.on('message', (topic, message) => {
+    this.client.on('message', (topic, message) => {
       if (topic === 'deleteHistory' && message.toString() === 'true') {
         fs.writeFile(logPath, '', (err) => {
           if (err) {
             console.error(err);
           }
         });
-      //   const dbConnection = new db()
-      //   dbConnection.deleteTable();
+      this.deleteTable();
       }
     });
   }
@@ -50,3 +67,6 @@ class AlertLog
 }
 
 module.exports = AlertLog;
+
+// const loger = new AlertLog()
+// loger.deleteTable()

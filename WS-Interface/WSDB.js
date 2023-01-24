@@ -54,22 +54,6 @@ class WSDB extends MariaDB
     
       }
     }
-  // Die Methode löscht den Inhalt der Tabelle
-  async deleteTable() 
-  {
-    try 
-    {
-      const query = 'TRUNCATE TABLE messergebnisse';
-      await super.query(query);
-      console.log("Tabelle wurde geleert");
-      } 
-      catch (err) 
-      {
-        console.error(err);
-    
-      }
-  }
-
 }
 
 
