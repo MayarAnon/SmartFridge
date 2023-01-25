@@ -12,7 +12,6 @@ Aufgaben GPIO-Service:
 °LED aktivieren wenn ein Wert surpassed ist/deaktivieren wenn under
 °Nach timeIntervall Daten in Datenbank schreiben
 */
-
 const loginData = 
 {
     host: '127.0.0.1',
@@ -41,9 +40,7 @@ let timeMessage = "under"; //Als under initialisieren, damit keine Fehlermeldung
 let tempMessage = "under";
 let timeIntervallMessage = null;
 
-
 const table = 'messergebnisse'
-
 
 async function nameOfFunctionTwo(tempInside)
 {
@@ -80,67 +77,65 @@ function ledsAktivieren(timeMessage, tempMessage) //Die Funktion muss noch an de
   }
 };
 
-//INHALT von "Publish"
-
 //Funktion, welche beim erfolgreichen Verbinden mit dem MQTT Server abgearbeitet wird.
 
-  //Referenz: https://www.geeksforgeeks.org/how-to-generate-random-number-in-given-range-using-javascript/
-  function randomNumber(min, max) 
-  {
-      return Math.random() * (max - min) + min;
-  }
-  
-  /*let doorState = null;
-  async function randomDoorState()
-  {
-      doorState = "closed";
-      console.log("doorState: " + doorState);
-      doorState = "open";  
-      return doorState;
-  }*/
-  let randomDoorState = "open";
-  function randomState() 
-  {
-      setInterval(() => 
-      {
-          if (randomDoorState == "open") 
-          {
-              randomDoorState = "closed";
-          } else 
-          
-          {
-              randomDoorState = "open";
-          }
-      }, 10000);
-      return randomDoorState;
-  }
-  
-  
-  const read = function(callback) 
-  {
-        const doorState = randomState();
-        setInterval(() => 
-        {
-            // Generiert zufällige Temperaturwerte
-            const temperature = randomNumber(1, 20).toFixed(1);
-            //callback-Funktion aufrufen mit den erzeugten Daten
-            callback(null, temperature, doorState);
-        }, interval);
-  }
-  
-   read(function(err, temperature, doorState) 
-  {
-      if (!err) 
-      {
-          console.log('Temperature: ' + temperature + '°C');
-          mqttClient.publish(mqttTopic1, JSON.stringify(temperature)).then();
-          console.log('Türstatus: ' + doorState);
-          mqttClient.publish(mqttTopic2, JSON.stringify(doorState)).then();
-          nameOfFunctionTwo(temperature).then(console.log("funktioniert"))
-      }
-  });
 
-//INHALT von "subscribe"
+let doorState = "open";
+function randomDoor() 
+{
+    if (doorState == "open") 
+    {   
+        doorState = "closed";
+        console.log("IF AUSGEFÜHRT");
+    } 
+    else 
+    {
+        doorState = "open";
+        console.log("ELSE AUSGEFÜHRT");
+    }
+
+    console.log("randomTemp ausgeführt. Status in Funktion: " + doorState);
+}
+setInterval(randomDoor, 10000);
+
+let tempInside = null;
+let tempInsideRounded = null;
+function generateRandomValues(minimum, maximum, tempInterval) 
+{
+  tempInside = minimum;
+  let mathVariable = 1;
+  setInterval(() => 
+  {
+    if (doorState == "open") 
+    {
+      mathVariable = 60 * Math.random() * (maximum - tempInside) / tempInterval;
+    } 
+    else if (doorState == "closed") 
+    {
+      mathVariable = -60 * Math.random() * (tempInside - minimum) / tempInterval;
+    }
+    tempInside = tempInside + mathVariable;
+    tempInsideRounded = tempInside.toFixed(1);
+    console.log(tempInsideRounded + doorState);
+  }, tempInterval);
+}
+generateRandomValues(5, 20, 300);
+
+
+  
+function emitFunction() 
+{
+  setInterval(() => 
+  {
+    //const temperature = randomTemp(1, 20).toFixed(1);
+    console.log('Temperatur: ' + tempInsideRounded + '°C' + ' Türstatus: ' + doorState);
+    mqttClient.publish(mqttTopic1, JSON.stringify(tempInsideRounded)).then();
+    mqttClient.publish(mqttTopic2, JSON.stringify(doorState)).then();
+    nameOfFunctionTwo(tempInsideRounded); //.then(console.log("Datenbank befüllen funktioniert"))
+  }, interval);
+}
+
+emitFunction(); 
 
 //Abonniert die drei Topics
 mqttClientSubscribeToTopic = (topic) => {

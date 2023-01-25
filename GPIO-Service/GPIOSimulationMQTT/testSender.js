@@ -9,5 +9,5 @@ client.on('connect', () => {
     //client.publish(topic1, message);
     client.publish(topic2, message);
     console.log("Der versendete Inhalt lautet: " + message)
-  }, 10000);
+  }, 5000);
 });
