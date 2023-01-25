@@ -62,8 +62,8 @@ class EmailService extends SendMail
         this.theme = null;
         this.content = null; 
 
-        this.variableTime = null;
-        this.variableTemp = null;
+        this.variableTime = 0;
+        this.variableTemp = 0;
     }
 
     sendMailDecision()
