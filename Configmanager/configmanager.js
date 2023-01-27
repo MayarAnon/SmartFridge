@@ -1,9 +1,10 @@
 const mqtt = require('../mqttClient/mqttClient')
 const fs = require('fs');
 const nconf = require('nconf');
+const { compileFunction } = require('vm');
 
 
-class configManager
+class config
 {
     constructor()
     {
@@ -17,15 +18,6 @@ class configManager
         nconf.file({ file: this.filePath })
         
         //Auf relevante MQTT Nachriten hören 
-        
-        if(!configManager.instance)
-        {
-            this.#mqttListener()
-            configManager.instance = this
-        }
-        
-
-        return configManager.this
     }
 
     get(key) {
@@ -35,6 +27,29 @@ class configManager
             console.log(key + " wurde nicht in der Config gefunden")
             throw error
         }
+    }
+
+}
+
+
+class configManager extends config{
+    constructor(){
+        
+        //Konstruktor der ParentKlasse aufrufen 
+        
+        super()
+
+        //Sicherstellen das es nur eine Instanze von configmanager gibt
+        if(!configManager.instance)
+        {
+            configManager.instance = this
+        }
+
+        //Auf relevante MQTT Nachrichten reagiren 
+
+        this.#mqttListener()
+
+        return configManager.instance
     }
 
     //Methode um relevante MQTT Nachrichten zu handeln
@@ -73,6 +88,16 @@ class configManager
             {
                 this.#set(topic, message.toString())
             }  
+
+            if(topic == "timeLimitValue")
+            {
+                this.#set(topic, message.toString())
+            }
+
+            if(topic =="tempLimitValue")
+            {
+                this.#set(topic, message.toString())
+            }
         })
     }
 
@@ -98,12 +123,11 @@ class configManager
             throw error
         }
     }
-    
-  
 }
 
-module.exports = configManager
+const startModule = new configManager()
+
+module.exports = config
 
 
 
-const instance = new configManager()
