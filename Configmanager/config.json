@@ -1,6 +1,14 @@
 {
   "name": "smartfridge",
-  "mailAdressRecipient": "dennisroth.4.2001@gmail.com",
+  "mailSender": {
+    "sender": "smartfridge@gmx.net",
+    "mailPassword": "SmarterKuhlschrank123"
+  },
+  "alerts": {
+    "timeLimitValue": "9",
+    "tempLimitValue": "15"
+  },
+  "mailAdressRecipient": "felix.matalik@gmail.com",
   "lastDeleteHistory": "23.1.2023, 22:06:31",
   "loginDataDatabase": {
     "host": "127.0.0.1",
