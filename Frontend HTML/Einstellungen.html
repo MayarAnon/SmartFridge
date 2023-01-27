@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,35 +10,34 @@
     <title>Einstellungen</title>
 </head>
 <body>
-  <!--ausklappbare Navigationsleiste mit dauerhaftem oberem Rand-->
-  <!-- Always shows a header, even in smaller screens. -->
+  <!--Fixierte Kopfzeile mit Navigationsleiste und ausklappbarem Navigationsmenü-->
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header">
-      <div class="mdl-layout__header-row">
-        <!-- Title -->
-        <span class="mdl-layout-title"><h5>Smart Fridge <p>Einstellungen</p></h5></span>
-        <!-- Add spacer, to align navigation to the right -->
-        <div class="mdl-layout-spacer"></div>
-        <!-- Navigation. We hide it in small screens. -->
-        <!--<nav class="mdl-navigation mdl-layout--large-screen-only">
-          <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="">Link</a>
-        </nav> -->
-      </div>
-    </header>
-    <div class="mdl-layout__drawer">
-      <span class="mdl-layout-title">Menü </span>
-      <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" id="startSeite" href="">Startseite</a>
-        <a class="mdl-navigation__link" id="kameraSeite" href="">Kamera</a>
-        <a class="mdl-navigation__link" id="monitoringSeite" href="">Monitoring</a>
-        <a class="mdl-navigation__link" id="einstellungenSeite" href="">Einstellungen</a>
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <span class="mdl-layout-title"><h5>Smart Fridge <p>Einstellungen</p></h5></span>
+      <!--Platzhalter, damit die Navigationsleiste rechts ist-->
+      <div class="mdl-layout-spacer"></div>
+      <!--Navigationsleiste oben rechts (wird auf kleinen Displays nicht angezeigt)-->
+      <nav class="mdl-navigation mdl-layout--large-screen-only">
+        <a class="mdl-navigation__link" id="startSeite" href="Startseite.html">Startseite</a>
+        <a class="mdl-navigation__link" id="kameraSeite" href="Kamera.html">Kamera</a>
+        <a class="mdl-navigation__link" id="monitoringSeite" href="Monitoring.html">Monitoring</a>
+        <a class="mdl-navigation__link" id="einstellungenSeite" href="Einstellungen.html">Einstellungen</a>
       </nav>
     </div>
-    <main class="mdl-layout__content">
-      <div class="page-content">
+  </header>
+  <!--Ausklappbares Navigationsmenü-->
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Menü</span>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" id="startSeite" href="Startseite.html">Startseite</a>
+      <a class="mdl-navigation__link" id="kameraSeite" href="Kamera.html">Kamera</a>
+      <a class="mdl-navigation__link" id="monitoringSeite" href="Monitoring.html">Monitoring</a>
+      <a class="mdl-navigation__link" id="einstellungenSeite" href="Einstellungen.html">Einstellungen</a>
+    </nav>
+  </div>
+  <main class="mdl-layout__content">
+    <div class="page-content">
         <!-- Hier kommt der Inhalt der Seite hin-->
         <!--Speicherintervall auswählen-->
         <div>

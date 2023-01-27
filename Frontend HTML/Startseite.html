@@ -1,9 +1,10 @@
 <!--Der Graph für den zeitlichen Verlauf fehlt noch-->
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!--responsive (Elemente können sich der Bildschirmgröße anpassen)-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
@@ -12,26 +13,25 @@
 </head>
 
 <body>
-  <!--ausklappbare Navigationsleiste mit dauerhaftem oberem Rand-->
-  <!-- Always shows a header, even in smaller screens. -->
+<!--Fixierte Kopfzeile mit Navigationsleiste und ausklappbarem Navigationsmenü-->
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
-      <!-- Title -->
-      <span class="mdl-layout-title"><h5>Smart Fridge <p>Startseite</p></h5>  </span>
-      <!-- Add spacer, to align navigation to the right -->
+      <span class="mdl-layout-title"><h5>Smart Fridge <p>Startseite</p></h5></span>
+      <!--Platzhalter, damit die Navigationsleiste rechts ist-->
       <div class="mdl-layout-spacer"></div>
-      <!-- Navigation. We hide it in small screens. -->
-      <!--<nav class="mdl-navigation mdl-layout--large-screen-only">
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-      </nav> -->
+      <!--Navigationsleiste oben rechts (wird auf kleinen Displays nicht angezeigt)-->
+      <nav class="mdl-navigation mdl-layout--large-screen-only">
+        <a class="mdl-navigation__link" id="startSeite" href="Startseite.html">Startseite</a>
+        <a class="mdl-navigation__link" id="kameraSeite" href="Kamera.html">Kamera</a>
+        <a class="mdl-navigation__link" id="monitoringSeite" href="Monitoring.html">Monitoring</a>
+        <a class="mdl-navigation__link" id="einstellungenSeite" href="Einstellungen.html">Einstellungen</a>
+      </nav>
     </div>
   </header>
+  <!--Ausklappbares Navigationsmenü-->
   <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">Menü </span>
+    <span class="mdl-layout-title">Menü</span>
     <nav class="mdl-navigation">
       <a class="mdl-navigation__link" id="startSeite" href="Startseite.html">Startseite</a>
       <a class="mdl-navigation__link" id="kameraSeite" href="Kamera.html">Kamera</a>
@@ -41,72 +41,62 @@
   </div>
   <main class="mdl-layout__content">
     <div class="page-content">
-      <table>
-        <img src="kamerabild.jpg" height="400" width="300">
-      </table>
-
-      <!--Liste der aktuellen Daten -->
-    <style>
-    .demo-list-item {
-    width: 300px;
-    }
-    </style>
-
-    <table>
-    <ul class="demo-list-item mdl-list">
-    <li class="mdl-list__item">
-      <span class="mdl-list__item-primary-content">
-          Zustand:
-      </span>
-    </li>
-    <li class="mdl-list__item">
-      <span class="mdl-list__item-primary-content">
-        Raumtemperatur
-      </span>
-    </li>
-    <li class="mdl-list__item">
-      <span class="mdl-list__item-primary-content">
-        Kühlschranktemperatur:
-      </span>
-      <li class="mdl-list__item">
-        <span class="mdl-list__item-primary-content">
-          Maximum 
-        </span>
-      </li>
-      <li class="mdl-list__item">
-        <span class="mdl-list__item-primary-content">
-          Minimum: 
-        </span>
-      </li>
-      <li class="mdl-list__item">
-        <span class="mdl-list__item-primary-content">
-          Mittelwert: 
-        </span>
-      </li>
-    </li>
-    </ul>
-    </table>
       
-      <!-- Hier kommt der Inhalt der Seite hin-->
-      <style>
-        .footer{
-        width: 100vw;
-        height: 10vh;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        
-        font-size: 2em;
-        font-family: sans-serif;
-        text-align: center;
-}
-      </style>
+      <div>
+        <img src="kamerabild.jpg" style="max-width:40%;height:auto;">
       </div>
-      <div class="footer">
-        Version 0.9 SmartFridge DATUM&UHRZEIT</div>
-    
+      
+  
+      <!--Tabelle der aktuellen Daten -->
+      <table>
+        <tr>
+          <th>Echtzeitdaten</th> 
+        </tr>
+        <tr>
+          <td>Zustand:</td> 
+        </tr>
+        <tr>
+          <td>Raumtemperatur:</td>
+        </tr>
+        <tr>
+          <td>Kühlschranktemperatur:</td>
+        </tr>
+        <tr>
+          <td>Maximum:</td>
+        </tr>
+        <tr>
+          <td>Minimum:</td>
+        </tr>
+        <tr>
+          <td>Mittelwert:</td>
+        </tr>
+      </table>
+      
+      <style>
+        .mdl-mini-footer
+        {
+          width: 100%;
+          height: 5vh;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+        }
+      </style>
+
+      <!--Your content goes here--> 
+      <footer class="mdl-mini-footer">
+        <div class="mdl-mini-footer__left-section">
+          <ul class="mdl-mini-footer__link-list">
+            <li>Smart Fridge</li>
+            <li>Version: 0.9</li>
+          </ul>
+        </div>
+        <div class="mdl-mini-footer__right-section" id="dateAndTime">
+          <p>Testuhrzeit und Datum </p>
+        </div>
+      </footer>
+    </div>
   </main>
 </div>
-
 </body>
 </html>
