@@ -46,6 +46,7 @@ class restAPI
         this.restRouter.post('/mailAdressRecipient',this.mailAdressRecipientEndpoint.bind(this))
         this.restRouter.get('/tempHistory', this.tempHistroyEndpoint)
         this.restRouter.get('/downloadLog',this.downloadLogEndpoint)
+        this.restRouter.get('/initialValues',this.initialValuesEndpoint)
     }
 
     async timeIntervallEndpoint(req , res)
@@ -204,6 +205,18 @@ class restAPI
         
         res.download(logPath)
         
+    }
+
+    initialValuesEndpoint(req,res){
+        const dataObjekt = {
+            mailAdressRecipient : config.get('mailAdressRecipient'),
+            lastDeleteHistory: config.get('lastDeleteHistory'),
+            tempLimitValue: config.get('tempLimitValue'),
+            timeLimitValue: config.get('timeLimitValue')
+        }
+        
+        
+        res.send(JSON.stringify(dataObjekt))
     }
 
 
