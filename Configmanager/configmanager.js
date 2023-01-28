@@ -1,35 +1,6 @@
 const mqtt = require('../mqttClient/mqttClient')
-const fs = require('fs');
-const nconf = require('nconf');
-const { compileFunction } = require('vm');
+const config = require('./config')
 
-
-class config
-{
-    constructor()
-    {
-        
-        //erzeugen Absoluter Pfad zur Konfigdatei 
-        
-        this.filePath = __dirname + '/config.json'
-
-        // Festlegung der Configdatei
-
-        nconf.file({ file: this.filePath })
-        
-        //Auf relevante MQTT Nachriten hören 
-    }
-
-    get(key) {
-        try {
-            return nconf.get(key)
-        } catch (error) {
-            console.log(key + " wurde nicht in der Config gefunden")
-            throw error
-        }
-    }
-
-}
 
 
 class configManager extends config{
@@ -53,16 +24,16 @@ class configManager extends config{
     }
 
     //Methode um relevante MQTT Nachrichten zu handeln
-    #mqttListener()
+    async #mqttListener()
     {
         try 
         {
             
-            this.mqttClient = new mqtt(this.get('configManager:clientId'),this.get('mqttClient'))
+            this.mqttClient = await new mqtt(this.get('configManager:clientId'),this.get('mqttClient'))
 
             //relevanten Topics Abonnieren 
 
-            this.mqttClient.subscribe(this.get('configManager:relaventTopics'))
+            await this.mqttClient.subscribe(this.get('configManager:relaventTopics'))
 
         } catch (error) 
         {
@@ -127,7 +98,7 @@ class configManager extends config{
 
 const startModule = new configManager()
 
-module.exports = config
+
 
 
 
