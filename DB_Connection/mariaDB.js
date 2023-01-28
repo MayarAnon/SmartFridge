@@ -1,7 +1,7 @@
 
 const mariadb = require('mariadb');
-const configManager = require('../Configmanager/configManager')
-const config = new configManager()
+const config = new (require('../Configmanager/config'))()
+
 
 
 // Klasse für die Verbindung mit der Datenbank mariaDB
@@ -17,10 +17,10 @@ class dbConnection
     
     constructor()
     {
-        if (!dbConnection.instance) 
-        {
-            dbConnection.instance = this
-        }
+        //if (!dbConnection.instance) 
+        //{
+        //    dbConnection.instance = this
+        //}
 
         
         
@@ -28,7 +28,7 @@ class dbConnection
         this.connection
         this.connectionCount = 0
 
-        return dbConnection.instance
+        //return dbConnection.instance
         
     }
 
