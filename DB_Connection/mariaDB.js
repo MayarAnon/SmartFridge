@@ -17,18 +17,12 @@ class dbConnection
     
     constructor()
     {
-        //if (!dbConnection.instance) 
-        //{
-        //    dbConnection.instance = this
-        //}
-
-        
         
         this.loginData = config.get('loginDataDatabase')
         this.connection
         this.connectionCount = 0
 
-        //return dbConnection.instance
+        
         
     }
 
@@ -36,15 +30,23 @@ class dbConnection
     //Parameter: keine
     //Rückgabewert: Verbindung zur Datenbank
     
-    async reconnect()
+    async #reconnect()
     {
-        if(this.connectionCount == 0)
-        {
-            this.connection = await mariadb.createConnection(this.loginData)
-            if(this.connection.isValid){
-                this.connectionCount ++
+        try{
+            if(this.connectionCount == 0)
+            {
+                this.connection = await mariadb.createConnection(this.loginData)
+                if(this.connection.isValid)
+                {
+                    this.connectionCount ++
+                }
             }
+            this.#checkTableExistance()
+        }catch(error)
+        {
+            console.log(error)
         }
+        
         
         return this.connection 
         
@@ -53,6 +55,20 @@ class dbConnection
     //Ermöglicht die Kommunikation mit der Datenbank über SQL
     //Parameter: SQL Befehl als string
     //return: die Ergebnisse aus der Datenbank als Objekt mit Meta-Daten
+
+
+    async #checkTableExistance(){
+        const sqlCommand = 
+            `CREATE TABLE IF NOT EXISTS messergebnisse1 
+            (
+            ID int NOT NULL AUTO_INCREMENT,
+            Messwert decimal(3,1) NOT NULL,
+            nDtTm datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (ID)
+            ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`
+
+        await this.connection.query(sqlCommand)
+    }
     
     async query(sqlCommand)
     {
@@ -60,16 +76,20 @@ class dbConnection
         
         if(this.connectionCount == 0)
         {
-            await this.reconnect()
+            await this.#reconnect()
         }
         //Prüfen ob die Verbindung in Ordnung ist
         
         if(!this.connection.isValid())
         {
             this.connectionCount --
-            await this.reconnect()
+            await this.#reconnect()
 
         }
+
+        
+
+        
 
         // SQL Befehl senden und mögliche Antwort speicher
 
@@ -161,3 +181,11 @@ async function nameOfFunctionTwo()
 //nameOfFunctionTwo()
 */
 
+
+
+// `CREATE TABLE IF NOT EXISTS messergebnisse (
+//      ID int NOT NULL AUTO_INCREMENT,
+//      Messwert decimal(3,1) NOT NULL,
+//      nDtTm datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+//      PRIMARY KEY (ID)
+//     ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`
