@@ -9,10 +9,6 @@ class mqttClient
     {
         //Sicherstellen, dass nur eine Verbindung besteht 
         
-        if(!mqttClient.instance)
-        {
-            mqttClient.instance = this
-        }
 
         //Optionen der Verbindung deklarieren
 
@@ -28,18 +24,23 @@ class mqttClient
             password: loginData.password
         }
 
+        
+
+        
+        
+        return this.#connection()
+    }
+
+    async #connection(){
         //Versuch Verbindungsaufbau
 
         try
         {
-            this.client = mqtt.connect(this.brokerHostUrl,this.options);
+            this.client = await mqtt.connectAsync(this.brokerHostUrl,this.options);
         }catch(error)
         {
             console.log(error)
         }
-
-        
-        
         return this.client
     }
 
