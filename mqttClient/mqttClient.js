@@ -1,18 +1,19 @@
 const mqtt = require("async-mqtt")
-
+const config = new (require('../Configmanager/config'))()
 
  //Klasse für die erstellung einer MQTT Verbindung gibt eine MQTT-Client zurück mit allen funktionen von async Mqtt
  //Vorteile: nur eine Instance pro Service, Eine Verbindung, Automatisches Reconnecten, automatische Sicherheit
 class mqttClient
 {
-    constructor(serviceName,loginData)
+    constructor(serviceName)
     {
         //Sicherstellen, dass nur eine Verbindung besteht 
         
 
         //Optionen der Verbindung deklarieren
 
-        this.brokerHostUrl = loginData.brokerHostUrl
+        this.brokerHostUrl = config.get('mqttClient:brokerHostUrl')
+        
         
         this.options =
         {
@@ -20,8 +21,8 @@ class mqttClient
             reconnectPeriod: 1000, // falls Verbindung abbricht / Verbindungsversuch fehlschlägt => Zeit zwischen Versuchen in ms
             resubscribe : true, 
             clientId: serviceName, 
-            username: loginData.username, //Parameter des Konstruktors
-            password: loginData.password
+            username: config.get('mqttClient:username'), //Parameter des Konstruktors
+            password: config.get('mqttClient:password')
         }
 
         

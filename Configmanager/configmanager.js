@@ -29,7 +29,7 @@ class configManager extends config{
         try 
         {
             
-            this.mqttClient = await new mqtt(this.get('configManager:clientId'),this.get('mqttClient'))
+            this.mqttClient = await new mqtt(this.get('configManager:clientId'))
 
             //relevanten Topics Abonnieren 
 
