@@ -1,6 +1,7 @@
 const mqtt = require('../mqttClient/mqttClient')
 const config = require('./config')
-
+const nconf = require("nconf")
+const fs = require("fs")
 
 
 class configManager extends config{

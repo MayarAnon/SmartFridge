@@ -34,8 +34,7 @@ class webServer
         
             //WebSocket starten 
 
-            const socket = new webSocket(webServer)
-
+            const socket = webSocket(webServer);
             return app
         }catch(error)
         {
@@ -53,6 +52,7 @@ class webServer
 
             this.app.use('/',viewsRouter)
             this.app.use('/api',restAPI)
+            this.app.use(express.static('public'))
         }catch(error)
         {
             console.log(error + "Fehler bei Router setup")

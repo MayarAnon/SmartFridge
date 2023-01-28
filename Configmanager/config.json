@@ -1,9 +1,13 @@
 {
   "name": "smartfridge",
-  "mailAdressRecipient": "dennisroth.4.2001@gmail.com",
-  "lastDeleteHistory": "27.1.2023, 19:26:32",
-  "tempLimitValue": "13",
-  "timeLimitValue": "8",
+  "webServerHost" : "localhost",
+  "webServerPort" : 3000,
+  "webSocketPort" : 3001,
+  "mailAdressRecipient": "mayar.hanhon@gmail.com",
+  "lastDeleteHistory": "28.1.2023, 20:48:26",
+  "tempLimitValue": "123.0",
+  "timeLimitValue": "12",
+  "timeIntervallDefault": "10",
   "loginDataDatabase": {
     "host": "127.0.0.1",
     "user": "root",

@@ -58,13 +58,14 @@ class restAPI
             let logTime = Number(req.body.container)
 
             //Prüfen der Eingabe ob es sich um eine Zahl handelt oder nicht
-
+            
             if (isNaN(logTime)) {
                 console.log("Keine Zahl!") //hier eine antwort an den Client einfügen 
             }
             else {
                 
                 await this.mqtt.publish("timeIntervall", `${logTime}`)
+                
             }
             res.status(200).json({message :``})
 
@@ -153,8 +154,9 @@ class restAPI
             let mailAdress = req.body.container
             //Validierung der E-Mail-Adresse
             if (emailValidation.validate(mailAdress)) {
-                
+                console.log(mailAdress)
                 await this.mqtt.publish("mailAdressRecipient", `${mailAdress}`)
+                
         }
             res.status(200).json({message :``})
         }catch(error)

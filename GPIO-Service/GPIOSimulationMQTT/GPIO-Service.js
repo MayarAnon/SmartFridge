@@ -22,7 +22,7 @@ const loginData =
 }
 
 
-//const mqtt = require('async-mqtt');
+const mqtt = require('async-mqtt');
 const dbConnection = new(require('../../DB_Connection/mariaDB'))() //ZEILE 132 NOCH ÜBERGABEWERTE UND TIME INTERVALL BERÜCKSICHTIGEN
 
 const mqttUrl = "mqtt://localhost";
@@ -32,9 +32,9 @@ const mqttTopic2 = "doorState"; //->open/closed
 const mqttTopic3 = "alertTimeLimit";//->surpassed/under
 const mqttTopic4 = "alertTempLimit";//->surpassed/under
 const mqttTopic5 = "timeIntervall"; //->Wie oft gespeichert werden soll in Sekunden
-//const mqttClient = mqtt.connect(mqttUrl);
-const config = new(require('../../Configmanager/configManager'))()
-const mqttClient = new(require('../../mqttClient/mqttClient'))("Restful_Schnittstelle",config.get('mqttClient'))
+const mqttClient = mqtt.connect(mqttUrl);
+// const config = new(require('../../Configmanager/configManager'))()
+// const mqttClient = new(require('../../mqttClient/mqttClient'))("Restful_Schnittstelle",config.get('mqttClient'))
 const interval = 2000; //Intervall für random Funktion in ms
 
 let timeMessage = "under"; //Als under initialisieren, damit keine Fehlermeldung zum Start kommt.
