@@ -4,7 +4,8 @@
 https://www.w3schools.com/nodejs/nodejs_email.asp
 MQTT inspiriert von Stefan Stumpf's Git*/
 
-class SendMail
+//Diese Klasse ist für das Versenden einer E-Mail mit Nodemailer über GMX
+class sendMail
 {
   constructor()
   {
@@ -27,7 +28,7 @@ class SendMail
     });
   }
 
-    //Mail versenden mit console-meldungen 
+    //Mit der Methode send wird eine E-Mail versendet 
     send(receiver, theme, content) 
     {
         //Wohin soll die Mail gehen mit welchem Inhalt:
@@ -53,7 +54,15 @@ class SendMail
     }
 }
 
-class EmailService extends SendMail
+/*Die Klasse emailService erbt von der Klasse sendMail und beinhaltet die Logik zum Entscheiden,
+wann eine Mail versendet werden soll.
+Atrribute:
+config= wird für den Zugriff auf die 
+theme= Legt den Betreff der E-Mail fest
+content= Legt den Inhalt der E-Mail fest
+variableTime= wird benötigt, damit pro Überschreitung der Öffnungszeit nur eine E-Mail versendet wird
+variableTemp= wird benötigt, damit pro Überschreitung der Temperatur nur eine E-Mail versendet wird*/
+class emailService extends sendMail
 {
     constructor()
     {
@@ -66,6 +75,7 @@ class EmailService extends SendMail
         this.variableTemp = 0;
     }
 
+    //Diese Methode beinhaltet
     sendMailDecision()
     {
         if (timeMessage == "surpassed" && this.variableTime == 0)
@@ -97,6 +107,16 @@ class EmailService extends SendMail
     
 }
 
+/*Die Klasse mqttClass ist für das Empfangen der Nachrichten über MQTT
+Attribute:
+config= ermöglicht die Verwendung der Inhalte aus der config-Datei
+mqtt= bindet das package "async-mqtt" ein
+mqttUrl= legt die URL des Brokers fest
+mqttTopic1= das Topic "alertTimeLimit", über das surpassed/under gesendet wird im Falle eines/keines Alarms
+mqttTopic2=das Topic "alertTempLimit", über das surpassed/under gesendet wird im Falle eines/keines Alarms
+mqttClient= Definiert die MQTT-Verbindung 
+zwischenSpeicher= ist die Variable in die der über MQTT erhaltene Inhalt gespeichert wird, bevor er auf die 
+                  Topic-spezifischen Variablen verteilt wird*/
 class mqttClass 
 {
     constructor()
@@ -167,7 +187,7 @@ class mqttClass
 
 let timeMessage = null;
 let tempMessage = null;
-const emailServiceObject = new EmailService();
+const emailServiceObject = new emailService();
 const client = new mqttClass();
 client.onConnect();
 client.mqttMessage();
