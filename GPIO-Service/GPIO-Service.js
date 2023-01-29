@@ -1,146 +1,147 @@
-/* weiterzugebende Werte: 
-°doorState -> open/closed 
-°tempInside->Temperatur im Kühlschrank in Grad Celsius mit einer Nachkommastelle
-
-erhält die Werte: 
-°alertTimeLimit -> surpassed/under
-°alertTempLimit -> surpassed/under
-°timeIntervall -> Wie oft gespeichert werden soll in Sekunden
-
-Aufgaben GPIO-Service:
+/*Die Aufgaben des GPIO-Services:
 °Sensordaten auslesen und an MQTT weitergeben ->wie oft?
 °LED aktivieren wenn ein Wert surpassed ist/deaktivieren wenn under
-°Nach timeIntervall Daten in Datenbank schreiben
-*/
-/*const loginData = 
-{
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'raspberry',
-    database: 'smartfridge'
-}*/
+°Nach timeIntervall Daten in Datenbank schreiben */
 
-
-//const mqtt = require('async-mqtt');
-const config = new(require('../../Configmanager/configManager'))();
+const config = new(require('../Configmanager/configManager'))();
 const dbConnection = new(require('../DB_Connection/mariaDB'))();
+const table = 'messergebnisse';
 
-const mqttUrl = "mqtt://localhost";
+const mqttUrl = config.get('mqttClient:brokerHostUrl');
 const mqttTopic1 = "tempInside"; //tempInside 
 const mqttTopic2 = "doorState"; //->open/closed
-
 const mqttTopic3 = "alertTimeLimit";//->surpassed/under
 const mqttTopic4 = "alertTempLimit";//->surpassed/under
-const mqttTopic5 = "timeIntervall"; //->Wie oft gespeichert werden soll in Sekunden
-//const mqttClient = mqtt.connect(mqttUrl);
-
-const mqttClient = new(require('../../mqttClient/mqttClient'))("Restful_Schnittstelle",config.get('mqttClient'));
-const interval = 2000; //Intervall für random Funktion in ms
-
+const mqttTopic5 = "timeIntervall"; //->Wie oft in DB speichern (s)
+const mqttClient = new(require('../mqttClient/mqttClient'))("Restful_Schnittstelle",config.get('mqttClient'));
 let timeMessage = "under"; //Als under initialisieren, damit keine Fehlermeldung zum Start kommt.
 let tempMessage = "under";
-//let timeIntervallMessage = null;
+let timeIntervallMessage = config.get('timeIntervalDefault') * 1000;
 
-const table = 'messergebnisse'
+
+let minimum = 5;
+let maximum = 20;
+let intervalId;
+let saveIntervall = timeIntervallMessage;
+
+
+/*Diese Klasse hat die Aufgabe die Werte für die Temperatur im Kühlschrank und den Zustand der Türe zu erzeugen.
+Außerdem wird hier die Aktivierung der LED´s simuliert durch eine Konsolenausgabe 
+Attribute: 
+doorState = Zustand der Türe
+tempInside = die Temperatur im Kühlschrank
+tempInsideRounded = die, auf eine Nachkommastelle, gerundete Temperatur im Kühlschrank*/
+class GPIOService
+{
+    constructor()
+    {
+        this.doorState = "open";
+        this.tempInside = minimum;
+        this.tempInsideRounded = minimum;
+    }
+
+    /*Die Methode ledsAktivieren simuliert die LED´s also Konsolenausgaben, abhängig davon ob 
+    timeMessage oder tempMessage surpassed oder under sind 
+    Parameter: 
+    timeMessage= MQTT-Nachricht, ob die Tür zu lang geöffnet ist
+    tempMessage= MQTT-Nachricht, ob die maximale Öffnungszeit der Tür überschritten ist*/
+    ledsAktivieren(timeMessage, tempMessage)
+    {
+        if(timeMessage == 'surpassed')
+        {
+            console.log('Zeit-LED ist aktiv. Die maximale Öffnungszeit wurde überschritten')
+        }
+        else if(timeMessage == 'under')
+        {
+            console.log('Zeit-LED ist nicht aktiv. Die Kühlschranktür ist geschlossen')
+        }
+        else
+        {
+            console.error('Die MQTT für timeMessage Nachricht wurde nicht korrekt verarbeitet')
+        }
+
+        if(tempMessage == 'surpassed')
+        {
+            console.log('Temp-LED ist aktiv. Die maximale Temperatur wurde überschritten')
+        }
+        else if(tempMessage == 'under')
+        {
+            console.log('Temp-LED ist nicht aktiv. Die Temperatur ist geringer als die maximal zugelassene Temperatur')
+        }
+        else
+        {
+            console.error('Die MQTT für tempMessage Nachricht wurde nicht korrekt verarbeitet')
+        }
+    };
+
+    //randomDoor wechselt den Zustand von "doorState" von "open" zu "closed" und umgekehrt
+    randomDoor() 
+    {
+        if (this.doorState == "open") 
+        {   
+            this.doorState = "closed";
+            //console.log("IF AUSGEFÜHRT");
+        } 
+        else 
+        {
+            this.doorState = "open";
+            //console.log("ELSE AUSGEFÜHRT");
+        }
+        //console.log("randomDoor ausgeführt. Status in Funktion: " + this.doorState);
+    }
+
+    /*generateRandomValues erhöht oder verringert den Wert von tempInside abhängig davon,
+    ob doorState "open" oder "closed" ist*/
+    generateRandomValues(minimum, maximum, tempInterval) 
+    {
+        this.tempInside = minimum;
+        let mathVariable = 1;
+            setInterval(() => 
+            {
+                if (this.doorState == "open") 
+                {
+                mathVariable = 100 * Math.random() * (maximum - this.tempInside) / tempInterval;
+                } 
+                else if (this.doorState == "closed") 
+                {
+                mathVariable = -100 * Math.random() * (this.tempInside - minimum) / tempInterval;
+                }
+                this.tempInside = this.tempInside + mathVariable;
+                this.tempInsideRounded = this.tempInside.toFixed(1);
+                console.log(this.tempInsideRounded + this.doorState);
+            }, tempInterval); //wie bekomme ich hier tempInterval rein?
+    }
+}
 
 //Funktion, um in die Datenbank zu schreiben
-async function writeInDatabase(tempInside)
+async function writeInDatabase(tempInsideRounded)
 {
-    const result = await dbConnection.query(`INSERT INTO ${table} (Messwert) VALUES (${tempInside});`)
-    console.log(result)
+    //console.log("writeInDataBase:" + tempInsideRounded);
+    const result = await dbConnection.query(`INSERT INTO ${table} (Messwert) VALUES (${tempInsideRounded});`);
+    console.log(result);
 }
 
-function ledsAktivieren(timeMessage, tempMessage) //Die Funktion muss noch an der richtigen Stelle verwendet werden und die Variablen müssen übergeben werden
+//emitFunction gibt die erzeugten Werte aus an MQTT und schreibt die aktuelle Temperatur in die Datenbank
+function emitFunction(tempInsideRounded, doorState) 
 {
-  if(timeMessage == 'surpassed')
-  {
-    console.log('LED ist aktiv. Die maximale Öffnungszeit wurde überschritten')
-  }
-  else if(timeMessage == 'under')
-  {
-    console.log('LED ist nicht mehr aktiv. Die Kühlschranktür wurde geschlossen')
-  }
-  else
-  {
-    console.error('Die MQTT für timeMessage Nachricht wurde nicht korrekt verarbeitet')
-  }
-
-  if(tempMessage == 'surpassed')
-  {
-    console.log('LED ist aktiv. Die maximale Temperatur wurde überschritten')
-  }
-  else if(tempMessage == 'under')
-  {
-    console.log('LED ist nicht mehr aktiv. Die Temperatur ist wieder geringer als die maximal zugelassene Temperatur')
-  }
-  else
-  {
-    console.error('Die MQTT für tempMessage Nachricht wurde nicht korrekt verarbeitet')
-  }
-};
-
-//Die nächsten 2 Funktionen generieren random Werte
-let doorState = "open";
-function randomDoor() 
-{
-    if (doorState == "open") 
-    {   
-        doorState = "closed";
-        console.log("IF AUSGEFÜHRT");
-    } 
-    else 
-    {
-        doorState = "open";
-        console.log("ELSE AUSGEFÜHRT");
-    }
-
-    console.log("randomTemp ausgeführt. Status in Funktion: " + doorState);
-}
-setInterval(randomDoor, 10000);
-
-let tempInside = null;
-let tempInsideRounded = null;
-
-function generateRandomValues(minimum, maximum, tempInterval) 
-{
-  tempInside = minimum;
-  let mathVariable = 1;
-  setInterval(() => 
-  {
-    if (doorState == "open") 
-    {
-      mathVariable = 60 * Math.random() * (maximum - tempInside) / tempInterval;
-    } 
-    else if (doorState == "closed") 
-    {
-      mathVariable = -60 * Math.random() * (tempInside - minimum) / tempInterval;
-    }
-    tempInside = tempInside + mathVariable;
-    tempInsideRounded = tempInside.toFixed(1);
-    console.log(tempInsideRounded + doorState);
-  }, tempInterval);
-}
-generateRandomValues(5, 20, 300);
-
-
-
-
-function emitFunction() 
-{
-  setInterval(() => 
-  {
-    //const temperature = randomTemp(1, 20).toFixed(1);
-    console.log('Temperatur: ' + tempInsideRounded + '°C' + ' Türstatus: ' + doorState);
+    console.log('emitFunction: Temperatur: ' + tempInsideRounded + '°C ' + ' Türstatus: ' + doorState);
     mqttClient.publish(mqttTopic1, JSON.stringify(tempInsideRounded)).then();
     mqttClient.publish(mqttTopic2, JSON.stringify(doorState)).then();
-    writeInDatabase(tempInsideRounded); //.then(console.log("Datenbank befüllen funktioniert"))
-  }, interval);
+    writeInDatabase(GPIO.tempInsideRounded); //.then(console.log("Datenbank befüllen funktioniert"))
+    intervalId = setTimeout(() => {emitFunction(GPIO.tempInsideRounded, GPIO.doorState)}, saveIntervall);
 }
-emitFunction(); 
 
+//Ab hier beginnt der Ablauf des Codes:
+
+const GPIO = new GPIOService();
+
+setInterval(() => {GPIO.randomDoor()}, 10000);
+GPIO.generateRandomValues(minimum, maximum, 500);
+emitFunction(GPIO.tempInsideRounded, GPIO.doorState);
 
 //Abonniert die drei Topics
-mqttClientSubscribeToTopic = (topic) => {
+mqttClientSubscribeToTopic = (topic) => 
+{
     mqttClient.subscribe([mqttTopic3, mqttTopic4, mqttTopic5], {}, (error, granted) => 
     {
       if (granted !== null) 
@@ -152,38 +153,57 @@ mqttClientSubscribeToTopic = (topic) => {
         console.error("Subscription konnte nicht erstellt werden.");
       }
     });
-  };
-  
-  //Funktion, welche beim erfolgreichen Verbinden mit dem MQTT Server abgearbeitet wird.
-  mqttClient.on("connect", async () => 
-  {
-    console.log("MQTT wurde erfolgreich verbunden. Adresse: " + mqttUrl);
-  
-    // Abonniere ausgewähltes Thema
-    await mqttClient.subscribe(mqttTopic3);
-    await mqttClient.subscribe(mqttTopic4);
-    await mqttClient.subscribe(mqttTopic5);
-  });
-  
-  let zwischenSpeicher = null; 
-  //Funktion, welche bei einer neuen MQTT Nachricht in dem Subscription Topic ausgeführt wird.
-  mqttClient.on("message", (topic, message) => {
-    zwischenSpeicher = message //.toString().trim().split('"').join("");
-    //console.log('Wert erhalten: ', zwischenSpeicher, ' on topic ', topic);
-    switch (topic) 
+};
+
+//Funktion, welche beim erfolgreichen Verbinden mit dem MQTT Server abgearbeitet wird.
+mqttClient.on("connect", async () => 
+{
+    try
     {
-        case 'alertTimeLimit':
-            timeMessage = zwischenSpeicher;
-            console.log('alertTimeLimit: ' + zwischenSpeicher);
-            break;
-        case 'alertTempLimit':
-            tempMessage = zwischenSpeicher;
-            console.log('alertTempLimit: ' + zwischenSpeicher);
-            break;
-        case 'timeIntervall':
-            timeIntervallMessage = zwischenSpeicher;
-            console.log('timeIntervall: ' + zwischenSpeicher);
-            break;
+        console.log("MQTT wurde erfolgreich verbunden. Adresse: " + mqttUrl);
+        // Abonniere ausgewähltes Thema
+        await mqttClient.subscribe(mqttTopic3);
+        await mqttClient.subscribe(mqttTopic4);
+        await mqttClient.subscribe(mqttTopic5);
     }
-    ledsAktivieren(timeMessage, tempMessage);
-  });
+    catch (err) 
+    {
+        console.error(err);
+    }
+});
+
+let zwischenSpeicher = null; 
+//Funktion, welche bei einer neuen MQTT Nachricht in dem Subscription Topic ausgeführt wird.
+//Hier wird der Inhalt, der über MQTT auf den drei Topics kommt auch auf drei verschiedene Variablen aufgeteilt
+mqttClient.on("message", (topic, message) => 
+{
+    try
+    {
+        zwischenSpeicher = message.toString() //.trim().split('"').join("");
+        console.log('Wert erhalten: ', zwischenSpeicher, ' on topic ', topic);
+        switch (topic) 
+        {
+            case 'alertTimeLimit':
+                timeMessage = zwischenSpeicher;
+                console.log('alertTimeLimit: ' + zwischenSpeicher);
+                GPIO.ledsAktivieren(timeMessage, tempMessage);
+                break;
+            case 'alertTempLimit':
+                tempMessage = zwischenSpeicher;
+                console.log('alertTempLimit: ' + zwischenSpeicher);
+                GPIO.ledsAktivieren(timeMessage, tempMessage);
+                break;
+            case 'timeIntervall':
+                timeIntervallMessage = zwischenSpeicher;
+                console.log('timeIntervall: ' + zwischenSpeicher);
+                saveIntervall = timeIntervallMessage * 1000;
+                clearTimeout(intervalId);
+                emitFunction();
+                break;
+        }
+    }
+    catch (err) 
+    {
+        console.error(err);
+    }
+});
