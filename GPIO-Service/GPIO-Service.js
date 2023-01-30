@@ -3,17 +3,18 @@
 °LED aktivieren wenn ein Wert surpassed ist/deaktivieren wenn under
 °Nach timeIntervall Daten in Datenbank schreiben */
 
-const config = new(require('../Configmanager/configManager'))();
+const config = new(require('../Configmanager/config'))();
 const dbConnection = new(require('../DB_Connection/mariaDB'))();
 const table = 'messergebnisse';
-
+const MQTT = require("async-mqtt");
 const mqttUrl = config.get('mqttClient:brokerHostUrl');
+const mqttClient = MQTT.connect(mqttUrl);
 const mqttTopic1 = "tempInside"; //tempInside 
 const mqttTopic2 = "doorState"; //->open/closed
 const mqttTopic3 = "alertTimeLimit";//->surpassed/under
 const mqttTopic4 = "alertTempLimit";//->surpassed/under
 const mqttTopic5 = "timeIntervall"; //->Wie oft in DB speichern (s)
-const mqttClient = new(require('../mqttClient/mqttClient'))("Restful_Schnittstelle",config.get('mqttClient'));
+
 let timeMessage = "under"; //Als under initialisieren, damit keine Fehlermeldung zum Start kommt.
 let tempMessage = "under";
 let timeIntervallMessage = config.get('timeIntervalDefault') * 1000;

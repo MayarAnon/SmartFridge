@@ -5,12 +5,13 @@ https://www.w3schools.com/nodejs/nodejs_email.asp
 MQTT inspiriert von Stefan Stumpf's Git*/
 
 //Diese Klasse ist für das Versenden einer E-Mail mit Nodemailer über GMX
+const config = new (require("../Configmanager/config"))();
 class sendMail
 {
   constructor()
   {
     this.nodemailer = require('nodemailer');
-    this.config = new(require('../Configmanager/configmanager'))();
+    
     this.transporter = this.nodemailer.createTransport({
       host: 'mail.gmx.net',
       port: 587,
@@ -22,8 +23,8 @@ class sendMail
       debug:true,
           auth: 
           {
-          user: this.config.get('mailSender:sender'),
-          pass: this.config.get('mailSender:mailPassword')
+          user: config.get('mailSender:sender'),
+          pass: config.get('mailSender:mailPassword')
           }
     });
   }
@@ -34,7 +35,7 @@ class sendMail
         //Wohin soll die Mail gehen mit welchem Inhalt:
         let mailOptions = 
         {
-        from: this.config.get('mailSender:sender'),
+        from: config.get('mailSender:sender'),
         to: receiver,
         subject: theme,
         text: content
@@ -67,7 +68,6 @@ class emailService extends sendMail
     constructor()
     {
         super();
-        this.config = new(require('../Configmanager/configmanager'))();
         this.theme = null;
         this.content = null; 
 
@@ -82,8 +82,8 @@ class emailService extends sendMail
         {
             this.theme = "Alarm: Ihr Kühlschrank ist zu lange geöffnet";
             this.content = "Ihre Kühlschranktür ist länger, als die maximal zugelassene Öffnungszeit von "
-            + this.config.get('alerts:timeLimitValue') + " Sekunden geöffnet. Bitte schließen Sie ihren Kühlschrank umgehend."
-            this.send(this.config.get('mailAdressRecipient'), this.theme, this.content);
+            + config.get('alerts:timeLimitValue') + " Sekunden geöffnet. Bitte schließen Sie ihren Kühlschrank umgehend."
+            this.send(config.get('mailAdressRecipient'), this.theme, this.content);
             this.variableTime = 1;
         }
         else if (timeMessage == "under")
@@ -95,8 +95,8 @@ class emailService extends sendMail
         {
             this.theme = "Alarm: Ihr Kühlschrank ist zu warm!"
             this.content = "Die Temperatur im inneren Ihres Kühlschranks hat die eingestellte Höchsttemperatur von "
-            + this.config.get('alerts:tempLimitValue') + " °C überschritten";
-            this.send(this.config.get('mailAdressRecipient'), this.theme, this.content);
+            + config.get('alerts:tempLimitValue') + " °C überschritten";
+            this.send(config.get('mailAdressRecipient'), this.theme, this.content);
             this.variableTemp = 1;
         }
         else if (tempMessage == "under")
@@ -121,7 +121,6 @@ class mqttClass
 {
     constructor()
     {
-        this.config = new(require('../Configmanager/configmanager'))();
         this.mqtt = require('async-mqtt');
         this.mqttUrl = "mqtt://localhost";
 
@@ -132,8 +131,9 @@ class mqttClass
     }
     
     //Abonniert die zwei Topics
-    mqttClientSubscribeToTopic = (topic) => 
+    mqttClientSubscribeToTopic = async (topic) => 
     {
+        
         this.mqttClient.subscribe([this.mqttTopic1, this.mqttTopic2], {}, (error, granted) => 
         {
             if (granted !== null) 
