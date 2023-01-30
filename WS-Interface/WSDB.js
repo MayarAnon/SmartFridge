@@ -1,5 +1,8 @@
+//Die Klasse WSDB stellt eine ChildKlasse der Klasse DbConnection. Die Klasse bietet zwei Methoden die vom Websocket gebraucht werden um die Daten
+// aus der Datenbank zu fetchen
 const MariaDB = require("../DB_Connection/mariaDB");
-
+const config = new (require("../Configmanager/config"))();
+const MetricsPeriod = Number(config.get("metricsPeriod"));  // in days
 //WSDB Klasse ist eine Childclass der Klasse MariaDB, mit der Klasse werden die Daten des Websocketes gefetcht
 class WSDB extends MariaDB {
   constructor() {
@@ -12,7 +15,7 @@ class WSDB extends MariaDB {
       const query = `
         SELECT MAX(Messwert), MIN(Messwert), AVG(Messwert)
         FROM messergebnisse
-        WHERE InDtTm BETWEEN NOW() - INTERVAL 60 DAY AND NOW();
+        WHERE InDtTm BETWEEN NOW() - INTERVAL ${MetricsPeriod} DAY AND NOW();
       `;
       const [results] = await super.query(query);
 

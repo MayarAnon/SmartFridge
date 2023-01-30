@@ -272,7 +272,6 @@ const setTempLimitValue = () => {
     )
   ) {
     transmit("api/tempLimitValue", tempLimitRef.value.toString());
-    console.log(tempLimitRef.value);
     currentTempLimitRef.value = tempLimitRef.value + " °C";
   }
 };
@@ -281,7 +280,6 @@ const setTempLimitValue = () => {
 const setTimeLimitValue = () => {
   if (isNumeric(timeLimitRef, "bitte Zeit in minuten eingeben!!")) {
     transmit("api/timeLimitValue", timeLimitRef.value);
-    console.log(timeLimitRef.value);
     currentTimeLimitRef.value = timeLimitRef.value + "min";
   }
 };
@@ -301,7 +299,6 @@ const setEmailAdresse = () => {
     isEmail(setEmailAdresseRef, "bitte eine gültige Emailadresse eingeben!!")
   ) {
     transmit("api/mailAdressRecipient", emailadresseRef.value);
-    console.log(setEmailAdresseRef.value);
     emailadresseRef.value = setEmailAdresseRef.value;
   }
 };

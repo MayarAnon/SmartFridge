@@ -7,7 +7,8 @@
   "lastDeleteHistory": "28.1.2023, 20:48:26",
   "tempLimitValue": "123.0",
   "timeLimitValue": "12",
-  "timeIntervallDefault": "10",
+  "timeIntervalDefault": "10",
+  "metricsPeriod": "1",
   "loginDataDatabase": {
     "host": "127.0.0.1",
     "user": "root",
@@ -22,6 +23,25 @@
       "timeLimitValue",
       "tempLimitValue"
     ]
+  },
+  "alertService": {
+    "clientId": "AlertService",
+    "relaventTopics": {
+      "alertTempLimit": "alertTempLimit",
+      "alertTimeLimit": "alertTimeLimit",
+      "deleteHistory": "deleteHistory",
+      "doorState": "doorState",
+      "timeLimitValue": "timeLimitValue",
+      "tempLimitValue": "tempLimitValue",
+      "tempInside": "tempInside"
+    }
+  },
+  "WS-Interface": {
+    "clientId": "WS-Interface",
+    "relaventTopics": {
+      "doorState": "doorState",
+      "timeInterval": "timeInterval"
+    }
   },
   "mqttClient": {
     "brokerHostUrl": "tcp://localhost:1883",

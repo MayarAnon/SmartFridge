@@ -1,15 +1,7 @@
 // Die Klasse Alert ist zuständig für das Auslösen der Alarme
 const alertLog = require("./AlertLog");
-
-const topics = {
-  alertTempLimit: "alertTempLimit",
-  alertTimeLimit: "alertTimeLimit",
-  deleteHistory: "deleteHistory",
-  doorState: "doorState",
-  timeLimitValue: "timeLimitValue",
-  tempLimitValue: "tempLimitValue",
-  tempInside: "tempInside",
-};
+const configManager = new (require("../Configmanager/config"))();
+const topics = configManager.get('alertService:relaventTopics');
 //Die Klasse analysiert die Daten vom MQTT-Broker und löst Alarme aus, falls Limits überschritten wurden
 //Der Alert-service-MQTT-Client muss übergeben werden
 class Alert {

@@ -1,11 +1,15 @@
+//Die Klasse WS stellt das Websocket dar, wenn die Klasse benutzt wird, wird ein WS erstellt und wird darüber die Echtdaten mit
+//der Methode sendRealTimeData an alle WS-clients geschickt.
+//Echtzeitdaten: Systemzeit, aktuelle tempInside, aktuelle doorstate und Min,Max und Avg 
+
 const WebSocket = require("ws");
 const dbConn = require("./WSDB");
 const config = new (require("../Configmanager/config"))();
 const MQTT = require("../mqttClient/mqttClient");
 const webServerHost = config.get("webServerHost");
 const webSocketPort = config.get("webSocketPort");
-const sendIntervallforSystemtime = 1000; // in ms
-let sendIntervallforDBData = Number(config.get("timeIntervallDefault")); //in ms
+const sendIntervalforSystemtime = 1000; // in ms
+let sendIntervalforDBData = Number(config.get("timeIntervalDefault")); //in ms
 
 class WS {
   constructor(webServer) {
@@ -13,10 +17,7 @@ class WS {
       WS.instance = this;
     }
 
-    this.topicList = {
-      doorState: "doorState",
-      timeIntervall: "timeIntervall",
-    };
+    this.topicList = config.get('WS-Interface:relaventTopics');;
 
     this.#creatWebsocketServer(webServer);
     return WS.instance;
@@ -64,7 +65,6 @@ class WS {
   //Rückgabe ist die TimerID, die z.B. gebraucht wird um den Timer zu stoppen
   #startInterval(_interval) {
     const dbMethodes = new dbConn();
-    // Store the id of the interval so we can clear it later
     return setInterval(async () => {
       const latestRow = await dbMethodes.sendLatestRow();
       const metrics = await dbMethodes.sendMetrics();
@@ -81,23 +81,23 @@ class WS {
     mqttClient.subscribe(topics);
 
     try {
-      var dbRetrievalLoop = this.#startInterval(sendIntervallforDBData);
+      var dbRetrievalLoop = this.#startInterval(sendIntervalforDBData);
       mqttClient.on("message", (topic, message) => {
-        if (topic == "timeIntervall") {
-          sendIntervallforDBData = Number(message.toString());
+        if (topic == "timeInterval") {
+          sendIntervalforDBData = Number(message.toString());
           //Der Alte Timer stoppen und einen neuen mit dem aktuellen Interval starten
           clearInterval(Number(dbRetrievalLoop));
-          dbRetrievalLoop = this.#startInterval(sendIntervallforDBData);
+          dbRetrievalLoop = this.#startInterval(sendIntervalforDBData);
         }
 
         if (topic == "doorState") {
           this.sendMessage("DoorState", message.toString());
         }
       });
-
+      // Eine Schleife die die Systemzeit mit dem Interval sendIntervalforSystemtime sendet 
       setInterval(() => {
         this.sendMessage("SystemTime", new Date());
-      }, sendIntervallforSystemtime);
+      }, sendIntervalforSystemtime);
     } catch (err) {
       this.handleError(err);
     }
