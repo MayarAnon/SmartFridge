@@ -1,21 +1,33 @@
+//smartfridge von HaRoMa
+
 const express = require('express')
 const http = require("http");
 const webSocket = require('../WS-Interface/WS')
 
-class webServer
+
+//Erstellt einen Webserver auf Basis von http
+//Erstellen von Websocket Server
+class WebServer
 {
     constructor()
     {
-        if(!webServer.instance){
-            webServer.instance = this;
+        //Sicherstellen das es nur eine Instanz gibt
+
+        if(!WebServer.instance)
+        {
+            WebServer.instance = this;
         }
+
         this.app = this.#setupServer()
         this.#setupRouters()
 
         
-        return webServer.instance
+        return WebServer.instance
     }
 
+    //erstellen Webserver und Websocket-Server
+    //Parameter: keine
+    //return: applikation als Objekt 
     #setupServer()
     {
         try
@@ -26,12 +38,12 @@ class webServer
 
             //festlegen auf welchem Port die Applikation funktionieren soll 
 
-            app.listen(3000)
+            app.listen(80)
 
             //Server erstellen
 
             const webServer = http.createServer(app); 
-        
+            
             //WebSocket starten 
 
             const socket = webSocket(webServer);
@@ -43,7 +55,9 @@ class webServer
     
         
     }
-
+    //Aufsetzen der Router, umleitung der Request auf die Router
+    //Parameter:keine
+    //return: kein
     #setupRouters()
     {
         try{
@@ -61,4 +75,4 @@ class webServer
     }
 }
 
-const instance = new webServer()
+const startWebServer = new WebServer()

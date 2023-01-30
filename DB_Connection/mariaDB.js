@@ -1,3 +1,5 @@
+//smartfridge von HaRoMa
+//Stellt eine Klasse welche eine Verbindung zur Datenbank aufbaut und eine Möglichkeit bietet mit dieser zu interagieren 
 
 const mariadb = require('mariadb');
 const config = new (require('../Configmanager/config'))()
@@ -7,9 +9,9 @@ const config = new (require('../Configmanager/config'))()
 // Klasse für die Verbindung mit der Datenbank mariaDB
 // Stellt sicher, dass nur eine Verbindung pro Service existiert
 // Stellt sicher, dass die Verbindung aufrecht erhalten wird
-//Parameter: loginDaten als Objekt 
+// Parameter: keine  
 
-class dbConnection
+class DbConnection
 {
     //Initalisiert das Objekt 
     //Stellt sicher das nur ein Objekt existiert in einem Service
@@ -28,7 +30,7 @@ class dbConnection
 
     //Verbindet mit Datenbank + schaut das nur eine Verbindung besteht
     //Parameter: keine
-    //Rückgabewert: Verbindung zur Datenbank
+    //return: Verbindung zur Datenbank
     
     async #reconnect()
     {
@@ -52,14 +54,13 @@ class dbConnection
         
     }
 
-    //Ermöglicht die Kommunikation mit der Datenbank über SQL
-    //Parameter: SQL Befehl als string
-    //return: die Ergebnisse aus der Datenbank als Objekt mit Meta-Daten
-
+    //Stellt sicher, das die Tabelle in der Datenbank existiert, wenn nicht wird diese angelegt
+    //Parameter: keine
+    //return: kein
 
     async #checkTableExistance(){
         const sqlCommand = 
-            `CREATE TABLE IF NOT EXISTS messergebnisse1 
+            `CREATE TABLE IF NOT EXISTS messergebnisse 
             (
             ID int NOT NULL AUTO_INCREMENT,
             Messwert decimal(3,1) NOT NULL,
@@ -69,6 +70,10 @@ class dbConnection
 
         await this.connection.query(sqlCommand)
     }
+
+    //Ermöglicht die Kommunikation mit der Datenbank über SQL
+    //Parameter: SQL Befehl als string
+    //return: die Ergebnisse aus der Datenbank als Objekt mit Meta-Daten
     
     async query(sqlCommand)
     {
@@ -86,10 +91,6 @@ class dbConnection
             await this.#reconnect()
 
         }
-
-        
-
-        
 
         // SQL Befehl senden und mögliche Antwort speicher
 
@@ -117,7 +118,7 @@ class dbConnection
 }
 
 
-module.exports = dbConnection
+module.exports = DbConnection
 
 
 
