@@ -1,48 +1,54 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-red.min.css" />
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!--responsive (Elemente können sich der Bildschirmgröße anpassen)-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="styleSettings.css">
+  <!--Stylesheets und JavaScript, um die MDL-Elemente verwenden zu können-->
+  <link rel="stylesheet" href="mdl/material.min.css">
+  <script src="mdl/material.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <title>Einstellungen</title>
 </head>
 <body>
-  <!--ausklappbare Navigationsleiste mit dauerhaftem oberem Rand-->
-  <!-- Always shows a header, even in smaller screens. -->
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <!--Fixierte Kopfzeile mit Navigationsleiste und ausklappbarem Navigationsmenü-->
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
       <div class="mdl-layout__header-row">
-        <!-- Title -->
-        <span class="mdl-layout-title"><h5>Smart Fridge <p>Einstellungen</p></h5></span>
-        <!-- Add spacer, to align navigation to the right -->
+        <span class="mdl-layout-title">
+          <h5>Smart Fridge <p>Einstellungen</p>
+          </h5>
+        </span>
+        <!--Platzhalter, damit die Navigationsleiste rechts ist-->
         <div class="mdl-layout-spacer"></div>
-        <!-- Navigation. We hide it in small screens. -->
-        <!--<nav class="mdl-navigation mdl-layout--large-screen-only">
-          <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="">Link</a>
-        </nav> -->
+        <!--Navigationsleiste oben rechts (wird auf kleinen Displays nicht angezeigt)-->
+        <nav class="mdl-navigation mdl-layout--large-screen-only">
+          <a class="mdl-navigation__link" id="startSeite" href="Startseite.html">Startseite</a>
+          <a class="mdl-navigation__link" id="kameraSeite" href="Kamera.html">Kamera</a>
+          <a class="mdl-navigation__link" id="monitoringSeite" href="Monitoring.html">Monitoring</a>
+          <a class="mdl-navigation__link" id="einstellungenSeite" href="Einstellungen.html">Einstellungen</a>
+        </nav>
       </div>
     </header>
+    <!--Ausklappbares Navigationsmenü-->
     <div class="mdl-layout__drawer">
-      <span class="mdl-layout-title">Menü </span>
+      <span class="mdl-layout-title">Menü</span>
       <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" id="startSeite" href="">Startseite</a>
-        <a class="mdl-navigation__link" id="kameraSeite" href="">Kamera</a>
-        <a class="mdl-navigation__link" id="monitoringSeite" href="">Monitoring</a>
-        <a class="mdl-navigation__link" id="einstellungenSeite" href="">Einstellungen</a>
+        <a class="mdl-navigation__link" id="startSeite" href="Startseite.html">Startseite</a>
+        <a class="mdl-navigation__link" id="kameraSeite" href="Kamera.html">Kamera</a>
+        <a class="mdl-navigation__link" id="monitoringSeite" href="Monitoring.html">Monitoring</a>
+        <a class="mdl-navigation__link" id="einstellungenSeite" href="Einstellungen.html">Einstellungen</a>
       </nav>
     </div>
     <main class="mdl-layout__content">
       <div class="page-content">
         <!-- Hier kommt der Inhalt der Seite hin-->
         <!--Speicherintervall auswählen-->
-        <div>
-          <p>Speicherintervall wählen</p>
+        <div class="parent">
+          <div class="child">
+            <p>Speicherintervall wählen</p>
             <button class="mdl-button mdl-js-button mdl-button--primary" id="1sButtonSpeicher">
               1 s
             </button>
@@ -68,40 +74,40 @@
               2 h
             </button>
             <button class="mdl-button mdl-js-button mdl-button--primary" id="4hButtonSpeicher">
-              4 h 
+              4 h
             </button>
             <button class="mdl-button mdl-js-button mdl-button--primary" id="6hButtonSpeicher">
               6 h
             </button>
           </div>
-        <!--Temperaturschwellwert anzeigen und Eingabefeld-->
-        <div>
+          <!--Temperaturschwellwert anzeigen und Eingabefeld-->
+          <div class="child">
             <p>Temperaturschwellwert</p>
-            <p>Aktuell: 
-                <form action="#">
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <p>Aktuell:
+            <form action="#">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="tempMax">
                 <label class="mdl-textfield__label" for="sample4">Eingabe:</label>
                 <span class="mdl-textfield__error">Input is not a number!</span>
-                </div>
-                </form> 
+              </div>
+            </form>
             </p>
-        </div>
-        <!--maximale Öffnungszeit anzeigen und Eingabefeld-->
-        <div>
+          </div>
+          <!--maximale Öffnungszeit anzeigen und Eingabefeld-->
+          <div class="child">
             <p>maximale Öffnungszeit</p>
-            <p>Aktuell:</p> 
-                <form action="#">
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <p>Aktuell:</p>
+            <form action="#">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="timeMax">
                 <label class="mdl-textfield__label" for="sample4">Eingabe:</label>
                 <span class="mdl-textfield__error">Input is not a number!</span>
-                </div>
-                </form>  
-        </div>
-        <!--Intervall Diagramm auswählen-->
-        <div>
-          <p>Intervall für das Diagramm wählen</p>
+              </div>
+            </form>
+          </div>
+          <!--Intervall Diagramm auswählen-->
+          <div class="child">
+            <p>Intervall für das Diagramm wählen</p>
             <button class="mdl-button mdl-js-button mdl-button--primary" id="1sButtonDiagramm">
               1 s
             </button>
@@ -127,43 +133,45 @@
               2 h
             </button>
             <button class="mdl-button mdl-js-button mdl-button--primary" id="4hButtonDiagramm">
-              4 h 
+              4 h
             </button>
             <button class="mdl-button mdl-js-button mdl-button--primary" id="6hButtonDiagramm">
               6 h
             </button>
-        </div>
-        <!--Datenbankeinträge löschen-->
-        <div>
-          <p>Datenbankeinträge löschen</p>
-          <p>letzte Löschung: DATUM</p>
-        <!-- Accent-colored raised button -->
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="datenbankLöschen">
-        löschen
-        </button>
-        </div>
-        <!--Event-E-Mail-Adresse-->
-        <div>
-          <p>Event-E-Mail-Adresse</p>
-          <p>Aktuell: E-MAIL
+          </div>
+          <!--Datenbankeinträge löschen-->
+          <div class="child">
+            <p>Datenbankeinträge löschen</p>
+            <p>letzte Löschung: DATUM</p>
+            <!-- Accent-colored raised button -->
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="datenbankLöschen">
+              löschen
+            </button>
+          </div>
+          <!--Event-E-Mail-Adresse-->
+          <div class="child">
+            <p>Event-E-Mail-Adresse</p>
+            <p>Aktuell: E-MAIL
             <form action="#">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="tempMax">
-            <label class="mdl-textfield__label" for="sample4">Eingabe:</label>
-            <span class="mdl-textfield__error">Input is not a number!</span>
-            </div>
-            </form> 
-          </p>
-        </div>
-        <div>
-          <p>Benachrichtigungsverlauf herunterladen</p>
-          <!-- Accent-colored raised button -->
-          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="datenbankLöschen">
-          jetzt herunterladen
-          </button>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="tempMax">
+                <label class="mdl-textfield__label" for="sample4">Eingabe:</label>
+                <span class="mdl-textfield__error">Input is not a number!</span>
+              </div>
+            </form>
+            </p>
+          </div>
+          <div class="child">
+            <p>Benachrichtigungsverlauf herunterladen</p>
+            <!-- Accent-colored raised button -->
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="datenbankLöschen">
+              jetzt herunterladen
+            </button>
+          </div>
         </div>
       </div>
     </main>
   </div>
 </body>
+
 </html>
