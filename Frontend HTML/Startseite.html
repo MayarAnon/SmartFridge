@@ -1,37 +1,38 @@
-<!--Der Graph für den zeitlichen Verlauf fehlt noch-->
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!--responsive (Elemente können sich der Bildschirmgröße anpassen)-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="styleStart.css">
+  <!--Stylesheets und JavaScript, um die MDL-Elemente verwenden zu können-->
+  <link rel="stylesheet" href="mdl/material.min.css">
+  <script src="mdl/material.min.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-  <title>Startseite</title>
+  <title>Startseite</title>  
 </head>
 
 <body>
-  <!--ausklappbare Navigationsleiste mit dauerhaftem oberem Rand-->
-  <!-- Always shows a header, even in smaller screens. -->
+<!--Fixierte Kopfzeile mit Navigationsleiste und ausklappbarem Navigationsmenü-->
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
-      <!-- Title -->
-      <span class="mdl-layout-title"><h5>Smart Fridge <p>Startseite</p></h5>  </span>
-      <!-- Add spacer, to align navigation to the right -->
+      <span class="mdl-layout-title"><h5>Smart Fridge <p>Startseite</p></h5></span>
+      <!--Platzhalter, damit die Navigationsleiste rechts ist-->
       <div class="mdl-layout-spacer"></div>
-      <!-- Navigation. We hide it in small screens. -->
-      <!--<nav class="mdl-navigation mdl-layout--large-screen-only">
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-      </nav> -->
+      <!--Navigationsleiste oben rechts (wird auf kleinen Displays nicht angezeigt)-->
+      <nav class="mdl-navigation mdl-layout--large-screen-only">
+        <a class="mdl-navigation__link" id="startSeite" href="Startseite.html">Startseite</a>
+        <a class="mdl-navigation__link" id="kameraSeite" href="Kamera.html">Kamera</a>
+        <a class="mdl-navigation__link" id="monitoringSeite" href="Monitoring.html">Monitoring</a>
+        <a class="mdl-navigation__link" id="einstellungenSeite" href="Einstellungen.html">Einstellungen</a>
+      </nav>
     </div>
   </header>
+  <!--Ausklappbares Navigationsmenü-->
   <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">Menü </span>
+    <span class="mdl-layout-title">Menü</span>
     <nav class="mdl-navigation">
       <a class="mdl-navigation__link" id="startSeite" href="Startseite.html">Startseite</a>
       <a class="mdl-navigation__link" id="kameraSeite" href="Kamera.html">Kamera</a>
@@ -41,72 +42,44 @@
   </div>
   <main class="mdl-layout__content">
     <div class="page-content">
-      <table>
-        <img src="kamerabild.jpg" height="400" width="300">
-      </table>
-
-      <!--Liste der aktuellen Daten -->
-    <style>
-    .demo-list-item {
-    width: 300px;
-    }
-    </style>
-
-    <table>
-    <ul class="demo-list-item mdl-list">
-    <li class="mdl-list__item">
-      <span class="mdl-list__item-primary-content">
-          Zustand:
-      </span>
-    </li>
-    <li class="mdl-list__item">
-      <span class="mdl-list__item-primary-content">
-        Raumtemperatur
-      </span>
-    </li>
-    <li class="mdl-list__item">
-      <span class="mdl-list__item-primary-content">
-        Kühlschranktemperatur:
-      </span>
-      <li class="mdl-list__item">
-        <span class="mdl-list__item-primary-content">
-          Maximum 
-        </span>
-      </li>
-      <li class="mdl-list__item">
-        <span class="mdl-list__item-primary-content">
-          Minimum: 
-        </span>
-      </li>
-      <li class="mdl-list__item">
-        <span class="mdl-list__item-primary-content">
-          Mittelwert: 
-        </span>
-      </li>
-    </li>
-    </ul>
-    </table>
+    <div class="parent" >  
+      <!--<div class="child" style="background-color: royalblue;">-->
+        <img src="kamerabild.jpg" style="height:100%; width: auto;">
+      <!--</div>-->
       
-      <!-- Hier kommt der Inhalt der Seite hin-->
-      <style>
-        .footer{
-        width: 100vw;
-        height: 10vh;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        
-        font-size: 2em;
-        font-family: sans-serif;
-        text-align: center;
-}
-      </style>
+      <!--Tabelle der aktuellen Daten -->
+      <div class="child" style="background-color: red;">
+        <div class="gridContainer">
+          <div class="gridItem">Zustand <p id="zustand"></p></div>
+          <div class="gridItem">Raumtemperatur <p id="raumtemperatur"></p></div>
+          <div class="gridItem">Kühlschranktemperatur <p id="kühlschranktemperatur"></p></div>
+          <div class="gridItem">Maximum <p id="maximum"></p></div>
+          <div class="gridItem">Minimum  <p id="minimum"></p></div>
+          <div class="gridItem">Mittelwert <p id="mittelwert"></p></div>
+        </div>
       </div>
-      <div class="footer">
-        Version 0.9 SmartFridge DATUM&UHRZEIT</div>
-    <
+    </div>
+      <!--Your content goes here--> 
+      <div id = "footer">
+        <div style="display: flex; justify-content: space-between;">
+          <div>Team: SmartFridge</div>
+          <div>Version: 0.9</div>
+          <div style="text-align: right;">Testuhrzeit und Datum</div>
+        </div>
+      </div>
+      <!--<footer>
+        <div class="footerLinks">
+          <ul class="mdl-mini-footer__link-list">
+            <li>Smart Fridge</li>
+            <li>Version: 0.9</li>
+          </ul>
+        </div>
+        <div id="dateAndTime">
+          <p>Testuhrzeit und Datum </p>
+        </div>
+      </footer>-->
+    </div>
   </main>
 </div>
-
 </body>
 </html>

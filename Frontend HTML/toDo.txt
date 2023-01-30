@@ -3,3 +3,79 @@ zum Beispiel bei den Zuständen auf der Startseite
 
 Footer
 
+<!--ausklappbare Navigationsleiste mit dauerhaftem oberem Rand-->
+  <!-- Always shows a header, even in smaller screens. -->
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <!-- Title -->
+        <span class="mdl-layout-title"><h5>Smart Fridge <p>Startseite</p></h5>  </span>
+        <!-- Add spacer, to align navigation to the right -->
+        <div class="mdl-layout-spacer"></div>
+        <!-- Navigation. We hide it in small screens. -->
+        <!--<nav class="mdl-navigation mdl-layout--large-screen-only">
+          <a class="mdl-navigation__link" href="">Link</a>
+          <a class="mdl-navigation__link" href="">Link</a>
+          <a class="mdl-navigation__link" href="">Link</a>
+          <a class="mdl-navigation__link" href="">Link</a>
+        </nav> -->
+      </div>
+    </header>
+    <div class="mdl-layout__drawer">
+      <span class="mdl-layout-title">Menü </span>
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" id="startSeite" href="Startseite.html">Startseite</a>
+        <a class="mdl-navigation__link" id="kameraSeite" href="Kamera.html">Kamera</a>
+        <a class="mdl-navigation__link" id="monitoringSeite" href="Monitoring.html">Monitoring</a>
+        <a class="mdl-navigation__link" id="einstellungenSeite" href="Einstellungen.html">Einstellungen</a>
+      </nav>
+    </div>
+    <main class="mdl-layout__content">
+      <div class="page-content">
+      <table>
+        <img src="kamerabild.jpg" style="max-width:40%;height:auto;">
+      </table>
+  
+      <!--Tabelle der aktuellen Daten -->
+      <table>
+        <tr>
+          <th>Echtzeitdaten</th> 
+        </tr>
+        <tr>
+          <td>Zustand:</td> 
+        </tr>
+        <tr>
+          <td>Raumtemperatur:</td>
+        </tr>
+        <tr>
+          <td>Kühlschranktemperatur:</td>
+        </tr>
+        <tr>
+          <td>Maximum:</td>
+        </tr>
+        <tr>
+          <td>Minimum:</td>
+        </tr>
+        <tr>
+          <td>Mittelwert:</td>
+        </tr>
+      </table>
+        <!-- Hier kommt der Inhalt der Seite hin-->
+        <!--<style>
+          .footer{
+          width: 100vw;
+          height: 10vh;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          
+          font-size: 2em;
+          font-family: sans-serif;
+          text-align: center;
+  }
+        </style>
+        </div>
+        <div class="footer">
+          Version 0.9 SmartFridge DATUM&UHRZEIT</div> -->
+    </main>
+  </div>
