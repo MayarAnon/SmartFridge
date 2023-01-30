@@ -7,7 +7,11 @@
   "lastDeleteHistory": "28.1.2023, 20:48:26",
   "tempLimitValue": "123.0",
   "timeLimitValue": "12",
-  "timeIntervallDefault": "10",
+  "timeIntervalDefault": "10",
+  "mailSender": {
+    "sender": "smartfridge@gmx.net",
+    "mailPassword": "SmarterKuhlschrank123"
+  },
   "loginDataDatabase": {
     "host": "127.0.0.1",
     "user": "root",
