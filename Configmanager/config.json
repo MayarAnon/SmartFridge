@@ -9,6 +9,10 @@
   "timeLimitValue": "12",
   "timeIntervalDefault": "10",
   "metricsPeriod": "1",
+  "mailSender": {
+    "sender": "smartfridge@gmx.net",
+    "mailPassword": "SmarterKuhlschrank123"
+  },
   "loginDataDatabase": {
     "host": "127.0.0.1",
     "user": "root",

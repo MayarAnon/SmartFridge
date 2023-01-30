@@ -1,3 +1,5 @@
+//smartfridge von HaRoMa
+//Stellt eine Klasse welche eine Verbindung zur Datenbank aufbaut und eine Möglichkeit bietet mit dieser zu interagieren 
 
 const mariadb = require('mariadb');
 const config = new (require('../Configmanager/config'))()
@@ -7,9 +9,9 @@ const config = new (require('../Configmanager/config'))()
 // Klasse für die Verbindung mit der Datenbank mariaDB
 // Stellt sicher, dass nur eine Verbindung pro Service existiert
 // Stellt sicher, dass die Verbindung aufrecht erhalten wird
-//Parameter: loginDaten als Objekt 
+// Parameter: keine  
 
-class dbConnection
+class DbConnection
 {
     //Initalisiert das Objekt 
     //Stellt sicher das nur ein Objekt existiert in einem Service
@@ -17,37 +19,56 @@ class dbConnection
     
     constructor()
     {
-        //if (!dbConnection.instance) 
-        //{
-        //    dbConnection.instance = this
-        //}
-
-        
         
         this.loginData = config.get('loginDataDatabase')
         this.connection
         this.connectionCount = 0
 
-        //return dbConnection.instance
+        
         
     }
 
     //Verbindet mit Datenbank + schaut das nur eine Verbindung besteht
     //Parameter: keine
-    //Rückgabewert: Verbindung zur Datenbank
+    //return: Verbindung zur Datenbank
     
-    async reconnect()
+    async #reconnect()
     {
-        if(this.connectionCount == 0)
-        {
-            this.connection = await mariadb.createConnection(this.loginData)
-            if(this.connection.isValid){
-                this.connectionCount ++
+        try{
+            if(this.connectionCount == 0)
+            {
+                this.connection = await mariadb.createConnection(this.loginData)
+                if(this.connection.isValid)
+                {
+                    this.connectionCount ++
+                }
             }
+            this.#checkTableExistance()
+        }catch(error)
+        {
+            console.log(error)
         }
+        
         
         return this.connection 
         
+    }
+
+    //Stellt sicher, das die Tabelle in der Datenbank existiert, wenn nicht wird diese angelegt
+    //Parameter: keine
+    //return: kein
+
+    async #checkTableExistance(){
+        const sqlCommand = 
+            `CREATE TABLE IF NOT EXISTS messergebnisse 
+            (
+            ID int NOT NULL AUTO_INCREMENT,
+            Messwert decimal(3,1) NOT NULL,
+            nDtTm datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (ID)
+            ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`
+
+        await this.connection.query(sqlCommand)
     }
 
     //Ermöglicht die Kommunikation mit der Datenbank über SQL
@@ -60,14 +81,14 @@ class dbConnection
         
         if(this.connectionCount == 0)
         {
-            await this.reconnect()
+            await this.#reconnect()
         }
         //Prüfen ob die Verbindung in Ordnung ist
         
         if(!this.connection.isValid())
         {
             this.connectionCount --
-            await this.reconnect()
+            await this.#reconnect()
 
         }
 
@@ -97,7 +118,7 @@ class dbConnection
 }
 
 
-module.exports = dbConnection
+module.exports = DbConnection
 
 
 
@@ -161,3 +182,11 @@ async function nameOfFunctionTwo()
 //nameOfFunctionTwo()
 */
 
+
+
+// `CREATE TABLE IF NOT EXISTS messergebnisse (
+//      ID int NOT NULL AUTO_INCREMENT,
+//      Messwert decimal(3,1) NOT NULL,
+//      nDtTm datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+//      PRIMARY KEY (ID)
+//     ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`

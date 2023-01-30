@@ -1,15 +1,18 @@
+//smartfridge von HaRoMa
+//Stellt einen mqtt Client welcher sich mit dem Broker verbindet
+
 const mqtt = require("async-mqtt")
 const config = new (require('../Configmanager/config'))()
 
  //Klasse für die erstellung einer MQTT Verbindung gibt eine MQTT-Client zurück mit allen funktionen von async Mqtt
  //Vorteile: nur eine Instance pro Service, Eine Verbindung, Automatisches Reconnecten, automatische Sicherheit
+ //Parameter: den Namen des Services
+ //return: mqttClient Verbindung als Promise
 class mqttClient
 {
     constructor(serviceName)
     {
-        //Sicherstellen, dass nur eine Verbindung besteht 
-        
-
+       
         //Optionen der Verbindung deklarieren
 
         this.brokerHostUrl = config.get('mqttClient:brokerHostUrl')
@@ -32,12 +35,14 @@ class mqttClient
         return this.#connection()
     }
 
+    //Baut eine Verbindung zum MQTT Broker auf Bib sorgt intern für den Erhalt der Verbindung
+    //Parameter: keine
+    //return: mqttClient als Promise
     async #connection(){
-        //Versuch Verbindungsaufbau
-
+        
         try
         {
-            this.client = await mqtt.connectAsync(this.brokerHostUrl,this.options);
+            this.client = await mqtt.connectAsync(this.brokerHostUrl,this.options)
         }catch(error)
         {
             console.log(error)
@@ -56,7 +61,7 @@ class mqttClient
 
 
 
-module.exports = mqttClient;
+module.exports = mqttClient
 
 
 

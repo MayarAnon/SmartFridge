@@ -1,3 +1,6 @@
+//smartfridge von HaRoMa
+//Erstellt einen Express Router welcher alle Post und get request verarbeitet
+
 const config = new(require('../../Configmanager/config'))()
 const express = require('express')
 const path = require('path')
@@ -5,14 +8,19 @@ const mqtt = require('../../mqttClient/mqttClient')
 const emailValidation = require('email-validator')
 const dbConnection = new(require('../../DB_Connection/mariaDB'))()
 
+//Verarbeitung aller Post und get requests
+//Parameter: keine
+//return: instance der RestAPI
 
-class restAPI
+class RestAPI
 {
-    constructor(){
-         
-        if(!restAPI.instance)
+    constructor()
+    {
+        // Sicherstellen das es nur eine Instance gibt der Klasse
+
+        if(!RestAPI.instance)
         {
-            restAPI.instance = this
+            RestAPI.instance = this
         }
 
         //Router erstellen(Miniapplikation)
@@ -25,29 +33,36 @@ class restAPI
 
         //Erfassen des Userinputs
 
-        this.restRouter.use(express.json()); // Ermöglicht das Auslesen von JSON-Daten aus dem Request-Body
+        this.restRouter.use(express.json()) // Ermöglicht das Auslesen von JSON-Daten aus dem Request-Body
         
-
         this.distributor()
+
         return this.restRouter
     }
 
     
     
-
-    async distributor(){
+    //Verteilt die Endpunkte auf die verschienen Funktionen
+    //Parameter: keine
+    //return: kein
+    async distributor()
+    {
         
         this.mqtt = await new mqtt("Restful_Schnittstelle")
-        //maybe später mit Map und for each umsetzen 
-        this.restRouter.post('/timeIntervall',this.timeIntervallEndpoint.bind(this))
+       
+        this.restRouter.post('/timeIntervall',this.timeIntervallEndpoint.bind(this)) // Bindet den Wert von "this" auf die aktuelle Instanz des Objekts, um sicherzustellen, dass die Methode "this.timeIntervallEndpoint" innerhalb des Callbacks korrekt aufgerufen wird.
         this.restRouter.post('/deleteHistory',this.deleteHistoryEndpoint.bind(this))
         this.restRouter.post('/tempLimitValue',this.tempLimitValueEndpoint.bind(this))
         this.restRouter.post('/timeLimitValue',this.timeLimitValueEndpoint.bind(this))
         this.restRouter.post('/mailAdressRecipient',this.mailAdressRecipientEndpoint.bind(this))
         this.restRouter.get('/tempHistory', this.tempHistroyEndpoint)
         this.restRouter.get('/downloadLog',this.downloadLogEndpoint)
+        this.restRouter.get('/initialValues',this.initialValuesEndpoint)
     }
 
+    //Endpunt timeIntervall, checkt auf eine Valide eingabe und published dann unter dem Topic
+    //Prameter: das request und response Objekt 
+    //return: kein
     async timeIntervallEndpoint(req , res)
     {
         
@@ -75,7 +90,9 @@ class restAPI
         }
         
     }
-
+    //Endpunt delteHistory, checkt auf eine Valide eingabe und published dann unter dem Topic
+    //Prameter: das request und response Objekt 
+    //return: kein
     async deleteHistoryEndpoint(req , res)
     {
         try
@@ -95,7 +112,9 @@ class restAPI
         }
         
     }
-    
+    //Endpunt delteHistory, checkt auf eine Valide eingabe und published dann unter dem Topic
+    //Prameter: das request und response Objekt 
+    //return: kein
     async tempLimitValueEndpoint(req,res)
     {
         try
@@ -121,7 +140,9 @@ class restAPI
         }
         
     }
-
+    //Endpunt delteHistory, checkt auf eine Valide eingabe und published dann unter dem Topic
+    //Prameter: das request und response Objekt 
+    //return: kein
     async timeLimitValueEndpoint(req,res)
     {
         try
@@ -147,6 +168,9 @@ class restAPI
         
     }
 
+    //Endpunt mailAddressRecipient, checkt auf eine Valide eingabe und published dann unter dem Topic
+    //Prameter: das request und response Objekt 
+    //return: kein
     async mailAdressRecipientEndpoint(req,res)
     {
         try
@@ -167,6 +191,9 @@ class restAPI
 
     }
 
+    //Endpunt tempHistory, hohlt gesamte daten aus der Datenbank und stellt sie dann unter dem Endpunkt als Objekt zur verfügung
+    //Prameter: das request und response Objekt 
+    //return: kein
     async tempHistroyEndpoint(req,res)
     {
         
@@ -196,6 +223,9 @@ class restAPI
         res.send(sqlResult);
     }
 
+    //Endpunt downloadLog, stellt die Log datei als download unter dem Endpuntk zur Verfügung
+    //Prameter: das request und response Objekt 
+    //return: kein
     downloadLogEndpoint(req,res)
     {
         
@@ -206,9 +236,24 @@ class restAPI
         
     }
 
+    //Endpunt intitialValues, lädt Werte aus der Config und stellt sie als String Objekt unter dem Endpunkt zur Verfügung
+    //Prameter: das request und response Objekt 
+    //return: kein
+    initialValuesEndpoint(req,res){
+        const dataObjekt = {
+            mailAdressRecipient : config.get('mailAdressRecipient'),
+            lastDeleteHistory: config.get('lastDeleteHistory'),
+            tempLimitValue: config.get('tempLimitValue'),
+            timeLimitValue: config.get('timeLimitValue')
+        }
+        
+        
+        res.send(JSON.stringify(dataObjekt))
+    }
+
 
 
 }
 
 
-module.exports = restAPI
+module.exports = RestAPI

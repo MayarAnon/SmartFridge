@@ -1,17 +1,23 @@
+//smartfridge von HaRoMa
+//Datei sorgt für Änderung der Config Datei bei tätigung einer Einstellungen auf der Weboberfläche
+
 const mqtt = require('../mqttClient/mqttClient')
 const config = require('./config')
 const nconf = require("nconf")
 const fs = require("fs")
 
-
-class configManager extends config{
-    constructor(){
+//ConfigManager ist dafür zuständig Informationen über eine Webbroser Client hinweg zu speichern und zu laden
+class configManager extends config
+{
+    constructor()
+    {
         
         //Konstruktor der ParentKlasse aufrufen 
         
         super()
 
         //Sicherstellen das es nur eine Instanze von configmanager gibt
+
         if(!configManager.instance)
         {
             configManager.instance = this
@@ -25,6 +31,8 @@ class configManager extends config{
     }
 
     //Methode um relevante MQTT Nachrichten zu handeln
+    //Parameter : keine 
+    //Return : keine 
     async #mqttListener()
     {
         try 
@@ -41,19 +49,19 @@ class configManager extends config{
             console.log(error) 
         }
 
+        // wird aufgerufen bei Nachrichten auf relevanten Topics
+
         this.mqttClient.on('message', (topic, message) => 
         {
-            //Nachricht in die Config datei Speichern
-            //relevaten Topics sind mailAdressRecipient und deleteHistory
             
-            //handel deleteHistroy
+            //Verarbeitung der Relevanten Topics
             
             if(topic == "deleteHistory" && message == "true")
             {
-                //Aktuelles Datum hohlen 
-                let date = new Date().toLocaleString('de-DE')
-                //In Datenbank speichern 
-                this.#set("lastDeleteHistory",date)
+                
+                let date = new Date().toLocaleString('de-DE') //aktuelles Datum hohlen 
+
+                this.#set("lastDeleteHistory",date) //In Config speichern 
             }
 
             if(topic == "mailAdressRecipient")
@@ -74,6 +82,8 @@ class configManager extends config{
     }
 
     //Methode um den eine neuen Eintrag zu erstellen oder einen Eintrag zu aktualisieren 
+    //Parameter: key, value  unter dem key wird der value in der config abgespeichert
+    //Return: kein
     #set(key, value) 
     {
         
@@ -87,10 +97,12 @@ class configManager extends config{
         }
     }
 
-    //Methode um die aktullen Konfigurationen in der Datei zu speichern 
+    //Methode um die aktullen Konfigurationen in der config sichert
+    //Parameter : keine
+    //Return: kein
     #save() {
         try {
-            fs.writeFileSync(this.filePath, JSON.stringify(nconf.get(), null, 2))
+            fs.writeFileSync(this.filePath, JSON.stringify(nconf.get(), null, 2)) // null und 2 sind für die Formatierung
         } catch (error) {
             throw error
         }
