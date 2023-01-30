@@ -1,4 +1,3 @@
-<!--Der Graph für den zeitlichen Verlauf fehlt noch-->
 <!DOCTYPE html> 
 <html lang="en">
 <head>
@@ -6,10 +5,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!--responsive (Elemente können sich der Bildschirmgröße anpassen)-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="styleStart.css">
+  <!--Stylesheets und JavaScript, um die MDL-Elemente verwenden zu können-->
+  <link rel="stylesheet" href="mdl/material.min.css">
+  <script src="mdl/material.min.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-  <title>Startseite</title>
+  <title>Startseite</title>  
 </head>
 
 <body>
@@ -41,60 +42,42 @@
   </div>
   <main class="mdl-layout__content">
     <div class="page-content">
+    <div class="parent" >  
+      <!--<div class="child" style="background-color: royalblue;">-->
+        <img src="kamerabild.jpg" style="height:100%; width: auto;">
+      <!--</div>-->
       
-      <div>
-        <img src="kamerabild.jpg" style="max-width:40%;height:auto;">
-      </div>
-      
-  
       <!--Tabelle der aktuellen Daten -->
-      <table>
-        <tr>
-          <th>Echtzeitdaten</th> 
-        </tr>
-        <tr>
-          <td>Zustand:</td> 
-        </tr>
-        <tr>
-          <td>Raumtemperatur:</td>
-        </tr>
-        <tr>
-          <td>Kühlschranktemperatur:</td>
-        </tr>
-        <tr>
-          <td>Maximum:</td>
-        </tr>
-        <tr>
-          <td>Minimum:</td>
-        </tr>
-        <tr>
-          <td>Mittelwert:</td>
-        </tr>
-      </table>
-      
-      <style>
-        .mdl-mini-footer
-        {
-          width: 100%;
-          height: 5vh;
-          position: absolute;
-          bottom: 0;
-          left: 0;
-        }
-      </style>
-
+      <div class="child" style="background-color: red;">
+        <div class="gridContainer">
+          <div class="gridItem">Zustand <p id="zustand"></p></div>
+          <div class="gridItem">Raumtemperatur <p id="raumtemperatur"></p></div>
+          <div class="gridItem">Kühlschranktemperatur <p id="kühlschranktemperatur"></p></div>
+          <div class="gridItem">Maximum <p id="maximum"></p></div>
+          <div class="gridItem">Minimum  <p id="minimum"></p></div>
+          <div class="gridItem">Mittelwert <p id="mittelwert"></p></div>
+        </div>
+      </div>
+    </div>
       <!--Your content goes here--> 
-      <footer class="mdl-mini-footer">
-        <div class="mdl-mini-footer__left-section">
+      <div id = "footer">
+        <div style="display: flex; justify-content: space-between;">
+          <div>Team: SmartFridge</div>
+          <div>Version: 0.9</div>
+          <div style="text-align: right;">Testuhrzeit und Datum</div>
+        </div>
+      </div>
+      <!--<footer>
+        <div class="footerLinks">
           <ul class="mdl-mini-footer__link-list">
             <li>Smart Fridge</li>
             <li>Version: 0.9</li>
           </ul>
         </div>
-        <div class="mdl-mini-footer__right-section" id="dateAndTime">
+        <div id="dateAndTime">
           <p>Testuhrzeit und Datum </p>
         </div>
-      </footer>
+      </footer>-->
     </div>
   </main>
 </div>

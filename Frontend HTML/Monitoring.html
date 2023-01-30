@@ -1,43 +1,46 @@
 <!DOCTYPE html> 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!--responsive (Elemente können sich der Bildschirmgröße anpassen)-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <!--Stylesheets und JavaScript, um die MDL-Elemente verwenden zu können-->
+  <link rel="stylesheet" href="mdl/material.min.css">
+  <script src="mdl/material.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <title>Monitoring</title>
 </head>
 <body>
   <!--Fixierte Kopfzeile mit Navigationsleiste und ausklappbarem Navigationsmenü-->
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-  <header class="mdl-layout__header">
-    <div class="mdl-layout__header-row">
-      <span class="mdl-layout-title"><h5>Smart Fridge <p>Monitoring</p></h5></span>
-      <!--Platzhalter, damit die Navigationsleiste rechts ist-->
-      <div class="mdl-layout-spacer"></div>
-      <!--Navigationsleiste oben rechts (wird auf kleinen Displays nicht angezeigt)-->
-      <nav class="mdl-navigation mdl-layout--large-screen-only">
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title"><h5>Smart Fridge <p>Startseite</p></h5></span>
+        <!--Platzhalter, damit die Navigationsleiste rechts ist-->
+        <div class="mdl-layout-spacer"></div>
+        <!--Navigationsleiste oben rechts (wird auf kleinen Displays nicht angezeigt)-->
+        <nav class="mdl-navigation mdl-layout--large-screen-only">
+          <a class="mdl-navigation__link" id="startSeite" href="Startseite.html">Startseite</a>
+          <a class="mdl-navigation__link" id="kameraSeite" href="Kamera.html">Kamera</a>
+          <a class="mdl-navigation__link" id="monitoringSeite" href="Monitoring.html">Monitoring</a>
+          <a class="mdl-navigation__link" id="einstellungenSeite" href="Einstellungen.html">Einstellungen</a>
+        </nav>
+      </div>
+    </header>
+    <!--Ausklappbares Navigationsmenü-->
+    <div class="mdl-layout__drawer">
+      <span class="mdl-layout-title">Menü</span>
+      <nav class="mdl-navigation">
         <a class="mdl-navigation__link" id="startSeite" href="Startseite.html">Startseite</a>
         <a class="mdl-navigation__link" id="kameraSeite" href="Kamera.html">Kamera</a>
         <a class="mdl-navigation__link" id="monitoringSeite" href="Monitoring.html">Monitoring</a>
         <a class="mdl-navigation__link" id="einstellungenSeite" href="Einstellungen.html">Einstellungen</a>
       </nav>
     </div>
-  </header>
-  <!--Ausklappbares Navigationsmenü-->
-  <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">Menü</span>
-    <nav class="mdl-navigation">
-      <a class="mdl-navigation__link" id="startSeite" href="Startseite.html">Startseite</a>
-      <a class="mdl-navigation__link" id="kameraSeite" href="Kamera.html">Kamera</a>
-      <a class="mdl-navigation__link" id="monitoringSeite" href="Monitoring.html">Monitoring</a>
-      <a class="mdl-navigation__link" id="einstellungenSeite" href="Einstellungen.html">Einstellungen</a>
-    </nav>
-  </div>
-  <main class="mdl-layout__content">
-    <div class="page-content">
+    <main class="mdl-layout__content">
+      <div class="page-content">
         <!-- Hier kommt der Inhalt der Seite hin-->
         <div><p>Platzhalter für Graph</p></div>
         <table>
