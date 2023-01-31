@@ -1,8 +1,9 @@
 //smartfridge von HaRoMa
-
+//erstellt den Webserver und ruft mit ihm zudem den Websocket auf
 const express = require('express')
 const http = require("http");
 const webSocket = require('../WS-Interface/WS')
+const config = new (require('../Configmanager/config'))()
 
 
 //Erstellt einen Webserver auf Basis von http
@@ -38,7 +39,7 @@ class WebServer
 
             //festlegen auf welchem Port die Applikation funktionieren soll 
 
-            app.listen(80)
+            app.listen(config.get('webServerPort'))
 
             //Server erstellen
 
@@ -66,7 +67,7 @@ class WebServer
 
             this.app.use('/',viewsRouter)
             this.app.use('/api',restAPI)
-            this.app.use(express.static('public'))
+            this.app.use(express.static('public')) // für Testzwecke
         }catch(error)
         {
             console.log(error + "Fehler bei Router setup")
