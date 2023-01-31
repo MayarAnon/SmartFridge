@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>NodeJS WebSocket Server</title>
+    <style>
+        .chartBox {
+            width:700px;
+        }
+    </style> 
+</head>
+
+<body>
+    <a id="startSeite" href="index copy.html">Startseite</a>
+    <div>
+        <time id="datum" ></time>
+    </div>
+    <div>
+        <time id="uhrzeit" ></time>
+    </div>
+    <div class="Metrics">
+        Maximum: <input type="text" id="maximum" />
+        Minimum: <input type="text" id="minimum" />
+        Mittelwert: <input type="text" id="avg" />
+        Aktuelle Innentemperatur: <input type="text" id="tempinside" />
+        Öffnungszustand: <input type="text" id="doorstate" />
+    </div>
+    <div >
+        Temperaturschwellwert
+        Aktuell: <input type="text" id="akteullertempschwellwert" />
+        <input onchange="setTempLimitValue()" type="text" id="tempschwellwert" />
+    </div>
+    <div>
+        maximale Öffnungszeit
+        Aktuell: <input type="text" id="akteullemaxzeit" />
+        <input onchange="setTimeLimitValue()" type="text" id="maxzeit" />
+    </div>
+    <div >
+        System Historie löschen
+        Aktuell: <input type="text" id="lastdelete" />
+        <input onclick="deleteHistory()" type="button" value="Löschen" id="deletehistory" />
+    </div>
+    <div >
+        Event-Email-adresse
+        Aktuell: <input type="text" id="emailadresse" />
+        <input onchange="setEmailAdresse()" type="text" id="setemailadresse" />
+    </div>
+    <div >
+        speicherintervall
+        <button onclick=setTimeInterval(this.value) value="1" id="intervall1s">1s</button>
+        <button onclick=setTimeInterval(this.value) value="10" id="intervall10s">10s</button>
+        <button onclick=setTimeInterval(this.value) value="600" id = "intervall10min">10min</button>
+        <button onclick=setTimeInterval(this.value) value="3600" id = "intervall1h">1h</button>
+      </div>
+    <!-- <div>
+        <a href="file:///C:\Users\mayar\Desktop\Softwareprojekt\smartfridge\Log\Log.txt" download><input type="button" id="downloadlog" value="download Log"/></a></div>
+    <div> -->
+    <table id="messwertetabelle" border="1">
+        <tr>
+            <th>Erfassungszeit</th>
+            <th>Messwert</th>
+        </tr>
+    </div>
+    <div class="chartBox">
+        <canvas id="myChart"></canvas>
+    </div>
+    <input type="button" id="day" value="day" onclick="changeUnit(this.value)" />
+    <input type="button" id="hour" value="hour" onclick="changeUnit(this.value)" />
+    <input type="button" id="minute" value="minute" onclick="changeUnit(this.value)" />
+    <input type="button" id="second" value="second" onclick="changeUnit(this.value)" />
+    <div class="zeitraum">
+        Anfangszeit: <input type="datetime-local" id="startTime"   step="1" />
+        endzeit: <input onchange="filterData()" type="datetime-local" id="endTime"  step="1"/>
+        <input type="button" id="refreshchart" value="refresh Chart" onclick="refreshChart()" />
+    </div>
+
+</body>
+
+<script type="module" src="startseite.js"></script>
+<!-- <script type="text/javascript" src="LineChart.js"></script> -->
+</html>
+
+
+
+ 
+ 

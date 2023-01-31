@@ -195,6 +195,7 @@ const initWebsocket = (() => {
     const ws = new WebSocket(`${websocketUrl}`);
     ws.onopen = function () {
       console.log(`Erfolgreich mit WebSocket verbunden`);
+      ws.send("connected")
     };
     ws.onmessage = function (messageEvent) {
       const data = JSON.parse(messageEvent.data);
@@ -241,6 +242,7 @@ const initWebsocket = (() => {
       console.log(`err: ${err}`);
     };
     window.addEventListener("unload", function () {
+      //ws.send("closing")
       if (ws.readyState == WebSocket.OPEN) ws.close();
     });
   } catch (err) {

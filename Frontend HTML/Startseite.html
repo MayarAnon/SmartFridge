@@ -50,12 +50,12 @@
       <!--Tabelle der aktuellen Daten -->
       <div class="child" style="background-color: red;">
         <div class="gridContainer">
-          <div class="gridItem">Zustand <p id="zustand"></p></div>
-          <div class="gridItem">Raumtemperatur <p id="raumtemperatur"></p></div>
-          <div class="gridItem">Kühlschranktemperatur <p id="kühlschranktemperatur"></p></div>
-          <div class="gridItem">Maximum <p id="maximum"></p></div>
-          <div class="gridItem">Minimum  <p id="minimum"></p></div>
-          <div class="gridItem">Mittelwert <p id="mittelwert"></p></div>
+          <div class="gridItem">Zustand <p id="doorState"></p></div>
+          <div class="gridItem">Raumtemperatur <p></p></div>
+          <div class="gridItem">Kühlschranktemperatur <p id="tempInside"></p></div>
+          <div class="gridItem">Maximum <p id="max"></p></div>
+          <div class="gridItem">Minimum  <p id="min"></p></div>
+          <div class="gridItem">Mittelwert <p id="avg"></p></div>
         </div>
       </div>
     </div>
@@ -64,7 +64,7 @@
         <div style="display: flex; justify-content: space-between;">
           <div>Team: SmartFridge</div>
           <div>Version: 0.9</div>
-          <div style="text-align: right;">Testuhrzeit und Datum</div>
+          <div style="text-align: right;"><p id="systemTime"></p><p id="systemDate"></p></div>
         </div>
       </div>
       <!--<footer>
@@ -82,4 +82,5 @@
   </main>
 </div>
 </body>
+<script type="module" src="startseite.js"></script>
 </html>

@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!--responsive (Elemente können sich der Bildschirmgröße anpassen)-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
   <!--Stylesheets und JavaScript, um die MDL-Elemente verwenden zu können-->
   <link rel="stylesheet" href="mdl/material.min.css">
   <script src="mdl/material.min.js"></script>
@@ -42,48 +42,63 @@
     <main class="mdl-layout__content">
       <div class="page-content">
         <!-- Hier kommt der Inhalt der Seite hin-->
-        <div><p>Platzhalter für Graph</p></div>
+        <div><canvas id="myChart"></canvas></div>
+        <div class="zeitraum">
+        Anfangszeit: <input type="datetime-local" id="startTime"   step="1" />
+        endzeit: <input  type="datetime-local" id="endTime"  step="1"/>
+        <input type="button" id="refreshchart" value="refresh Chart"  />
+    </div>
         <table>
           <ul class="demo-list-item mdl-list">
           <li class="mdl-list__item">
             <span class="mdl-list__item-primary-content">
-                Zustand:
+                Zustand <p id="doorState"></p>
             </span>
           </li>
           <li class="mdl-list__item">
             <span class="mdl-list__item-primary-content">
-              Raumtemperatur
+              Raumtemperatur <p></p>
             </span>
           </li>
           <li class="mdl-list__item">
             <span class="mdl-list__item-primary-content">
-              Kühlschranktemperatur
+              Kühlschranktemperatur <p id="tempInside"></p>
             </span>
             <li class="mdl-list__item">
               <span class="mdl-list__item-primary-content">
-                Maximum 
+                Maximum <p id="max"></p> 
               </span>
             </li>
             <li class="mdl-list__item">
               <span class="mdl-list__item-primary-content">
-                Minimum: 
+                Minimum  <p id="min"></p>
               </span>
             </li>
             <li class="mdl-list__item">
               <span class="mdl-list__item-primary-content">
-                Mittelwert: 
+                Mittelwert <p id="avg"></p>
               </span>
             </li>
           </li>
           </ul>
           </table>
           <div>
-            <table>
-              <p>Platzhalter für Tabelle Werte</p>
-            </table>
+            <table id="myTable" border="1">
+              <tr>
+                  <th>Erfassungszeit</th>
+                  <th>Messwert</th>
+              </tr>
+          </div>
           </div>
       </div>
     </main>
   </div>
+  <div style="text-align: right;"><p id="systemTime"></p><p id="systemDate"></p></div>
 </body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script type="module" src="monitoring.js"></script>
 </html>
+
+
