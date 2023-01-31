@@ -50,7 +50,7 @@ class RestAPI
         
         this.mqtt = await new mqtt("Restful_Schnittstelle")
        
-        this.restRouter.post('/timeIntervall',this.timeIntervallEndpoint.bind(this)) // Bindet den Wert von "this" auf die aktuelle Instanz des Objekts, um sicherzustellen, dass die Methode "this.timeIntervallEndpoint" innerhalb des Callbacks korrekt aufgerufen wird.
+        this.restRouter.post('/timeInterval',this.timeIntervalEndpoint.bind(this)) // Bindet den Wert von "this" auf die aktuelle Instanz des Objekts, um sicherzustellen, dass die Methode "this.timeIntervalEndpoint" innerhalb des Callbacks korrekt aufgerufen wird.
         this.restRouter.post('/deleteHistory',this.deleteHistoryEndpoint.bind(this))
         this.restRouter.post('/tempLimitValue',this.tempLimitValueEndpoint.bind(this))
         this.restRouter.post('/timeLimitValue',this.timeLimitValueEndpoint.bind(this))
@@ -60,10 +60,10 @@ class RestAPI
         this.restRouter.get('/initialValues',this.initialValuesEndpoint)
     }
 
-    //Endpunt timeIntervall, checkt auf eine Valide eingabe und published dann unter dem Topic
+    //Endpunt timeInterval, checkt auf eine Valide eingabe und published dann unter dem Topic
     //Prameter: das request und response Objekt 
     //return: kein
-    async timeIntervallEndpoint(req , res)
+    async timeIntervalEndpoint(req , res)
     {
         
         try
@@ -79,7 +79,7 @@ class RestAPI
             }
             else {
                 
-                await this.mqtt.publish("timeIntervall", `${logTime}`)
+                await this.mqtt.publish("timeInterval", `${logTime}`)
                 
             }
             res.status(200).json({message :``})

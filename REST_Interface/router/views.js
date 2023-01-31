@@ -25,12 +25,12 @@ class views
         //Pfad zur HTML Seite ermittlen 
 
         this.currentDir = __dirname;                       // __dirname ist der aktuelle Pfad
-        this.parentDir = path.resolve(this.currentDir, '..')   //auf den Übergeordneten Ordner wechseln 
-
-        this.#renderHome()
-        this.#renderCamera()
-        this.#renderMonitoring()
-        this.#renderSettings()
+        this.parentDir = path.join(this.currentDir, '../../','Frontend HTML')   //auf den Übergeordneten Ordner wechseln 
+        this.viewsRouter.use(express.static(this.parentDir))
+        //this.#renderHome()
+        //this.#renderCamera()
+        //this.#renderMonitoring()
+        //this.#renderSettings()
 
         return this.viewsRouter
     }

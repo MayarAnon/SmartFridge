@@ -11,7 +11,7 @@ class Alert {
     this.startTime = Date.now();
     this.timeDiff = 0;
     this.Logger = new alertLog();
-    this.lastDoorState = "undefined";
+    this.lastDoorState = "closed";
     this.client = client;
   }
   // Die Methode ermittelt die Schwellwert(TempLimit/TimeLimit) aus den MQTT-Nachrichten
@@ -32,8 +32,9 @@ class Alert {
       if (Math.round(temp) >= Math.round(this.TempLimit)) {
         this.client.publish(
           topics.alertTempLimit,
-          `Tempinside= ${temp} Schwellwert: ${this.TempLimit}>>>>> surpassed`
+          `surpassed`
         );
+        // console.log(`Tempinside= ${temp} Schwellwert: ${this.TempLimit}>>>>> surpassed`)
         this.Logger.writeLog(
           "Die Innentemperatur hat den Schwellwert überschritten",
           topic,
@@ -42,8 +43,9 @@ class Alert {
       } else {
         this.client.publish(
           topics.alertTempLimit,
-          `Tempinside= ${temp} Schwellwert: ${this.TempLimit}>>>>> under `
+          `under`
         );
+        // console.log(`Tempinside= ${temp} Schwellwert: ${this.TempLimit}>>>>> under `)
       }
     }
   }
@@ -54,21 +56,22 @@ class Alert {
       // Ist der aktuelle Zustand = "open" und die Tür davor "Closed" war, dann wird ein Timer gestart >>> timeDiff=0
       // Ist der aktuelle Zustand = "open" und die Tür davor auch "open" war, dann läuft der Timer weiter >>> timeDiff>0
       // ist der aktuelle Zustand = "closed" wird der Timer rückgesetzt >>> timeDiff=0
-      if (message === "open" && this.lastDoorState === "closed") {
+      if (message == "open" && this.lastDoorState == "closed") {
         this.startTime = Date.now();
         this.lastDoorState = "open";
       }
-      if (message === "closed") {
+      if (message == "closed") {
         this.startTime = Date.now();
       }
       this.timeDiff = Date.now() - this.startTime;
       if (this.timeDiff > this.TimeLimit * 1000) {
         this.client.publish(
           topics.alertTimeLimit,
-          `doorstate= ${message} TimeLimit: ${this.TimeLimit} TimeDiff: ${
-            this.timeDiff / 1000
-          }>>>>> surpassed`
+          `surpassed`
         );
+        // console.log(`doorstate= ${message} TimeLimit: ${this.TimeLimit} TimeDiff: ${
+        //   this.timeDiff / 1000
+        // }>>>>> surpassed`)
         this.Logger.writeLog(
           "Die maximale Öffnungszeit wurde überschritten",
           topic,
@@ -77,10 +80,11 @@ class Alert {
       } else {
         this.client.publish(
           topics.alertTimeLimit,
-          `doorstate= ${message} TimeLimit: ${this.TimeLimit} TimeDiff: ${
-            this.timeDiff / 1000
-          }>>>>> under `
+          `under`
         );
+        // console.log(`doorstate= ${message} TimeLimit: ${this.TimeLimit} TimeDiff: ${
+        //   this.timeDiff / 1000
+        // }>>>>> under `)
       }
     }
   }
