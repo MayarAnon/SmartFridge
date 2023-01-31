@@ -17,7 +17,7 @@ class WS {
       WS.instance = this;
     }
 
-    this.topicList = config.get('WS-Interface:relaventTopics');;
+    this.topicList = config.get('WS-Interface:relaventTopics');
 
     this.#creatWebsocketServer(webServer);
     return WS.instance;
@@ -75,7 +75,7 @@ class WS {
   //Die Methode verbindet sich mit der Datenbank und sendet die letzte Zeile, sowie das Maximum/Minimun und den Mittelwert der Messdaten
   //der letzten 24h über WS. Die Methode verbindet sich außerdem mit dem MQTT Broker und sendet den Öffnungszustand des Kühlschranks über WS
   async #sendRealTimeData() {
-    const mqttClient = await new MQTT("WS");
+    const mqttClient = await new MQTT(config.get('WS-Interface:clientId'));
 
     const topics = Object.values(this.topicList);
     mqttClient.subscribe(topics);
@@ -85,6 +85,7 @@ class WS {
       mqttClient.on("message", (topic, message) => {
         if (topic == "timeInterval") {
           sendIntervalforDBData = Number(message.toString());
+          console.log(sendIntervalforDBData)
           //Der Alte Timer stoppen und einen neuen mit dem aktuellen Interval starten
           clearInterval(Number(dbRetrievalLoop));
           dbRetrievalLoop = this.#startInterval(sendIntervalforDBData);

@@ -12,7 +12,7 @@ const alertLog = require("./AlertLog");
 
 // Die Funktion runAlertService führt das Alert-service als MQTTClient aus.
 runAlertService = (async function () {
-  const mqttClient = await new MQTT("Alert-Service");
+  const mqttClient = await new MQTT('alertService:clientId');
   try {
     //zu topics subscriben
     const topics = Object.values(configManager.get('alertService:relaventTopics'));
@@ -27,7 +27,6 @@ runAlertService = (async function () {
     const thisAlert = new Alert(mqttClient);
     //auf Nachrichten warten und wenn welche kommen dann mit thisAlert-Methoden verarbeiten
     await mqttClient.on("message", async function (topic, message) {
-      console.log(`${topic}>>>>>> ${message}`);
       try {
         await thisAlert.setLimits(topic, message.toString());
         await thisAlert.checkTime(topic, message.toString());

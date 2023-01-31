@@ -1,7 +1,7 @@
 /*Die Aufgaben des GPIO-Services:
 °Sensordaten auslesen und an MQTT weitergeben ->wie oft?
 °LED aktivieren wenn ein Wert surpassed ist/deaktivieren wenn under
-°Nach timeIntervall Daten in Datenbank schreiben */
+°Nach timeInterval Daten in Datenbank schreiben */
 
 const config = new(require('../Configmanager/config'))();
 const dbConnection = new(require('../DB_Connection/mariaDB'))();
@@ -13,17 +13,17 @@ const mqttTopic1 = "tempInside"; //tempInside
 const mqttTopic2 = "doorState"; //->open/closed
 const mqttTopic3 = "alertTimeLimit";//->surpassed/under
 const mqttTopic4 = "alertTempLimit";//->surpassed/under
-const mqttTopic5 = "timeIntervall"; //->Wie oft in DB speichern (s)
+const mqttTopic5 = "timeInterval"; //->Wie oft in DB speichern (s)
 
 let timeMessage = "under"; //Als under initialisieren, damit keine Fehlermeldung zum Start kommt.
 let tempMessage = "under";
-let timeIntervallMessage = config.get('timeIntervalDefault') * 1000;
+let timeIntervalMessage = config.get('timeIntervalDefault') * 1000;
 
 
 let minimum = 5;
 let maximum = 20;
 let intervalId;
-let saveIntervall = timeIntervallMessage;
+let saveIntervall = timeIntervalMessage;
 
 
 /*Diese Klasse hat die Aufgabe die Werte für die Temperatur im Kühlschrank und den Zustand der Türe zu erzeugen.
@@ -46,7 +46,7 @@ class GPIOService
     Parameter: 
     timeMessage= MQTT-Nachricht, ob die Tür zu lang geöffnet ist
     tempMessage= MQTT-Nachricht, ob die maximale Öffnungszeit der Tür überschritten ist*/
-    ledsAktivieren(timeMessage, tempMessage)
+    timeActivateLed(timeMessage)
     {
         if(timeMessage == 'surpassed')
         {
@@ -60,7 +60,10 @@ class GPIOService
         {
             console.error('Die MQTT für timeMessage Nachricht wurde nicht korrekt verarbeitet')
         }
-
+    };
+    
+    tempActivateLed(tempMessage)
+    {
         if(tempMessage == 'surpassed')
         {
             console.log('Temp-LED ist aktiv. Die maximale Temperatur wurde überschritten')
@@ -109,7 +112,7 @@ class GPIOService
                 }
                 this.tempInside = this.tempInside + mathVariable;
                 this.tempInsideRounded = this.tempInside.toFixed(1);
-                console.log(this.tempInsideRounded + this.doorState);
+                //console.log(this.tempInsideRounded + this.doorState);
             }, tempInterval); //wie bekomme ich hier tempInterval rein?
     }
 }
@@ -119,15 +122,15 @@ async function writeInDatabase(tempInsideRounded)
 {
     //console.log("writeInDataBase:" + tempInsideRounded);
     const result = await dbConnection.query(`INSERT INTO ${table} (Messwert) VALUES (${tempInsideRounded});`);
-    console.log(result);
+    //console.log(result);
 }
 
 //emitFunction gibt die erzeugten Werte aus an MQTT und schreibt die aktuelle Temperatur in die Datenbank
 function emitFunction(tempInsideRounded, doorState) 
 {
-    console.log('emitFunction: Temperatur: ' + tempInsideRounded + '°C ' + ' Türstatus: ' + doorState);
-    mqttClient.publish(mqttTopic1, JSON.stringify(tempInsideRounded)).then();
-    mqttClient.publish(mqttTopic2, JSON.stringify(doorState)).then();
+    //console.log('emitFunction: Temperatur: ' + tempInsideRounded + '°C ' + ' Türstatus: ' + doorState);
+    mqttClient.publish(mqttTopic1, tempInsideRounded.toString()).then();
+    mqttClient.publish(mqttTopic2, doorState.toString()).then();
     writeInDatabase(GPIO.tempInsideRounded); //.then(console.log("Datenbank befüllen funktioniert"))
     intervalId = setTimeout(() => {emitFunction(GPIO.tempInsideRounded, GPIO.doorState)}, saveIntervall);
 }
@@ -147,7 +150,7 @@ mqttClientSubscribeToTopic = (topic) =>
     {
       if (granted !== null) 
       {
-        console.log("\n Subscription erfolgreich erstellt. Topic = " + topic);
+        //console.log("\n Subscription erfolgreich erstellt. Topic = " + topic);
       }
       else 
       {
@@ -161,7 +164,7 @@ mqttClient.on("connect", async () =>
 {
     try
     {
-        console.log("MQTT wurde erfolgreich verbunden. Adresse: " + mqttUrl);
+        //console.log("MQTT wurde erfolgreich verbunden. Adresse: " + mqttUrl);
         // Abonniere ausgewähltes Thema
         await mqttClient.subscribe(mqttTopic3);
         await mqttClient.subscribe(mqttTopic4);
@@ -173,31 +176,31 @@ mqttClient.on("connect", async () =>
     }
 });
 
-let zwischenSpeicher = null; 
+let bufferVar = null; 
 //Funktion, welche bei einer neuen MQTT Nachricht in dem Subscription Topic ausgeführt wird.
 //Hier wird der Inhalt, der über MQTT auf den drei Topics kommt auch auf drei verschiedene Variablen aufgeteilt
 mqttClient.on("message", (topic, message) => 
 {
     try
     {
-        zwischenSpeicher = message.toString() //.trim().split('"').join("");
-        console.log('Wert erhalten: ', zwischenSpeicher, ' on topic ', topic);
+        bufferVar = message.toString() //.trim().split('"').join("");
+        //console.log('Wert erhalten: ', bufferVar, ' on topic ', topic);
         switch (topic) 
         {
             case 'alertTimeLimit':
-                timeMessage = zwischenSpeicher;
-                console.log('alertTimeLimit: ' + zwischenSpeicher);
-                GPIO.ledsAktivieren(timeMessage, tempMessage);
+                timeMessage = bufferVar;
+                //console.log('alertTimeLimit: ' + bufferVar);
+                GPIO.timeActivateLed(timeMessage);
                 break;
             case 'alertTempLimit':
-                tempMessage = zwischenSpeicher;
-                console.log('alertTempLimit: ' + zwischenSpeicher);
-                GPIO.ledsAktivieren(timeMessage, tempMessage);
+                tempMessage = bufferVar;
+                //console.log('alertTempLimit: ' + bufferVar);
+                GPIO.tempActivateLed(tempMessage);
                 break;
-            case 'timeIntervall':
-                timeIntervallMessage = zwischenSpeicher;
-                console.log('timeIntervall: ' + zwischenSpeicher);
-                saveIntervall = timeIntervallMessage * 1000;
+            case 'timeInterval':
+                timeIntervalMessage = bufferVar;
+                //console.log('timeInterval: ' + bufferVar);
+                saveIntervall = timeIntervalMessage * 1000;
                 clearTimeout(intervalId);
                 emitFunction();
                 break;
