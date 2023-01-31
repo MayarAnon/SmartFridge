@@ -25,10 +25,10 @@
         <div class="mdl-layout-spacer"></div>
         <!--Navigationsleiste oben rechts (wird auf kleinen Displays nicht angezeigt)-->
         <nav class="mdl-navigation mdl-layout--large-screen-only">
-          <a class="mdl-navigation__link" id="startSeite" href="Startseite.html">Startseite</a>
-          <a class="mdl-navigation__link" id="kameraSeite" href="Kamera.html">Kamera</a>
-          <a class="mdl-navigation__link" id="monitoringSeite" href="Monitoring.html">Monitoring</a>
-          <a class="mdl-navigation__link" id="einstellungenSeite" href="Einstellungen.html">Einstellungen</a>
+          <a class="mdl-navigation__link" id="startPage" href="Startseite.html">Startseite</a>
+          <a class="mdl-navigation__link" id="cameraPage" href="Kamera.html">Kamera</a>
+          <a class="mdl-navigation__link" id="monitoringPage" href="Monitoring.html">Monitoring</a>
+          <a class="mdl-navigation__link" id="settingsPage" href="Einstellungen.html">Einstellungen</a>
         </nav>
       </div>
     </header>
@@ -36,10 +36,10 @@
     <div class="mdl-layout__drawer">
       <span class="mdl-layout-title">Menü</span>
       <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" id="startSeite" href="Startseite.html">Startseite</a>
-        <a class="mdl-navigation__link" id="kameraSeite" href="Kamera.html">Kamera</a>
-        <a class="mdl-navigation__link" id="monitoringSeite" href="Monitoring.html">Monitoring</a>
-        <a class="mdl-navigation__link" id="einstellungenSeite" href="Einstellungen.html">Einstellungen</a>
+        <a class="mdl-navigation__link" id="startPage" href="Startseite.html">Startseite</a>
+        <a class="mdl-navigation__link" id="cameraPage" href="Kamera.html">Kamera</a>
+        <a class="mdl-navigation__link" id="monitoringPage" href="Monitoring.html">Monitoring</a>
+        <a class="mdl-navigation__link" id="settingsPage" href="Einstellungen.html">Einstellungen</a>
       </nav>
     </div>
     <main class="mdl-layout__content">
@@ -49,109 +49,118 @@
         <div class="parent">
           <div class="child">
             <p>Speicherintervall wählen</p>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="1sButtonSpeicher">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="1sButtonMemory">
               1 s
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="10sButtonSpeicher">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="10sButtonMemory">
               10 s
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="1minButtonSpeicher">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="1minButtonMemory">
               1 min
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="5minButtonSpeicher">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="5minButtonMemory">
               5 min
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="10minButtonSpeicher">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="10minButtonMemory">
               10 min
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="30minButtonSpeicher">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="30minButtonMemory">
               30 min
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="1hButtonSpeicher">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="1hButtonMemory">
               1 h
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="2hButtonSpeicher">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="2hButtonMemory">
               2 h
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="4hButtonSpeicher">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="4hButtonMemory">
               4 h
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="6hButtonSpeicher">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="6hButtonMemory">
               6 h
             </button>
           </div>
           <!--Temperaturschwellwert anzeigen und Eingabefeld-->
           <div class="child">
             <p>Temperaturschwellwert</p>
-            <p>Aktuell:
+            <div style="margin-bottom: -10px;">
+            <p style="display: inline-block; margin-right: 3px;">Aktuell:</p>
+            <p id="currentTempThreshold" style="display: inline-block;">Test</p>
+            <p style="display: inline-block;">°C</p>
+            </div>
             <form action="#">
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="tempMax">
                 <label class="mdl-textfield__label" for="sample4">Eingabe:</label>
-                <span class="mdl-textfield__error">Input is not a number!</span>
+                <span class="mdl-textfield__error">Die Eingabe ist keine Zahl</span>
               </div>
             </form>
-            </p>
           </div>
           <!--maximale Öffnungszeit anzeigen und Eingabefeld-->
           <div class="child">
             <p>maximale Öffnungszeit</p>
-            <p>Aktuell:</p>
+            <div style="margin-bottom: -10px;">
+              <p style="display: inline-block; margin-right: 3px;">Aktuell:</p>
+              <p id="currentTimeThreshold" style="display: inline-block;">Test</p>
+              <p style="display: inline-block;">s</p>
+            </div>
             <form action="#">
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="timeMax">
                 <label class="mdl-textfield__label" for="sample4">Eingabe:</label>
-                <span class="mdl-textfield__error">Input is not a number!</span>
+                <span class="mdl-textfield__error">Die Eingabe ist keine Zahl</span>
               </div>
             </form>
           </div>
           <!--Intervall Diagramm auswählen-->
           <div class="child">
             <p>Intervall für das Diagramm wählen</p>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="1sButtonDiagramm">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="1sButtonDiagram">
               1 s
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="10sButtonDiagramm">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="10sButtonDiagram">
               10 s
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="1minButtonDiagramm">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="1minButtonDiagram">
               1 min
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="5minButtonDiagramm">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="5minButtonDiagram">
               5 min
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="10minButtonDiagramm">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="10minButtonDiagram">
               10 min
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="30minButtonDiagramm">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="30minButtonDiagram">
               30 min
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="1hButtonDiagramm">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="1hButtonDiagram">
               1 h
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="2hButtonDiagramm">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="2hButtonDiagram">
               2 h
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="4hButtonDiagramm">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="4hButtonDiagram">
               4 h
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="6hButtonDiagramm">
+            <button class="mdl-button mdl-js-button mdl-button--primary" id="6hButtonDiagram">
               6 h
             </button>
           </div>
           <!--Datenbankeinträge löschen-->
           <div class="child">
             <p>Datenbankeinträge löschen</p>
-            <p>letzte Löschung: DATUM</p>
+            <p style="display: inline-block; margin-right: 3px;">letzte Löschung:</p>
+            <p id="lastDelete" style="display: inline-block;">Testdatum</p><br>
             <!-- Accent-colored raised button -->
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="datenbankLöschen">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="deleteDatabase">
               löschen
             </button>
           </div>
           <!--Event-E-Mail-Adresse-->
           <div class="child">
             <p>Event-E-Mail-Adresse</p>
-            <p>Aktuell: E-MAIL
+            <p style="display: inline-block; margin-right: 3px;">Aktuell:</p>
+            <p id="currentTimeThreshold" style="display: inline-block;">TestMail</p>
             <form action="#">
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="tempMax">
@@ -159,12 +168,11 @@
                 <span class="mdl-textfield__error">Input is not a number!</span>
               </div>
             </form>
-            </p>
           </div>
           <div class="child">
             <p>Benachrichtigungsverlauf herunterladen</p>
             <!-- Accent-colored raised button -->
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="datenbankLöschen">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="downloadAlerts">
               jetzt herunterladen
             </button>
           </div>
