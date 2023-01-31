@@ -3,6 +3,7 @@
 const express = require('express')
 const http = require("http");
 const webSocket = require('../WS-Interface/WS')
+const config = new (require('../Configmanager/config'))()
 
 
 //Erstellt einen Webserver auf Basis von http
@@ -38,7 +39,7 @@ class WebServer
 
             //festlegen auf welchem Port die Applikation funktionieren soll 
 
-            app.listen(80)
+            app.listen(config.get('webServerPort'))
 
             //Server erstellen
 
