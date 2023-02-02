@@ -7,15 +7,16 @@ const configManager = new (require("../Configmanager/config"))();
 
 const alertLog = require("./AlertLog");
 
-
 //asyncmqtt referenz: https://github.com/mqttjs/async-mqtt
 
 // Die Funktion runAlertService führt das Alert-service als MQTTClient aus.
 runAlertService = (async function () {
-  const mqttClient = await new MQTT('alertService:clientId');
+  const mqttClient = await new MQTT("alertService:clientId");
   try {
     //zu topics subscriben
-    const topics = Object.values(configManager.get('alertService:relaventTopics'));
+    const topics = Object.values(
+      configManager.get("alertService:relaventTopics")
+    );
     await mqttClient.subscribe(topics);
     //db Verbindung erstellen
     const mariaDBconnection = require("../DB_Connection/mariaDB");

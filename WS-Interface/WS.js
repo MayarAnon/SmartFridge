@@ -16,9 +16,9 @@ class WS {
     if (!WS.instance) {
       WS.instance = this;
     }
-
+    this.clientsNames = []
     this.topicList = config.get('WS-Interface:relaventTopics');
-
+    this.dbMethodes = new dbConn();
     this.#creatWebsocketServer(webServer);
     return WS.instance;
   }
@@ -31,7 +31,13 @@ class WS {
       let ws;
       this.webSocketServer.on("connection", (ws) => {
         ws.on("message", (message) => {
-          console.log(`Neue Nachricht per Websocket erhalten: '${message}'`);
+          // local storage sollte geleert werden wenn wenn eine Seite zum ersten mal geladen wurde
+          const pageName = JSON.parse(message).pageName[0];
+          if(!this.clientsNames.includes(pageName)){
+            this.clientsNames.push(pageName);
+            this.sendMessage("localStorage","delete");
+            console.log(`${this.clientsNames} connected'`);
+          }
         });
       });
 
@@ -64,10 +70,10 @@ class WS {
   //Die Methode startInterval gibt einen Timer zurück der mit dem Interval _interval die Daten aus der Datenbank mit this.sendMessage sendet
   //Rückgabe ist die TimerID, die z.B. gebraucht wird um den Timer zu stoppen
   #startInterval(_interval) {
-    const dbMethodes = new dbConn();
+    
     return setInterval(async () => {
-      const latestRow = await dbMethodes.sendLatestRow();
-      const metrics = await dbMethodes.sendMetrics();
+      const latestRow = await this.dbMethodes.sendLatestRow();
+      const metrics = await this.dbMethodes.sendMetrics();
       await this.sendMessage("LatestTemp", latestRow);
       await this.sendMessage("Metrics", metrics);
     }, _interval * 1000);
@@ -82,10 +88,13 @@ class WS {
 
     try {
       var dbRetrievalLoop = this.#startInterval(sendIntervalforDBData);
+      const latestRow = await this.dbMethodes.sendLatestRow();
+      const metrics = await this.dbMethodes.sendMetrics();
+      await this.sendMessage("LatestTemp", latestRow);
+      await this.sendMessage("Metrics", metrics);
       mqttClient.on("message", (topic, message) => {
         if (topic == "timeInterval") {
           sendIntervalforDBData = Number(message.toString());
-          console.log(sendIntervalforDBData)
           //Der Alte Timer stoppen und einen neuen mit dem aktuellen Interval starten
           clearInterval(Number(dbRetrievalLoop));
           dbRetrievalLoop = this.#startInterval(sendIntervalforDBData);

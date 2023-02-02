@@ -2,7 +2,7 @@
 // aus der Datenbank zu fetchen
 const MariaDB = require("../DB_Connection/mariaDB");
 const config = new (require("../Configmanager/config"))();
-const MetricsPeriod = Number(config.get("metricsPeriod"));  // in days
+const MetricsPeriod = Number(config.get("metricsPeriod")); // in days
 //WSDB Klasse ist eine Childclass der Klasse MariaDB, mit der Klasse werden die Daten des Websocketes gefetcht
 class WSDB extends MariaDB {
   constructor() {

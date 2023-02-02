@@ -6,9 +6,7 @@ const refreshBtnRef = document.getElementById("refreshchart");
 
 const tableRef = document.getElementById("myTable");
 
-const tempInsideRef = document.getElementById("tempInside");
-
-//setup Block
+//setup Block for chart
 const data = {
   datasets: [
     {
@@ -21,7 +19,7 @@ const data = {
   ],
 };
 
-// config Block
+// config Block for chart
 const config = {
   type: "line",
   data,
@@ -36,6 +34,7 @@ const config = {
             hour: "dd.MM \n hh:mm",
             minute: "dd.MM \n hh:mm",
             second: "dd.MM \n hh:mm:ss",
+            millisecond: "dd.MM \n hh:mm:ss",
           },
         },
         ticks: {
@@ -59,7 +58,7 @@ const config = {
         ticks: {
           // Include a dollar sign in the ticks
           callback: function (value) {
-            return value + "°C";
+            return value.toFixed(2) + "°C";
           },
         },
       },
@@ -67,50 +66,85 @@ const config = {
   },
 };
 
-//init // render Block
-const myChart = new Chart(document.getElementById("myChart"), config);
+//init // render Block for chart
+const myChart = new Chart(
+  document.getElementById("myChart").getContext("2d"),
+  config
+);
 
+//die funktion schreibt in der letzten Zeile der Tabelle und löscht die erste zeile der Tabelle wenn 10 zeilen schon in der Tabelle sind
+//als Parameter wird der Temperaturwert übergeben
 const insertIntoTable = (temp) => {
-  if (tempData) {
+  let numberOftableRows = 10;
+  if (tableRef.getElementsByTagName("tr").length > numberOftableRows) {
     tableRef.deleteRow(1);
-    let newRow = tableRef.insertRow(tableRef.length);
-    let cell1 = newRow.insertCell(0);
-    let cell2 = newRow.insertCell(1);
-    cell1.innerHTML = DateFormatter.dateTime(new Date());
-    cell2.innerHTML = temp;
   }
+  let newRow = tableRef.insertRow(tableRef.length);
+  let cell1 = newRow.insertCell(0);
+  let cell2 = newRow.insertCell(1);
+  cell1.innerHTML = DateFormatter.dateTime(new Date());
+  cell2.innerHTML = temp + " °C";
   return;
 };
-//Die funktion erstellt ein WS Client und  verarbeitet die eingehende Nachrichten
+//Die Klasse stellt ein WS Client und  verarbeitet die eingehende Nachrichten die für die Monitoring Seite relevant sind
 class WS extends WSClient {
   constructor() {
     super();
-    this.renderMessage()
-    super.renderMessages(this.ws)
+
+    // super.renderMessages(this.ws)
+    this.renderMessages();
   }
-  renderMessage() {
-    const client = this
-    
-    client.ws.onmessage = function (messageEvent) {
-      const data = JSON.parse(messageEvent.data);
-        if (data.topic== "LatestTemp") {
-          const tempInside = JSON.parse(data.message).value;
-          insertIntoTable(tempInside);
-          tempData.push({
-            x: DateFormatter.getFormattedDate(new Date()),
-            y: tempInside,
-          });
-          myChart.update();
+  renderMessages() {
+    const client = this;
+    try {
+      client.ws.onmessage = function (messageEvent) {
+        const data = JSON.parse(messageEvent.data);
+        switch (data.topic) {
+          case "SystemTime": {
+            client.setSystemTime(data.message);
+            break;
+          }
+          case "Metrics": {
+            const str = JSON.parse(data.message);
+            client.maxRef.innerHTML = Object.values(str)[0] + " °C";
+            client.minRef.innerHTML = Object.values(str)[1] + " °C";
+            client.avgRef.innerHTML = Object.values(str)[2] + " °C";
+            break;
+          }
+          case "DoorState": {
+            client.doorStateRef.innerHTML = data.message;
+            break;
+          }
+          case "LatestTemp": {
+            const tempInside = JSON.parse(data.message).value;
+            client.tempInsideRef.innerHTML = tempInside + " °C";
+            tempData.push({
+              x: DateFormatter.getFormattedDate(new Date()),
+              y: tempInside,
+            });
+            insertIntoTable(tempInside);
+            myChart.update();
+            // endTimeRef.value = DateFormatter.getFormattedDate(Data.pop().x);
+            break;
+          }
+          default: {
+            break;
+          }
         }
-      }
+      };
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 const socket = new WS();
-//das erste Datetime-local auf dem ersten Punkt im Diagramm stellen
+
+//Die funktion stellt das erste Datetime-local-Element auf dem ersten Punkt aus tempData
+
 const settimeoption = (() => {
   function runThis() {
     if (tempData[0]) {
-      startTimeRef.value = tempData[0].x;
+      startTimeRef.value = DateFormatter.getFormattedDate(tempData[0].x);
       return;
     } else {
       setTimeout(() => {
@@ -120,34 +154,52 @@ const settimeoption = (() => {
   }
   runThis();
 })();
-
-axios
-  .get("http://localhost:3000/api/temphistory")
-  .then((response) => {
-    const transformedData = response.data.map((item) => {
-      tempData.push({
-        y: item.Messwert,
-        x: DateFormatter.dateTime(item.InDtTm),
+//mit der Funktion werden die Daten die der Webserver bereitstellt geholt und in tempData gespeichert
+//mit Daten wird die Tabelle und das Diagramm ausgefüllt
+const getTempHistory = () => {
+  axios
+    .get("http://localhost:3000/api/temphistory")
+    .then((response) => {
+      const transformedData = response.data.map((item) => {
+        tempData.push({
+          y: item.Messwert,
+          x: DateFormatter.getFormattedDate(item.InDtTm),
+        });
       });
+      filltable();
+    })
+    .catch((error) => {
+      console.error(error);
     });
-    filltable();
-    myChart.update();
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+};
+getTempHistory();
+
 //die Funktion füllt die HTML Tabelle mit daten aus
 const filltable = () => {
-  for (let i = 0; i < 10; i++) {
-    let newRow = tableRef.insertRow(tableRef.length);
-    let cell1 = newRow.insertCell(0);
-    let cell2 = newRow.insertCell(1);
-    cell1.innerHTML = tempData[i].x;
-    cell2.innerHTML = tempData[i].y;
+  let numberOftableRows = 10;
+  try {
+    if (tempData.length < numberOftableRows) {
+      numberOftableRows = tempData.length;
+    } else {
+    }
+    for (let i = 0; i < numberOftableRows; i++) {
+      let newRow = tableRef.insertRow(tableRef.length);
+      let cell1 = newRow.insertCell(0);
+      let cell2 = newRow.insertCell(1);
+      cell1.innerHTML = DateFormatter.dateTime(tempData.slice(
+        Math.max(tempData.length - numberOftableRows, 0)
+      )[i].x);
+      cell2.innerHTML = tempData.slice(
+        Math.max(tempData.length - numberOftableRows, 0)
+      )[i].y;
+    }
+    myChart.update();
+  } catch (err) {
+    console.log(err);
   }
 };
 
-//Die funktion filtert die Daten nach dem festgelegtem Zeitraum
+//Die funktion filtert die Daten nach einem vom Benutzer über startTimeRef und endTimeRef festgelegtem Zeitraum
 function filterData() {
   //ausführen erst wenn beide Dates eingestellt wurden
   try {

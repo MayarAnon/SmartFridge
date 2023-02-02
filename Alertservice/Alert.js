@@ -1,7 +1,7 @@
 // Die Klasse Alert ist zuständig für das Auslösen der Alarme
 const alertLog = require("./AlertLog");
 const configManager = new (require("../Configmanager/config"))();
-const topics = configManager.get('alertService:relaventTopics');
+const topics = configManager.get("alertService:relaventTopics");
 //Die Klasse analysiert die Daten vom MQTT-Broker und löst Alarme aus, falls Limits überschritten wurden
 //Der Alert-service-MQTT-Client muss übergeben werden
 class Alert {
@@ -30,10 +30,7 @@ class Alert {
     if (topic === "tempInside") {
       const temp = parseFloat(JSON.parse(message));
       if (Math.round(temp) >= Math.round(this.TempLimit)) {
-        this.client.publish(
-          topics.alertTempLimit,
-          `surpassed`
-        );
+        this.client.publish(topics.alertTempLimit, `surpassed`);
         // console.log(`Tempinside= ${temp} Schwellwert: ${this.TempLimit}>>>>> surpassed`)
         this.Logger.writeLog(
           "Die Innentemperatur hat den Schwellwert überschritten",
@@ -41,10 +38,7 @@ class Alert {
           message
         );
       } else {
-        this.client.publish(
-          topics.alertTempLimit,
-          `under`
-        );
+        this.client.publish(topics.alertTempLimit, `under`);
         // console.log(`Tempinside= ${temp} Schwellwert: ${this.TempLimit}>>>>> under `)
       }
     }
@@ -65,10 +59,7 @@ class Alert {
       }
       this.timeDiff = Date.now() - this.startTime;
       if (this.timeDiff > this.TimeLimit * 1000) {
-        this.client.publish(
-          topics.alertTimeLimit,
-          `surpassed`
-        );
+        this.client.publish(topics.alertTimeLimit, `surpassed`);
         // console.log(`doorstate= ${message} TimeLimit: ${this.TimeLimit} TimeDiff: ${
         //   this.timeDiff / 1000
         // }>>>>> surpassed`)
@@ -78,10 +69,7 @@ class Alert {
           message
         );
       } else {
-        this.client.publish(
-          topics.alertTimeLimit,
-          `under`
-        );
+        this.client.publish(topics.alertTimeLimit, `under`);
         // console.log(`doorstate= ${message} TimeLimit: ${this.TimeLimit} TimeDiff: ${
         //   this.timeDiff / 1000
         // }>>>>> under `)

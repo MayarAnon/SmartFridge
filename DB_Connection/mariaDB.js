@@ -1,136 +1,105 @@
 //smartfridge von HaRoMa
-//Stellt eine Klasse welche eine Verbindung zur Datenbank aufbaut und eine Möglichkeit bietet mit dieser zu interagieren 
+//Stellt eine Klasse welche eine Verbindung zur Datenbank aufbaut und eine Möglichkeit bietet mit dieser zu interagieren
 
-const mariadb = require('mariadb');
-const config = new (require('../Configmanager/config'))()
-
-
+const mariadb = require("mariadb");
+const config = new (require("../Configmanager/config"))();
 
 // Klasse für die Verbindung mit der Datenbank mariaDB
 // Stellt sicher, dass nur eine Verbindung pro Service existiert
 // Stellt sicher, dass die Verbindung aufrecht erhalten wird
-// Parameter: keine  
+// Parameter: keine
 
-class DbConnection
-{
-    //Initalisiert das Objekt 
-    //Stellt sicher das nur ein Objekt existiert in einem Service
-    //Parameter: Login-Daten als Obejkt 
-    
-    constructor()
-    {
-        
-        this.loginData = config.get('loginDataDatabase')
-        this.connection
-        this.connectionCount = 0
+class DbConnection {
+  //Initalisiert das Objekt
+  //Stellt sicher das nur ein Objekt existiert in einem Service
+  //Parameter: Login-Daten als Obejkt
 
-        
-        
-    }
+  constructor() {
+    this.loginData = config.get("loginDataDatabase");
+    this.connection;
+    this.connectionCount = 0;
+  }
 
-    //Verbindet mit Datenbank + schaut das nur eine Verbindung besteht
-    //Parameter: keine
-    //return: Verbindung zur Datenbank
-    
-    async #reconnect()
-    {
-        try{
-            if(this.connectionCount == 0)
-            {
-                this.connection = await mariadb.createConnection(this.loginData)
-                if(this.connection.isValid)
-                {
-                    this.connectionCount ++
-                }
-            }
-            this.#checkTableExistance()
-        }catch(error)
-        {
-            console.log(error)
+  //Verbindet mit Datenbank + schaut das nur eine Verbindung besteht
+  //Parameter: keine
+  //return: Verbindung zur Datenbank
+
+  async #reconnect() {
+    try {
+      if (this.connectionCount == 0) {
+        this.connection = await mariadb.createConnection(this.loginData);
+        if (this.connection.isValid) {
+          this.connectionCount++;
         }
-        
-        
-        return this.connection 
-        
+      }
+      this.#checkTableExistance();
+    } catch (error) {
+      console.log(error);
     }
 
-    //Stellt sicher, das die Tabelle in der Datenbank existiert, wenn nicht wird diese angelegt
-    //Parameter: keine
-    //return: kein
+    return this.connection;
+  }
 
-    async #checkTableExistance(){
-        const sqlCommand = 
-            `CREATE TABLE IF NOT EXISTS messergebnisse 
+  //Stellt sicher, das die Tabelle in der Datenbank existiert, wenn nicht wird diese angelegt
+  //Parameter: keine
+  //return: kein
+
+  async #checkTableExistance() {
+    const sqlCommand = `CREATE TABLE IF NOT EXISTS messergebnisse 
             (
             ID int NOT NULL AUTO_INCREMENT,
             Messwert decimal(3,1) NOT NULL,
             nDtTm datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (ID)
-            ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`
+            ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`;
 
-        await this.connection.query(sqlCommand)
+    await this.connection.query(sqlCommand);
+  }
+
+  //Ermöglicht die Kommunikation mit der Datenbank über SQL
+  //Parameter: SQL Befehl als string
+  //return: die Ergebnisse aus der Datenbank als Objekt mit Meta-Daten
+
+  async query(sqlCommand) {
+    // Prüfen ob bereits eine Verbindung besteht, falls nicht aufbauen
+
+    if (this.connectionCount == 0) {
+      await this.#reconnect();
+    }
+    //Prüfen ob die Verbindung in Ordnung ist
+
+    if (!this.connection.isValid()) {
+      this.connectionCount--;
+      await this.#reconnect();
     }
 
-    //Ermöglicht die Kommunikation mit der Datenbank über SQL
-    //Parameter: SQL Befehl als string
-    //return: die Ergebnisse aus der Datenbank als Objekt mit Meta-Daten
-    
-    async query(sqlCommand)
-    {
-        // Prüfen ob bereits eine Verbindung besteht, falls nicht aufbauen
-        
-        if(this.connectionCount == 0)
-        {
-            await this.#reconnect()
-        }
-        //Prüfen ob die Verbindung in Ordnung ist
-        
-        if(!this.connection.isValid())
-        {
-            this.connectionCount --
-            await this.#reconnect()
+    // SQL Befehl senden und mögliche Antwort speicher
 
-        }
+    const queryResult = await this.connection.query(sqlCommand);
 
-        // SQL Befehl senden und mögliche Antwort speicher
+    return queryResult;
+  }
 
-        const queryResult = await this.connection.query(sqlCommand)
-        
-        return queryResult
+  //gibt die Anzahl der Aktuellen Verbindungen zurück => Testzwecke
+
+  async getConnectionCount() {
+    return this.connectionCount;
+  }
+
+  //Trennt die Verbindung
+
+  destructor() {
+    if (this.connection) {
+      this.connection.relese();
     }
-
-    //gibt die Anzahl der Aktuellen Verbindungen zurück => Testzwecke
-
-    async getConnectionCount()
-    {
-        return this.connectionCount
-    }
-
-    //Trennt die Verbindung
-
-    destructor()
-    {
-        if(this.connection)
-        {
-            this.connection.relese()
-        }
-    }
+  }
 }
 
-
-module.exports = DbConnection
-
-
-
-
-
-
-
-
+module.exports = DbConnection;
 
 //Benutzung der Klasse
 
-//Einbinden der Bibliothek 
+//Einbinden der Bibliothek
 
 //npm i mariadb
 
@@ -165,7 +134,7 @@ async function nameOfFunctionOne()
 nameOfFunctionOne()
 */
 
-//Daten in die Datenbank hinzufügen 
+//Daten in die Datenbank hinzufügen
 /*
 const instanceTwo = new dbConnection(loginData)
 
@@ -181,8 +150,6 @@ async function nameOfFunctionTwo()
 
 //nameOfFunctionTwo()
 */
-
-
 
 // `CREATE TABLE IF NOT EXISTS messergebnisse (
 //      ID int NOT NULL AUTO_INCREMENT,

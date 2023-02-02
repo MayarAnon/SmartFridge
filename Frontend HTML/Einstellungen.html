@@ -49,34 +49,34 @@
         <div class="parent">
           <div class="child">
             <p>Speicherintervall wählen</p>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="1sButtonMemory">
+            <button name ="MemoryButton" value ="1"class="mdl-button mdl-js-button mdl-button--primary" id="1sButtonMemory">
               1 s
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="10sButtonMemory">
+            <button name ="MemoryButton" value="10" class="mdl-button mdl-js-button mdl-button--primary" id="10sButtonMemory">
               10 s
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="1minButtonMemory">
+            <button name ="MemoryButton" value="60"class="mdl-button mdl-js-button mdl-button--primary" id="1minButtonMemory">
               1 min
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="5minButtonMemory">
+            <button name ="MemoryButton" value="300"class="mdl-button mdl-js-button mdl-button--primary" id="5minButtonMemory">
               5 min
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="10minButtonMemory">
+            <button name ="MemoryButton" value="600" class="mdl-button mdl-js-button mdl-button--primary" id="10minButtonMemory">
               10 min
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="30minButtonMemory">
+            <button name ="MemoryButton" value="1800"class="mdl-button mdl-js-button mdl-button--primary" id="30minButtonMemory">
               30 min
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="1hButtonMemory">
+            <button name ="MemoryButton" value="3600" class="mdl-button mdl-js-button mdl-button--primary" id="1hButtonMemory">
               1 h
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="2hButtonMemory">
+            <button name ="MemoryButton" value="7200" class="mdl-button mdl-js-button mdl-button--primary" id="2hButtonMemory">
               2 h
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="4hButtonMemory">
+            <button name ="MemoryButton" value="14400" class="mdl-button mdl-js-button mdl-button--primary" id="4hButtonMemory">
               4 h
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="6hButtonMemory">
+            <button name ="MemoryButton" value="21600" class="mdl-button mdl-js-button mdl-button--primary" id="6hButtonMemory">
               6 h
             </button>
           </div>
@@ -85,7 +85,7 @@
             <p>Temperaturschwellwert</p>
             <div style="margin-bottom: -10px;">
             <p style="display: inline-block; margin-right: 3px;">Aktuell:</p>
-            <p id="currentTempThreshold" style="display: inline-block;">Test</p>
+            <p id="currentTempThreshold" style="display: inline-block;"></p>
             <p style="display: inline-block;">°C</p>
             </div>
             <form action="#">
@@ -101,8 +101,8 @@
             <p>maximale Öffnungszeit</p>
             <div style="margin-bottom: -10px;">
               <p style="display: inline-block; margin-right: 3px;">Aktuell:</p>
-              <p id="currentTimeThreshold" style="display: inline-block;">Test</p>
-              <p style="display: inline-block;">s</p>
+              <p id="currentTimeThreshold" style="display: inline-block;"></p>
+              <p style="display: inline-block;">min</p>
             </div>
             <form action="#">
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -111,40 +111,6 @@
                 <span class="mdl-textfield__error">Die Eingabe ist keine Zahl</span>
               </div>
             </form>
-          </div>
-          <!--Intervall Diagramm auswählen-->
-          <div class="child">
-            <p>Intervall für das Diagramm wählen</p>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="1sButtonDiagram">
-              1 s
-            </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="10sButtonDiagram">
-              10 s
-            </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="1minButtonDiagram">
-              1 min
-            </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="5minButtonDiagram">
-              5 min
-            </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="10minButtonDiagram">
-              10 min
-            </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="30minButtonDiagram">
-              30 min
-            </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="1hButtonDiagram">
-              1 h
-            </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="2hButtonDiagram">
-              2 h
-            </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="4hButtonDiagram">
-              4 h
-            </button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" id="6hButtonDiagram">
-              6 h
-            </button>
           </div>
           <!--Datenbankeinträge löschen-->
           <div class="child">
@@ -160,12 +126,12 @@
           <div class="child">
             <p>Event-E-Mail-Adresse</p>
             <p style="display: inline-block; margin-right: 3px;">Aktuell:</p>
-            <p id="currentTimeThreshold" style="display: inline-block;">TestMail</p>
+            <p id="currentEmailAdress" style="display: inline-block;"></p>
             <form action="#">
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="tempMax">
+                <input class="mdl-textfield__input" type="text" pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" id="emailAdress">
                 <label class="mdl-textfield__label" for="sample4">Eingabe:</label>
-                <span class="mdl-textfield__error">Input is not a number!</span>
+                <span class="mdl-textfield__error">Eingabe ist keine Email-Adresse!</span>
               </div>
             </form>
           </div>
@@ -177,9 +143,12 @@
             </button>
           </div>
         </div>
+        <div style="text-align: right;"><p id="systemTime" style="display: inline-block;"></p> <p id="systemDate" style="display: inline-block;"></p></div>
       </div>
     </main>
   </div>
+  
 </body>
-
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="module" src="settingspage.js"></script>
 </html>

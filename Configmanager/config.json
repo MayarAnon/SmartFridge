@@ -1,12 +1,12 @@
 {
   "name": "smartfridge",
-  "webServerHost" : "localhost",
-  "webServerPort" : 3000,
-  "webSocketPort" : 3001,
-  "mailAdressRecipient": "mayar.hanhon@gmail.com",
-  "lastDeleteHistory": "28.1.2023, 20:48:26",
-  "tempLimitValue": "123.0",
-  "timeLimitValue": "12",
+  "webServerHost": "localhost",
+  "webServerPort": 3000,
+  "webSocketPort": 3001,
+  "mailAdressRecipient": "maa@maa.de",
+  "lastDeleteHistory": "02.02.2023 13:18:11",
+  "tempLimitValue": "12.0",
+  "timeLimitValue": "120",
   "timeIntervalDefault": "10",
   "metricsPeriod": "1",
   "mailSender": {
@@ -53,6 +53,6 @@
     "password": "safePassword"
   },
   "Log": {
-    "path": "../Log/Log.txt"
+    "path": "/REST_Interface/public/Log.txt"
   }
 }

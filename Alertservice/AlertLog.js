@@ -1,8 +1,9 @@
 //Die Klasse AlertLog stellt den Log-Manager dar
 const fs = require("fs");
+const path = require("path");
 
-//const configManager = new (require("../Configmanager/configmanager"))();
-const logPath = "../Log/Log.txt"; //configManager.get('Log:path')
+const configManager = new (require("../Configmanager/config"))();
+const logPath = path.join(__dirname, "../", configManager.get("Log:path"));
 
 //Die Klasse formattiert die Log-Rekords und schreibt alle Rekords in der Datei Log.txt. Die Klasse ist auch für das Löschen der Daten
 //aus der LogDatei und aus der Datenbank
