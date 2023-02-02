@@ -3,7 +3,6 @@ import {
   transmit,
   isEmail,
   isNumeric,
-  DateFormatter,
 } from "/toolbox.js";
 const tempLimitRef = document.getElementById("tempMax");
 const currentTempLimitRef = document.getElementById("currentTempThreshold");
@@ -26,7 +25,6 @@ const timeRef = document.getElementById("systemTime");
 class WS extends WSClient {
   constructor() {
     super();
-    // super.renderMessages(this.ws)
     this.renderMessages();
   }
   renderMessages() {
@@ -69,11 +67,12 @@ const buttons = document.getElementsByName("MemoryButton");
 function handleBtn(element) {
   element = element || window.event;
   var target = element.target || element.srcElement;
-
   if (target.tagName === "BUTTON" && target.name.match("MemoryButton")) {
+    
     var id = target.id;
     setTimeInterval(target.value);
     buttonColors[id] = "Lightblue";
+
     for (var i = 0; i < buttons.length; i++) {
       if (buttons[i] == target) {
         buttons[i].style.backgroundColor = buttonColors[id];

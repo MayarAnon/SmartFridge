@@ -3,8 +3,6 @@ import { WSClient, tempData, DateFormatter } from "/toolbox.js";
 class WS extends WSClient {
   constructor() {
     super();
-
-    // super.renderMessages(this.ws)
     this.renderMessages();
   }
   renderMessages() {
@@ -35,7 +33,6 @@ class WS extends WSClient {
               x: DateFormatter.getFormattedDate(new Date()),
               y: tempInside,
             });
-            // endTimeRef.value = DateFormatter.getFormattedDate(Data.pop().x);
             break;
           }
           default: {

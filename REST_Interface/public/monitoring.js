@@ -90,8 +90,6 @@ const insertIntoTable = (temp) => {
 class WS extends WSClient {
   constructor() {
     super();
-
-    // super.renderMessages(this.ws)
     this.renderMessages();
   }
   renderMessages() {
@@ -124,7 +122,6 @@ class WS extends WSClient {
             });
             insertIntoTable(tempInside);
             myChart.update();
-            // endTimeRef.value = DateFormatter.getFormattedDate(Data.pop().x);
             break;
           }
           default: {

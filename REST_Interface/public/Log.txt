@@ -1,165 +1,83 @@
-2.2.2023, 13:18:12      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:20      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:21      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:22      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:23      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:23      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:24      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:24      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:25      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:25      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:26      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:26      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:27      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:27      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:28      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:28      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:29      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:29      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:30      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:30      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:31      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:31      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:32      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:32      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:33      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:34      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:35      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:36      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:37      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:38      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:39      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:40      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:41      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:42      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:43      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:43      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:44      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:44      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:45      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:45      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:46      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:46      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:47      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:47      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:48      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:48      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:49      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:49      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:50      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:50      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:51      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:51      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:52      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:52      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:18:53      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:54      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:55      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:56      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:57      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:58      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:18:59      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:00      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:01      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:02      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:03      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:03      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:04      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:04      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:05      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:05      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:06      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:06      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:07      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:07      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:08      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:08      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:09      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:09      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:10      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:10      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:11      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:11      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:12      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:12      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:13      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:14      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:15      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:16      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:17      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:18      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:19      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:20      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:21      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:22      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:23      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:23      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:24      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:24      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:25      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:25      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:26      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:26      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:27      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:27      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:28      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:28      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:29      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:29      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:30      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:30      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:31      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:31      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:32      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:32      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:33      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:34      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:35      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:36      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:37      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:38      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:39      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:40      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:41      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:42      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:42      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:43      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:43      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:44      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:44      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:45      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:45      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:46      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:46      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:47      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:47      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:48      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:48      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:49      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:49      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:50      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:50      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:51      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:51      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:19:52      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:54      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:55      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:56      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:57      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:58      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:19:59      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:20:00      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:20:01      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:20:02      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:20:03      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:20:03      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:20:04      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:20:04      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:20:05      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:20:05      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:20:06      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:20:06      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:20:16      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:20:26      Die Innentemperatur hat den Schwellwert überschritten
-2.2.2023, 13:20:26      Die maximale Öffnungszeit wurde überschritten
-2.2.2023, 13:20:36      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:02:51      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:02:52      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:02:53      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:02:54      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:02:55      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:02:56      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:02:57      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:02:58      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:02:59      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:00      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:01      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:02      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:03      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:04      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:05      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:06      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:07      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:08      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:09      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:10      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:11      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:12      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:13      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:14      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:15      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:16      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:17      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:18      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:19      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:20      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:21      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:22      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:23      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:24      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:25      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:26      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:27      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:28      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:29      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:30      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:31      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:32      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:33      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:35      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:36      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:37      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:38      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:39      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:40      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:41      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:42      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:43      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:44      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:45      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:46      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:47      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:48      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:49      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:50      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:51      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:52      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:53      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:54      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:55      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:56      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:57      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:58      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:03:59      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:04:00      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:04:01      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:04:02      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:04:03      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:04:04      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:04:05      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:04:06      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:04:07      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:04:08      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:04:09      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:04:10      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:04:11      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:04:12      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:04:13      Die Innentemperatur hat den Schwellwert überschritten
+2.2.2023, 14:04:14      Die Innentemperatur hat den Schwellwert überschritten
