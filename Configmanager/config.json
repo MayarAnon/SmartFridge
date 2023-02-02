@@ -3,7 +3,7 @@
   "webServerHost": "localhost",
   "webServerPort": 3000,
   "webSocketPort": 3001,
-  "mailAdressRecipient": "aaa@aaa.aa",
+  "mailAdressRecipient": "felix@matalik.de",
   "lastDeleteHistory": "02.02.2023 14:02:51",
   "tempLimitValue": "1.0",
   "timeLimitValue": "60",
@@ -11,7 +11,7 @@
   "metricsPeriod": "1",
   "mailSender": {
     "sender": "smartfridge@gmx.net",
-    "mailPassword": "SmarterKuhlschrank123"
+    "mailPassword": "SmarterKuhlschrank1234"
   },
   "loginDataDatabase": {
     "host": "127.0.0.1",
