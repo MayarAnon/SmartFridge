@@ -2,7 +2,7 @@
 //das Löschen der Daten aus dem Datenbank und aus dem Log zuständig
 
 const MQTT = require("../mqttClient/mqttClient");
-const Alert = require("./Alert");
+const alert = require("./Alert");
 const configManager = new (require("../Configmanager/config"))();
 
 const alertLog = require("./AlertLog");
@@ -25,7 +25,7 @@ runAlertService = (async function () {
     const thisLogger = new alertLog(DBconnection, mqttClient);
     await thisLogger.deleteLog();
     //Alert erstellen
-    const thisAlert = new Alert(mqttClient);
+    const thisAlert = new alert(mqttClient);
     //auf Nachrichten warten und wenn welche kommen dann mit thisAlert-Methoden verarbeiten
     await mqttClient.on("message", async function (topic, message) {
       try {

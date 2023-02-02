@@ -155,7 +155,7 @@ const settimeoption = (() => {
 //mit Daten wird die Tabelle und das Diagramm ausgefüllt
 const getTempHistory = () => {
   axios
-    .get("http://localhost:3000/api/temphistory")
+    .get("http://"+window.location.hostname+":3000"+"/api/temphistory")
     .then((response) => {
       const transformedData = response.data.map((item) => {
         tempData.push({
@@ -188,7 +188,7 @@ const filltable = () => {
       )[i].x);
       cell2.innerHTML = tempData.slice(
         Math.max(tempData.length - numberOftableRows, 0)
-      )[i].y;
+      )[i].y +" °C";
     }
     myChart.update();
   } catch (err) {

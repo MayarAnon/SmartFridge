@@ -44,7 +44,7 @@ class WS {
       this.#sendRealTimeData(ws);
       webServer.listen(3001, () => {
         console.log(
-          `WebSocket Server wurde gestartet. Adresse = http://${webServerHost}:${webSocketPort}`
+          `WebSocket Server wurde gestartet.`
         );
       });
     } catch {

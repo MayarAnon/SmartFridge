@@ -57,7 +57,7 @@ class WSClient {
     this.avgRef = document.getElementById("avg");
     this.tempInsideRef = document.getElementById("tempInside");
     this.doorStateRef = document.getElementById("doorState");
-    this.websocketUrl = "ws://localhost:3001";
+    this.websocketUrl =  "ws://"+window.location.hostname+":3001";
     
     this.ws = new WebSocket(`${this.websocketUrl}`);
     if (!WSClient.instance) {

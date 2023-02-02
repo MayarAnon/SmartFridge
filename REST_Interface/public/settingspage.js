@@ -95,7 +95,7 @@ window.addEventListener("load", function () {
 // Die Felder aktuelle emailadresse/letzte löschung/eingestellter Schwellwert/ eingestellte maximale Öffnungszeit
 // mit den Werten aus "http://localhost:3000/api/initialValues" initializieren
 axios
-  .get("http://localhost:3000/api/initialValues")
+  .get("http://"+window.location.hostname+":3000/api/initialValues")
   .then((response) => {
     emailadresseRef.innerHTML = response.data.mailAdressRecipient;
     lastDeletetRef.innerHTML = response.data.lastDeleteHistory;
@@ -150,7 +150,7 @@ const setEmailAdresse = () => {
 //die funktion ruft einen Link um die LogDatei runterzuladen
 const downloadLogFile = () => {
   window.open(
-    "http://localhost:3000/api/downloadLog",
+    "http://"+window.location.hostname+":3000/api/downloadLog",
     "_self",
     "resizable=yes"
   );

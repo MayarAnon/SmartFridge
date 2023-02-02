@@ -6,22 +6,22 @@ const topics = configManager.get("alertService:relaventTopics");
 //Der Alert-service-MQTT-Client muss übergeben werden
 class Alert {
   constructor(client) {
-    this.TempLimit = 0.0;
-    this.TimeLimit = 0;
+    this.tempLimit = 0.0;
+    this.timeLimit = 0;
     this.startTime = Date.now();
     this.timeDiff = 0;
-    this.Logger = new alertLog();
+    this.logger = new alertLog();
     this.lastDoorState = "closed";
     this.client = client;
   }
-  // Die Methode ermittelt die Schwellwert(TempLimit/TimeLimit) aus den MQTT-Nachrichten
+  // Die Methode ermittelt die Schwellwert(tempLimit/timeLimit) aus den MQTT-Nachrichten
   // Topic und Message von MQTT müssen übergeben werden
   setLimits(topic, message) {
     if (topic === "tempLimitValue") {
-      this.TempLimit = message;
+      this.tempLimit = message;
     }
     if (topic === "timeLimitValue") {
-      this.TimeLimit = message;
+      this.timeLimit = message;
     }
   }
   //Die Methode überprüft, ob der TemperaturSchwellwert überschritten wurde und löst ein Alarm aus/ schreibt einen Rekord im Log
@@ -29,17 +29,17 @@ class Alert {
   checkTemp(topic, message) {
     if (topic === "tempInside") {
       const temp = parseFloat(JSON.parse(message));
-      if (Math.round(temp) >= Math.round(this.TempLimit)) {
+      if (Math.round(temp) >= Math.round(this.tempLimit)) {
         this.client.publish(topics.alertTempLimit, `surpassed`);
-        // console.log(`Tempinside= ${temp} Schwellwert: ${this.TempLimit}>>>>> surpassed`)
-        this.Logger.writeLog(
+        // console.log(`Tempinside= ${temp} Schwellwert: ${this.tempLimit}>>>>> surpassed`)
+        this.logger.writeLog(
           "Die Innentemperatur hat den Schwellwert überschritten",
           topic,
           message
         );
       } else {
         this.client.publish(topics.alertTempLimit, `under`);
-        // console.log(`Tempinside= ${temp} Schwellwert: ${this.TempLimit}>>>>> under `)
+        // console.log(`Tempinside= ${temp} Schwellwert: ${this.tempLimit}>>>>> under `)
       }
     }
   }
@@ -58,19 +58,19 @@ class Alert {
         this.startTime = Date.now();
       }
       this.timeDiff = Date.now() - this.startTime;
-      if (this.timeDiff > this.TimeLimit * 1000) {
+      if (this.timeDiff > this.timeLimit * 1000) {
         this.client.publish(topics.alertTimeLimit, `surpassed`);
-        // console.log(`doorstate= ${message} TimeLimit: ${this.TimeLimit} TimeDiff: ${
+        // console.log(`doorstate= ${message} timeLimit: ${this.timeLimit} TimeDiff: ${
         //   this.timeDiff / 1000
         // }>>>>> surpassed`)
-        this.Logger.writeLog(
+        this.logger.writeLog(
           "Die maximale Öffnungszeit wurde überschritten",
           topic,
           message
         );
       } else {
         this.client.publish(topics.alertTimeLimit, `under`);
-        // console.log(`doorstate= ${message} TimeLimit: ${this.TimeLimit} TimeDiff: ${
+        // console.log(`doorstate= ${message} timeLimit: ${this.timeLimit} TimeDiff: ${
         //   this.timeDiff / 1000
         // }>>>>> under `)
       }
