@@ -82,7 +82,7 @@ class EmailService extends SendMail {
       this.theme = "Alarm: Ihr Kühlschrank ist zu lange geöffnet";
       this.content =
         "Ihre Kühlschranktür ist länger, als die maximal zugelassene Öffnungszeit von " +
-        config.get("alerts:timeLimitValue") +
+        config.get("timeLimitValue") +
         " Sekunden geöffnet. Bitte schließen Sie ihren Kühlschrank umgehend.";
       this.send(config.get("mailAdressRecipient"), this.theme, this.content);
       this.variableTime = 1;
@@ -94,7 +94,7 @@ class EmailService extends SendMail {
       this.theme = "Alarm: Ihr Kühlschrank ist zu warm!";
       this.content =
         "Die Temperatur im inneren Ihres Kühlschranks hat die eingestellte Höchsttemperatur von " +
-        config.get("alerts:tempLimitValue") +
+        config.get("tempLimitValue") +
         " °C überschritten";
       this.send(config.get("mailAdressRecipient"), this.theme, this.content);
       this.variableTemp = 1;
