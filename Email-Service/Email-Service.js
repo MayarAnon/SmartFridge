@@ -7,7 +7,7 @@ MQTT inspiriert von Stefan Stumpf's Git*/
 
 const config = new (require("../Configmanager/config"))();
 //Diese Klasse ist für das Versenden einer E-Mail mit Nodemailer über GMX
-class sendMail {
+class SendMail {
   constructor() {
     this.nodemailer = require("nodemailer");
 
@@ -50,7 +50,7 @@ class sendMail {
   }
 }
 
-/*Die Klasse emailService erbt von der Klasse sendMail und beinhaltet die Logik zum Entscheiden,
+/*Die Klasse EmailService erbt von der Klasse SendMail und beinhaltet die Logik zum Entscheiden,
 wann eine Mail versendet werden soll.
 Atrribute:
 config= wird für den Zugriff auf die 
@@ -58,7 +58,7 @@ theme= Legt den Betreff der E-Mail fest
 content= Legt den Inhalt der E-Mail fest
 variableTime= wird benötigt, damit pro Überschreitung der Öffnungszeit nur eine E-Mail versendet wird
 variableTemp= wird benötigt, damit pro Überschreitung der Temperatur nur eine E-Mail versendet wird*/
-class emailService extends sendMail {
+class EmailService extends SendMail {
   constructor() {
     super();
     this.theme = null;
@@ -176,7 +176,7 @@ class mqttClass {
 
 let timeMessage = null;
 let tempMessage = null;
-const emailServiceObject = new emailService();
+const emailServiceObject = new EmailService();
 const client = new mqttClass();
 client.onConnect();
 client.mqttMessage();
