@@ -1,9 +1,12 @@
+/*Der Email-Service dient dem Versenden von E-Mails an die, vom Benutzer festgelegte, E-Mail-Adresse,
+im Falle eines Alarms.
+
 /*Referenz für die Verwendung von Nodemailer: 
 https://www.w3schools.com/nodejs/nodejs_email.asp
 MQTT inspiriert von Stefan Stumpf's Git*/
 
-//Diese Klasse ist für das Versenden einer E-Mail mit Nodemailer über GMX
 const config = new (require("../Configmanager/config"))();
+//Diese Klasse ist für das Versenden einer E-Mail mit Nodemailer über GMX
 class sendMail {
   constructor() {
     this.nodemailer = require("nodemailer");
@@ -23,7 +26,11 @@ class sendMail {
     });
   }
 
-  //Mit der Methode send wird eine E-Mail versendet
+  /*Mit der Methode send wird eine E-Mail versendet
+  Parameter:
+  receiver=E-Mail-Adresse des Empfängers
+  theme=Betreff der E-Mail
+  content=Inhalt der E-Mail*/
   send(receiver, theme, content) {
     //Wohin soll die Mail gehen mit welchem Inhalt:
     let mailOptions = {
@@ -61,7 +68,15 @@ class emailService extends sendMail {
     this.variableTemp = 0;
   }
 
-  //Diese Methode beinhaltet
+  /*Diese Methode beinhaltet die Logik zur Entscheidung, ob eine Mail versendet werden soll.
+  Außerdem werden Inhalt und Betreff festgelegt, entsprechend der Art des Alarms.
+  Variablen:
+  timeMessage= MQTT-Nachricht, ob die Tür zu lang geöffnet ist
+  tempMessage= MQTT-Nachricht, ob die maximale Öffnungszeit der Tür überschritten ist
+  variableTime=Hilfsvariable, damit die Mail nach dem Auslösen des Alarms aufgrund der Öffnungszeit 
+               der Tür nur einmal versendet wird, bis der Status wieder "under" lautet
+  variableTemp=Hilfsvariable, damit die Mail nach dem Auslösen des Alarms aufgrund der Temperatur 
+               im Kühlschrank nur einmal versendet wird, bis der Status wieder "under" lautet*/
   sendMailDecision() {
     if (timeMessage == "surpassed" && this.variableTime == 0) {
       this.theme = "Alarm: Ihr Kühlschrank ist zu lange geöffnet";
@@ -104,8 +119,8 @@ class mqttClass {
     this.mqtt = require("async-mqtt");
     this.mqttUrl = "mqtt://localhost";
 
-    this.mqttTopic1 = "alertTimeLimit"; //->surpassed/under
-    this.mqttTopic2 = "alertTempLimit"; //->surpassed/under
+    this.mqttTopic1 = "alertTimeLimit";
+    this.mqttTopic2 = "alertTempLimit";
     this.mqttClient = this.mqtt.connect(this.mqttUrl);
     this.zwischenSpeicher = null;
   }

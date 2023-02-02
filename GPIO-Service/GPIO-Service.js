@@ -1,6 +1,6 @@
 /*Die Aufgaben des GPIO-Services:
-°Sensordaten auslesen und an MQTT weitergeben ->wie oft?
-°LED aktivieren wenn ein Wert surpassed ist/deaktivieren wenn under
+°Sensordaten auslesen und an MQTT weitergeben
+°LED´s aktivieren, wenn ein Wert surpassed ist/deaktivieren wenn under
 °Nach timeInterval Daten in Datenbank schreiben */
 
 const config = new (require("../Configmanager/config"))();
@@ -37,11 +37,9 @@ class GPIOService {
     this.tempInsideRounded = minimum;
   }
 
-  /*Die Methode ledsAktivieren simuliert die LED´s also Konsolenausgaben, abhängig davon ob 
-    timeMessage oder tempMessage surpassed oder under sind 
-    Parameter: 
-    timeMessage= MQTT-Nachricht, ob die Tür zu lang geöffnet ist
-    tempMessage= MQTT-Nachricht, ob die maximale Öffnungszeit der Tür überschritten ist*/
+  /*Die Methode timeActivateLed simuliert eine LED als Konsolenausgabe, abhängig davon ob 
+    timeMessage surpassed oder under ist 
+    Parameter: timeMessage= MQTT-Nachricht, ob die Tür zu lang geöffnet ist*/
   timeActivateLed(timeMessage) {
     if (timeMessage == "surpassed") {
       console.log(
@@ -58,6 +56,10 @@ class GPIOService {
     }
   }
 
+  /*Die Methode timeActivateLed simuliert eine LED als Konsolenausgabe, abhängig davon ob 
+    tempMessage surpassed oder under ist
+    Parameter: 
+    tempMessage= MQTT-Nachricht, ob die maximale Öffnungszeit der Tür überschritten ist*/
   tempActivateLed(tempMessage) {
     if (tempMessage == "surpassed") {
       console.log(
@@ -78,16 +80,19 @@ class GPIOService {
   randomDoor() {
     if (this.doorState == "open") {
       this.doorState = "closed";
-      //console.log("IF AUSGEFÜHRT");
     } else {
       this.doorState = "open";
-      //console.log("ELSE AUSGEFÜHRT");
     }
     //console.log("randomDoor ausgeführt. Status in Funktion: " + this.doorState);
   }
 
   /*generateRandomValues erhöht oder verringert den Wert von tempInside abhängig davon,
-    ob doorState "open" oder "closed" ist*/
+    ob doorState "open" oder "closed" ist
+    Parameter:
+    minimum=Definiert die minimale Temperatur, die erzeugt werden soll
+    maximum=Definiert die maximale Temperatur, die erzeugt werden soll
+    tempInterval=Definiert wie oft ein neuer Wert erzeugt werden soll
+    Variable: mathVariable=zufällig erzeugter Wert, um den die Temperatur steigt/fällt*/
   generateRandomValues(minimum, maximum, tempInterval) {
     this.tempInside = minimum;
     let mathVariable = 1;
@@ -102,11 +107,12 @@ class GPIOService {
       this.tempInside = this.tempInside + mathVariable;
       this.tempInsideRounded = this.tempInside.toFixed(1);
       //console.log(this.tempInsideRounded + this.doorState);
-    }, tempInterval); //wie bekomme ich hier tempInterval rein?
+    }, tempInterval);
   }
 }
 
-//Funktion, um in die Datenbank zu schreiben
+/*Funktion, um in die Datenbank zu schreiben
+Parameter: tempInsideRounded= Auf eine Nachkommastelle gerundeter aktueller Temperaturwert*/
 async function writeInDatabase(tempInsideRounded) {
   //console.log("writeInDataBase:" + tempInsideRounded);
   const result = await dbConnection.query(
@@ -115,7 +121,10 @@ async function writeInDatabase(tempInsideRounded) {
   //console.log(result);
 }
 
-//emitFunction gibt die erzeugten Werte aus an MQTT und schreibt die aktuelle Temperatur in die Datenbank
+/*emitFunction gibt die erzeugten Werte aus an MQTT und schreibt die aktuelle Temperatur in die Datenbank
+Parameter:
+tempInsideRounded= Auf eine Nachkommastelle gerundeter aktueller Temperaturwert
+doorState= aktueller Status der Türe ->open/closed*/
 function emitFunction(tempInsideRounded, doorState) {
   //console.log('emitFunction: Temperatur: ' + tempInsideRounded + '°C ' + ' Türstatus: ' + doorState);
   mqttClient.publish(mqttTopic1, tempInsideRounded.toString()).then();
@@ -164,6 +173,8 @@ mqttClient.on("connect", async () => {
   }
 });
 
+/*In die Variable bufferVar wird der Inhalt, der über MQTT kommt immer geschrieben, 
+bevor er auf die, dem Topic entsprechenden, Variablen umverteilt wird */
 let bufferVar = null;
 //Funktion, welche bei einer neuen MQTT Nachricht in dem Subscription Topic ausgeführt wird.
 //Hier wird der Inhalt, der über MQTT auf den drei Topics kommt auch auf drei verschiedene Variablen aufgeteilt
@@ -174,17 +185,14 @@ mqttClient.on("message", (topic, message) => {
     switch (topic) {
       case "alertTimeLimit":
         timeMessage = bufferVar;
-        //console.log('alertTimeLimit: ' + bufferVar);
         GPIO.timeActivateLed(timeMessage);
         break;
       case "alertTempLimit":
         tempMessage = bufferVar;
-        //console.log('alertTempLimit: ' + bufferVar);
         GPIO.tempActivateLed(tempMessage);
         break;
       case "timeInterval":
         timeIntervalMessage = bufferVar;
-        //console.log('timeInterval: ' + bufferVar);
         saveIntervall = timeIntervalMessage * 1000;
         clearTimeout(intervalId);
         emitFunction(GPIO.tempInsideRounded, GPIO.doorState);
