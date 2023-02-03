@@ -97,7 +97,6 @@ class RestAPI {
       } else {
         await this.mqtt.publish("deleteHistory", "false");
       }
-      console.log(answer)
       res.status(200).json({ message: `` });
     } catch (error) {
       res.status(400).json({ message: `${error}` });

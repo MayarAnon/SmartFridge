@@ -122,8 +122,8 @@ const setTempLimitValue = () => {
 //die Funktion ist für die Verarbeitung von der Benutzereingabe "maximale öffnungszeit"
 const setTimeLimitValue = () => {
   if (isNumeric(timeLimitRef, "bitte Zeit in Minuten eingeben!!")) {
-    const limit = timeLimitRef.value * 60;
-    transmit("api/timeLimitValue", limit);
+    const limit = timeLimitRef.value ;
+    transmit("api/timeLimitValue", limit* 60);
     currentTimeLimitRef.innerHTML = limit;
   }
 };
