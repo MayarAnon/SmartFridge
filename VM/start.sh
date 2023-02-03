@@ -1,9 +1,8 @@
 #!/bin/bash
 
 #ein Verzeichnis höher wechseln
-cd ..
 
-cd REST_Interface
+cd /home/smartfridge/REST_Interface
 
 #Services und Server starten
 node server.js &
