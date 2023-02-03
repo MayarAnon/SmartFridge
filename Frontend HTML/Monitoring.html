@@ -1,23 +1,28 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!--responsive (Elemente können sich der Bildschirmgröße anpassen)-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+  <link rel="stylesheet" type="text/css" href="style.css">
   <!--Stylesheets und JavaScript, um die MDL-Elemente verwenden zu können-->
   <link rel="stylesheet" href="mdl/material.min.css">
   <script src="mdl/material.min.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <title>Monitoring</title>
+  <title>Monitoring</title>
 </head>
+
 <body>
   <!--Fixierte Kopfzeile mit Navigationsleiste und ausklappbarem Navigationsmenü-->
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
       <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title"><h5>Smart Fridge <p>Startseite</p></h5></span>
+        <span class="mdl-layout-title">
+          <h5>Smart Fridge <p>Monitoring</p>
+          </h5>
+        </span>
         <!--Platzhalter, damit die Navigationsleiste rechts ist-->
         <div class="mdl-layout-spacer"></div>
         <!--Navigationsleiste oben rechts (wird auf kleinen Displays nicht angezeigt)-->
@@ -42,63 +47,76 @@
     <main class="mdl-layout__content">
       <div class="page-content">
         <!-- Hier kommt der Inhalt der Seite hin-->
-        <div><canvas id="myChart"></canvas></div>
-        <div class="zeitraum">
-        Anfangszeit: <input type="datetime-local" id="startTime"   step="1" />
-        endzeit: <input  type="datetime-local" id="endTime"  step="1"/>
-        <input type="button" id="refreshchart" value="refresh Chart"  />
-    </div>
-        <table>
-          <ul class="demo-list-item mdl-list">
-          <li class="mdl-list__item">
-            <span class="mdl-list__item-primary-content">
-                Zustand <p id="doorState"></p>
-            </span>
-          </li>
-          <li class="mdl-list__item">
-            <span class="mdl-list__item-primary-content">
-              Raumtemperatur <p></p>
-            </span>
-          </li>
-          <li class="mdl-list__item">
-            <span class="mdl-list__item-primary-content">
-              Kühlschranktemperatur <p id="tempInside"></p>
-            </span>
-            <li class="mdl-list__item">
-              <span class="mdl-list__item-primary-content">
-                Maximum <p id="max"></p> 
-              </span>
-            </li>
-            <li class="mdl-list__item">
-              <span class="mdl-list__item-primary-content">
-                Minimum  <p id="min"></p>
-              </span>
-            </li>
-            <li class="mdl-list__item">
-              <span class="mdl-list__item-primary-content">
-                Mittelwert <p id="avg"></p>
-              </span>
-            </li>
-          </li>
-          </ul>
-          </table>
+        <div id="container">
+
+        
+        <div id="graph">
           <div>
-            <table id="myTable" border="1">
-              <tr>
-                  <th>Erfassungszeit</th>
-                  <th>Messwert</th>
-              </tr>
+            <canvas id="myChart"></canvas>
           </div>
+          <div class="zeitraum">
+            Anfangszeit: <input type="datetime-local" id="startTime" step="1" />
+            endzeit: <input type="datetime-local" id="endTime" step="1" />
+            <input type="button" id="refreshchart" value="refresh Chart" />
           </div>
+        </div>
+
+          <div class="gridContainer" id="echtzeitMonitoring">
+            <div class="gridItem">
+              <p style="display: inline-block; margin-right: 3px;">Zustand:</p>
+              <p id="doorState" style="display: inline-block;"></p>
+            </div>
+            <div class="gridItem">
+              <p style="display: inline-block; margin-right: 3px;">Raumtemperatur:</p>
+              <p style="display: inline-block;">Noch nicht verfügbar</p>
+            </div>
+            <div class="gridItem">
+              <p style="display: inline-block; margin-right: 3px;">Kühlschranktemperatur:</p>
+              <p id="tempInside" style="display: inline-block;"></p>
+            </div>
+            <div class="gridItem">Maximum:
+              <p id="max" style="display: inline-block; margin-right: 3px;"></p>
+            </div>
+            <div class="gridItem">Minimum:
+              <p id="min" style="display: inline-block; margin-right: 3px;"></p>
+            </div>
+            <div class="gridItem">Mittelwert:
+              <p id="avg" style="display: inline-block; margin-right: 3px;"></p>
+            </div>
+          </div>
+        <div id="tableMonitoring">
+          <table id="myTable" border="1">
+            <tr>
+              <th>Erfassungszeit</th>
+              <th>Messwert</th>
+            </tr>
+        </div>
+      </div>
+        <div class="placeHolder"></div>
+        <footer>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <p style="margin-left: 20px;">Team: SmartFridge</p>
+            </div>
+            <div>
+              <p>Version: 0.9</p>
+            </div>
+            <div style="text-align: right;">
+              <p id="systemTime" style="display: inline-block; margin-right: 3px;"></p>
+              <p id="systemDate" style="display: inline-block; margin-right: 20px;"></p>
+            </div>
+          </div>
+        </footer>
+
       </div>
     </main>
   </div>
-  <div style="text-align: right;"><p id="systemTime"></p><p id="systemDate"></p></div>
+ 
 </body>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script type="module" src="monitoring.js"></script>
+
 </html>
-
-

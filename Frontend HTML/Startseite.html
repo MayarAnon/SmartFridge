@@ -1,86 +1,104 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!--responsive (Elemente können sich der Bildschirmgröße anpassen)-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="styleStart.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
   <!--Stylesheets und JavaScript, um die MDL-Elemente verwenden zu können-->
   <link rel="stylesheet" href="mdl/material.min.css">
   <script src="mdl/material.min.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <title>Startseite</title>  
+  <title>Startseite</title>
 </head>
 
 <body>
-<!--Fixierte Kopfzeile mit Navigationsleiste und ausklappbarem Navigationsmenü-->
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-  <header class="mdl-layout__header">
-    <div class="mdl-layout__header-row">
-      <span class="mdl-layout-title"><h5>Smart Fridge <p>Startseite</p></h5></span>
-      <!--Platzhalter, damit die Navigationsleiste rechts ist-->
-      <div class="mdl-layout-spacer"></div>
-      <!--Navigationsleiste oben rechts (wird auf kleinen Displays nicht angezeigt)-->
-      <nav class="mdl-navigation mdl-layout--large-screen-only">
+  <!--Fixierte Kopfzeile mit Navigationsleiste und ausklappbarem Navigationsmenü-->
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title">
+          <h5>Smart Fridge <p>Startseite</p>
+          </h5>
+        </span>
+        <!--Platzhalter, damit die Navigationsleiste rechts ist-->
+        <div class="mdl-layout-spacer"></div>
+        <!--Navigationsleiste oben rechts (wird auf kleinen Displays nicht angezeigt)-->
+        <nav class="mdl-navigation mdl-layout--large-screen-only">
+          <a class="mdl-navigation__link" id="startPage" href="Startseite.html">Startseite</a>
+          <a class="mdl-navigation__link" id="cameraPage" href="Kamera.html">Kamera</a>
+          <a class="mdl-navigation__link" id="monitoringPage" href="Monitoring.html">Monitoring</a>
+          <a class="mdl-navigation__link" id="settingsPage" href="Einstellungen.html">Einstellungen</a>
+        </nav>
+      </div>
+    </header>
+    <!--Ausklappbares Navigationsmenü-->
+    <div class="mdl-layout__drawer">
+      <span class="mdl-layout-title">Menü</span>
+      <nav class="mdl-navigation">
         <a class="mdl-navigation__link" id="startPage" href="Startseite.html">Startseite</a>
         <a class="mdl-navigation__link" id="cameraPage" href="Kamera.html">Kamera</a>
         <a class="mdl-navigation__link" id="monitoringPage" href="Monitoring.html">Monitoring</a>
         <a class="mdl-navigation__link" id="settingsPage" href="Einstellungen.html">Einstellungen</a>
       </nav>
     </div>
-  </header>
-  <!--Ausklappbares Navigationsmenü-->
-  <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">Menü</span>
-    <nav class="mdl-navigation">
-      <a class="mdl-navigation__link" id="startPage" href="Startseite.html">Startseite</a>
-      <a class="mdl-navigation__link" id="cameraPage" href="Kamera.html">Kamera</a>
-      <a class="mdl-navigation__link" id="monitoringPage" href="Monitoring.html">Monitoring</a>
-      <a class="mdl-navigation__link" id="settingsPage" href="Einstellungen.html">Einstellungen</a>
-    </nav>
+    <main class="mdl-layout__content">
+      <div class="page-content">
+        <div class="flexParent">
+          <div class="flexChild">
+            <img src="" frameborder="0">
+          </div>
+
+          <!--Tabelle der aktuellen Daten -->
+          <div class="flexChild">
+            <div class="gridContainer" id="echtzeitwerte">
+              <div class="gridItem">
+                <p style="display: inline-block; margin-right: 3px;">Zustand:</p> 
+                <p id="doorState" style="display: inline-block;"></p>
+              </div>
+              <div class="gridItem">
+                <p style="display: inline-block; margin-right: 3px;">Raumtemperatur:</p> 
+                <p style="display: inline-block;">Noch nicht verfügbar</p>
+              </div>
+              <div class="gridItem">
+                <p style="display: inline-block; margin-right: 3px;">Kühlschranktemperatur:</p> 
+                <p id="tempInside" style="display: inline-block;"></p>
+              </div>
+              <div class="gridItem">Maximum:
+                <p id="max" style="display: inline-block; margin-right: 3px;"></p>
+              </div>
+              <div class="gridItem">Minimum:
+                <p id="min" style="display: inline-block; margin-right: 3px;"></p>
+              </div>
+              <div class="gridItem">Mittelwert:
+                <p id="avg" style="display: inline-block; margin-right: 3px;"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Your content goes here-->
+        <div class="placeHolder"></div>
+        <footer>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <p style="margin-left: 20px;">Team: SmartFridge</p>
+            </div>
+            <div>
+              <p>Version: 0.9</p> 
+            </div>
+            <div style="text-align: right;">
+              <p id="systemTime" style="display: inline-block; margin-right: 3px;"></p>
+              <p id="systemDate" style="display: inline-block; margin-right: 20px;"></p>
+            </div>
+          </div>
+        </footer>
+      </div>
   </div>
-  <main class="mdl-layout__content">
-    <div class="page-content">
-    <div class="parent" >  
-      <!--<div class="child" style="background-color: royalblue;">-->
-        <img src="kamerabild.jpg" style="height:100%; width: auto;">
-      <!--</div>-->
-      
-      <!--Tabelle der aktuellen Daten -->
-      <div class="child" style="background-color: red;">
-        <div class="gridContainer">
-          <div class="gridItem">Zustand <p id="doorState"></p></div>
-          <div class="gridItem">Raumtemperatur <p></p></div>
-          <div class="gridItem">Kühlschranktemperatur <p id="tempInside"></p></div>
-          <div class="gridItem">Maximum <p id="max"></p></div>
-          <div class="gridItem">Minimum  <p id="min"></p></div>
-          <div class="gridItem">Mittelwert <p id="avg"></p></div>
-        </div>
-      </div>
-    </div>
-      <!--Your content goes here--> 
-      <div id = "footer">
-        <div style="display: flex; justify-content: space-between;">
-          <div>Team: SmartFridge</div>
-          <div>Version: 0.9</div>
-          <div style="text-align: right;"><p id="systemTime"></p><p id="systemDate"></p></div>
-        </div>
-      </div>
-      <!--<footer>
-        <div class="footerLinks">
-          <ul class="mdl-mini-footer__link-list">
-            <li>Smart Fridge</li>
-            <li>Version: 0.9</li>
-          </ul>
-        </div>
-        <div id="dateAndTime">
-          <p>Testuhrzeit und Datum </p>
-        </div>
-      </footer>-->
-    </div>
   </main>
-</div>
+  </div>
 </body>
 <script type="module" src="startpage.js"></script>
+
 </html>

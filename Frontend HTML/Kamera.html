@@ -5,19 +5,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!--responsive (Elemente können sich der Bildschirmgröße anpassen)-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!--<link rel="stylesheet" type="text/css" href="style.css">-->
+  <link rel="stylesheet" type="text/css" href="style.css">
   <!--Stylesheets und JavaScript, um die MDL-Elemente verwenden zu können-->
   <link rel="stylesheet" href="mdl/material.min.css">
   <script src="mdl/material.min.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <title>Kamera</title>
+  <title>Kamera</title>
 </head>
 <body>
   <!--Fixierte Kopfzeile mit Navigationsleiste und ausklappbarem Navigationsmenü-->
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
       <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title"><h5>Smart Fridge <p>Startseite</p></h5></span>
+        <span class="mdl-layout-title"><h5>Smart Fridge <p>Kamera</p></h5></span>
         <!--Platzhalter, damit die Navigationsleiste rechts ist-->
         <div class="mdl-layout-spacer"></div>
         <!--Navigationsleiste oben rechts (wird auf kleinen Displays nicht angezeigt)-->
@@ -43,20 +43,25 @@
       <div class="page-content">
         <div>
           <img id="cameraStream" src="" frameborder="0"></img>
-
-          <style>
-              #cameraStream {
-            transform: rotate(90deg);
-                  width: 100%;
-                  height: 100%;
-              }
-          </style>
         </div>
         <!-- Hier kommt der Inhalt der Seite hin-->
-        
+        <div class="placeHolder"></div>
+        <footer>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <p style="margin-left: 20px;">Team: SmartFridge</p>
+            </div>
+            <div>
+              <p>Version: 0.9</p> 
+            </div>
+            <div style="text-align: right;">
+              <p id="systemTime" style="display: inline-block; margin-right: 3px;"></p>
+              <p id="systemDate" style="display: inline-block; margin-right: 20px;"></p>
+            </div>
+          </div>
+        </footer>
       </div>
     </main>
-    <div style="text-align: right;"><p id="systemTime"></p><p id="systemDate"></p></div>
   </div>
 </body>
 <script type="module" src="camera.js"></script>
