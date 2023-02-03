@@ -7,7 +7,7 @@ const nconf = require("nconf");
 const fs = require("fs");
 
 //ConfigManager ist dafür zuständig Informationen über eine Webbroser Client hinweg zu speichern und zu laden
-class configManager extends config {
+class ConfigManager extends config {
   constructor() {
     //Konstruktor der ParentKlasse aufrufen
 
@@ -15,15 +15,15 @@ class configManager extends config {
 
     //Sicherstellen das es nur eine Instanze von configmanager gibt
 
-    if (!configManager.instance) {
-      configManager.instance = this;
+    if (!ConfigManager.instance) {
+      ConfigManager.instance = this;
     }
 
     //Auf relevante MQTT Nachrichten reagiren
 
     this.#mqttListener();
 
-    return configManager.instance;
+    return ConfigManager.instance;
   }
 
   //Methode um relevante MQTT Nachrichten zu handeln
@@ -100,4 +100,4 @@ class configManager extends config {
   }
 }
 
-const startModule = new configManager();
+const startModule = new ConfigManager();

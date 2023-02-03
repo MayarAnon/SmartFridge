@@ -8,7 +8,7 @@ const config = new (require("../Configmanager/config"))();
 //Vorteile: nur eine Instance pro Service, Eine Verbindung, Automatisches Reconnecten, automatische Sicherheit
 //Parameter: den Namen des Services
 //return: mqttClient Verbindung als Promise
-class mqttClient {
+class MqttClient {
   constructor(serviceName) {
     //Optionen der Verbindung deklarieren
 
@@ -45,4 +45,4 @@ class mqttClient {
   }
 }
 
-module.exports = mqttClient;
+module.exports = MqttClient;

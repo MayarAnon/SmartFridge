@@ -31,7 +31,7 @@ class RestAPI {
 
     this.restRouter.use(express.json()); // Ermöglicht das Auslesen von JSON-Daten aus dem Request-Body
 
-    this.distributor();
+    this.#distributor();
 
     return this.restRouter;
   }
@@ -39,35 +39,23 @@ class RestAPI {
   //Verteilt die Endpunkte auf die verschienen Funktionen
   //Parameter: keine
   //return: kein
-  async distributor() {
+  async #distributor() {
     this.mqtt = await new mqtt("Restful_Schnittstelle");
 
-    this.restRouter.post("/timeInterval", this.timeIntervalEndpoint.bind(this)); // Bindet den Wert von "this" auf die aktuelle Instanz des Objekts, um sicherzustellen, dass die Methode "this.timeIntervalEndpoint" innerhalb des Callbacks korrekt aufgerufen wird.
-    this.restRouter.post(
-      "/deleteHistory",
-      this.deleteHistoryEndpoint.bind(this)
-    );
-    this.restRouter.post(
-      "/tempLimitValue",
-      this.tempLimitValueEndpoint.bind(this)
-    );
-    this.restRouter.post(
-      "/timeLimitValue",
-      this.timeLimitValueEndpoint.bind(this)
-    );
-    this.restRouter.post(
-      "/mailAdressRecipient",
-      this.mailAdressRecipientEndpoint.bind(this)
-    );
-    this.restRouter.get("/tempHistory", this.tempHistroyEndpoint);
-    this.restRouter.get("/downloadLog", this.downloadLogEndpoint);
-    this.restRouter.get("/initialValues", this.initialValuesEndpoint);
+    this.restRouter.post("/timeInterval", this.#timeIntervalEndpoint.bind(this)); // Bindet den Wert von "this" auf die aktuelle Instanz des Objekts, um sicherzustellen, dass die Methode "this.timeIntervalEndpoint" innerhalb des Callbacks korrekt aufgerufen wird.
+    this.restRouter.post("/deleteHistory",this.#deleteHistoryEndpoint.bind(this));
+    this.restRouter.post("/tempLimitValue",this.#tempLimitValueEndpoint.bind(this));
+    this.restRouter.post("/timeLimitValue",this.#timeLimitValueEndpoint.bind(this));
+    this.restRouter.post("/mailAdressRecipient",this.#mailAdressRecipientEndpoint.bind(this));
+    this.restRouter.get("/tempHistory", this.#tempHistroyEndpoint);
+    this.restRouter.get("/downloadLog", this.#downloadLogEndpoint);
+    this.restRouter.get("/initialValues", this.#initialValuesEndpoint);
   }
 
   //Endpunt timeInterval, checkt auf eine Valide eingabe und published dann unter dem Topic
   //Prameter: das request und response Objekt
   //return: kein
-  async timeIntervalEndpoint(req, res) {
+  async #timeIntervalEndpoint(req, res) {
     try {
       //Erfassen der Nachricht und umwandlung von einem String in eine Zahl
 
@@ -88,7 +76,7 @@ class RestAPI {
   //Endpunt delteHistory, checkt auf eine Valide eingabe und published dann unter dem Topic
   //Prameter: das request und response Objekt
   //return: kein
-  async deleteHistoryEndpoint(req, res) {
+  async #deleteHistoryEndpoint(req, res) {
     try {
       let answer = req.body.container;
 
@@ -105,7 +93,7 @@ class RestAPI {
   //Endpunt delteHistory, checkt auf eine Valide eingabe und published dann unter dem Topic
   //Prameter: das request und response Objekt
   //return: kein
-  async tempLimitValueEndpoint(req, res) {
+  async #tempLimitValueEndpoint(req, res) {
     try {
       //Erfassen der Nachricht und umwandlung von einem String in eine Zahl und auf eine Nachkommastelle runden
 
@@ -127,7 +115,7 @@ class RestAPI {
   //Endpunt delteHistory, checkt auf eine Valide eingabe und published dann unter dem Topic
   //Prameter: das request und response Objekt
   //return: kein
-  async timeLimitValueEndpoint(req, res) {
+  async #timeLimitValueEndpoint(req, res) {
     try {
       //Erfassen der Nachricht und umwandlung von einem String in eine Zahl
 
@@ -150,7 +138,7 @@ class RestAPI {
   //Endpunt mailAddressRecipient, checkt auf eine Valide eingabe und published dann unter dem Topic
   //Prameter: das request und response Objekt
   //return: kein
-  async mailAdressRecipientEndpoint(req, res) {
+  async #mailAdressRecipientEndpoint(req, res) {
     try {
       let mailAdress = req.body.container;
       //Validierung der E-Mail-Adresse
@@ -166,7 +154,7 @@ class RestAPI {
   //Endpunt tempHistory, hohlt gesamte daten aus der Datenbank und stellt sie dann unter dem Endpunkt als Objekt zur verfügung
   //Prameter: das request und response Objekt
   //return: kein
-  async tempHistroyEndpoint(req, res) {
+  async #tempHistroyEndpoint(req, res) {
     //Array für die Daten aus der Datenbank
 
     const data = [];
@@ -194,7 +182,7 @@ class RestAPI {
   //Endpunt downloadLog, stellt die Log datei als download unter dem Endpuntk zur Verfügung
   //Prameter: das request und response Objekt
   //return: kein
-  downloadLogEndpoint(req, res) {
+  #downloadLogEndpoint(req, res) {
     const logPath = path.join(__dirname, "../", "public/Log.txt");
 
     res.download(logPath);
@@ -203,7 +191,7 @@ class RestAPI {
   //Endpunt intitialValues, lädt Werte aus der Config und stellt sie als String Objekt unter dem Endpunkt zur Verfügung
   //Prameter: das request und response Objekt
   //return: kein
-  initialValuesEndpoint(req, res) {
+  #initialValuesEndpoint(req, res) {
     const config = new (require("../../Configmanager/config"))();
     const dataObjekt = {
       mailAdressRecipient: config.get("mailAdressRecipient"),

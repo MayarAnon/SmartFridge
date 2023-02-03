@@ -56,7 +56,7 @@ class WebServer {
 
       this.app.use("/", viewsRouter);
       this.app.use("/api", restAPI);
-      this.app.use(express.static("public")); // für Testzwecke
+      this.app.use(express.static("public")); // für Websocke und Log
     } catch (error) {
       console.log(error + "Fehler bei Router setup");
     }
