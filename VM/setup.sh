@@ -20,8 +20,9 @@ sudo cp smartfridge.service /etc/systemd/system/smartfridge.service
 
 #Autostart neustarten 
 
-systemctl daemon-reload
-systemctl enable smartfridge.service
+sudo systemctl daemon-reload
+sudo systemctl enable smartfridge.service
+sudo systemctl start smartfridge.service
 
 #Dinste Herunterladen und installieren 
 
