@@ -46,3 +46,13 @@ class WS extends WSClient {
   }
 }
 const socket = new WS();
+// Die funktion ermittelt den url für den cameraStream
+function getHostAddress() {
+  return (
+    window.location.protocol +
+    "//" +
+    window.location.hostname +
+    ":8081/0/stream"
+  );
+}
+document.getElementById("cameraStream").src = getHostAddress();
