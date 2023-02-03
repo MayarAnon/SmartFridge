@@ -6,8 +6,6 @@ const webSocket = require("ws");
 const dbConn = require("./WSDB");
 const config = new (require("../Configmanager/config"))();
 const MQTT = require("../mqttClient/mqttClient");
-const webServerHost = config.get("webServerHost");
-const webSocketPort = config.get("webSocketPort");
 const sendIntervalforSystemtime = 1000; // in ms
 let sendIntervalforDBData = Number(config.get("timeIntervalDefault")); //in ms
 
