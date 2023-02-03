@@ -25,9 +25,9 @@ const timeRef = document.getElementById("systemTime");
 class WS extends WSClient {
   constructor() {
     super();
-    this.renderMessages();
+    this.#renderMessages();
   }
-  renderMessages() {
+  #renderMessages() {
     const client = this;
 
     client.ws.onmessage = function (messageEvent) {

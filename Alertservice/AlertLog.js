@@ -16,13 +16,13 @@ class AlertLog {
 
   //Die Funktion formatiert den Inhalt und fügt eine Zeitstempel zum Inhalt hinzu
   // Übergeben muss man nur den String(Inhalt was im Log geschrieben werden muss)
-  formatter(content) {
+  #formatter(content) {
     const time = new Date().toLocaleString("de-DE");
     const timestamp = time;
     return `${timestamp}      ${content}\n`;
   }
   //Mit der Methode lässt sich die Datenbank löschen
-  async deleteTable() {
+  async #deleteTable() {
     try {
       const query = "TRUNCATE TABLE messergebnisse";
       this.dbConnection.query(query);
@@ -41,7 +41,7 @@ class AlertLog {
             console.error(err);
           }
         });
-        this.deleteTable();
+        this.#deleteTable();
       }
     });
   }
@@ -49,15 +49,18 @@ class AlertLog {
   //Die funktion übernimmt das Schreiben des Loges
   //Der Inhalt/Record wird der Funktion als String übergeben
   writeLog(content) {
-    fs.appendFile(logPath, this.formatter(content), (err) => {
+    fs.appendFile(logPath, this.#formatter(content), (err) => {
       if (err) {
         console.error(err);
       }
     });
   }
 }
-
-module.exports = AlertLog;
-
+const logInstance = (DBconnection, mqttClient) => {
+  const logger = new AlertLog(DBconnection, mqttClient);
+  Object.seal(logger);
+  return logger;
+};
+module.exports = logInstance;
 // const loger = new AlertLog()
 // loger.deleteTable()

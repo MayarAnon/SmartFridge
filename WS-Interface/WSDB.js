@@ -2,7 +2,7 @@
 // aus der Datenbank zu fetchen
 const MariaDB = require("../DB_Connection/mariaDB");
 const config = new (require("../Configmanager/config"))();
-const MetricsPeriod = Number(config.get("metricsPeriod")); // in days
+const metricsPeriod = Number(config.get("metricsPeriod")); // in days
 //WSDB Klasse ist eine Childclass der Klasse MariaDB, mit der Klasse werden die Daten des Websocketes gefetcht
 class WSDB extends MariaDB {
   constructor() {
@@ -15,7 +15,7 @@ class WSDB extends MariaDB {
       const query = `
         SELECT MAX(Messwert), MIN(Messwert), AVG(Messwert)
         FROM messergebnisse
-        WHERE InDtTm BETWEEN NOW() - INTERVAL ${MetricsPeriod} DAY AND NOW();
+        WHERE InDtTm BETWEEN NOW() - INTERVAL ${metricsPeriod} DAY AND NOW();
       `;
       const [results] = await super.query(query);
 
@@ -29,16 +29,24 @@ class WSDB extends MariaDB {
     try {
       const query = "SELECT * FROM messergebnisse ORDER BY ID DESC LIMIT 1";
       const [row] = await super.query(query);
+     
+      if(typeof(row)!='undefined'){
+        //Zeile formatieren
+        const formattedRow = JSON.stringify({
+          value: row.Messwert,
+          timestamp: row.InDtTm.toISOString()
+            .replace(/T/, " ")
+            .replace(/\..+/, ""),
+        });
 
-      //Zeile formatieren
-      const formattedRow = JSON.stringify({
-        value: row.Messwert,
-        timestamp: row.InDtTm.toISOString()
-          .replace(/T/, " ")
-          .replace(/\..+/, ""),
-      });
-
-      return formattedRow;
+        return formattedRow;
+    }else{
+       //wenn Tabelle leer ist, dann sende eine "leere" Zeile
+        return JSON.stringify({
+          value: 0.0,
+          timestamp: 0,
+        });;
+    }
     } catch (err) {
       console.error(err);
     }
@@ -48,7 +56,6 @@ class WSDB extends MariaDB {
 module.exports = WSDB;
 
 // const db = new WSDB()
-
 // db.sendLatestRow().then(x => {
 //     console.log(x);
 //   })

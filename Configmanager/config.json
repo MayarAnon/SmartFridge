@@ -4,7 +4,7 @@
   "webServerPort": 3000,
   "webSocketPort": 3001,
   "mailAdressRecipient": "felix@matalik.de",
-  "lastDeleteHistory": "02.02.2023 14:02:51",
+  "lastDeleteHistory": "03.02.2023 02:24:38",
   "tempLimitValue": "1.0",
   "timeLimitValue": "60",
   "timeIntervalDefault": "10",

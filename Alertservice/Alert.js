@@ -10,7 +10,7 @@ class Alert {
     this.timeLimit = 0;
     this.startTime = Date.now();
     this.timeDiff = 0;
-    this.logger = new alertLog();
+    this.logger = alertLog();
     this.lastDoorState = "closed";
     this.client = client;
   }
@@ -78,4 +78,9 @@ class Alert {
   }
 }
 
-module.exports = Alert;
+const alertInstance = (client) => {
+  const alert = new Alert(client);
+  Object.seal(alert);
+  return alert;
+};
+module.exports = alertInstance;

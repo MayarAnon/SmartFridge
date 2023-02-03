@@ -90,9 +90,9 @@ const insertIntoTable = (temp) => {
 class WS extends WSClient {
   constructor() {
     super();
-    this.renderMessages();
+    this.#renderMessages();
   }
-  renderMessages() {
+  #renderMessages() {
     const client = this;
     try {
       client.ws.onmessage = function (messageEvent) {

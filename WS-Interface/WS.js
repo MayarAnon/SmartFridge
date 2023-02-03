@@ -2,7 +2,7 @@
 //der Methode sendRealTimeData an alle WS-clients geschickt.
 //Echtzeitdaten: Systemzeit, aktuelle tempInside, aktuelle doorstate und Min,Max und Avg 
 
-const WebSocket = require("ws");
+const webSocket = require("ws");
 const dbConn = require("./WSDB");
 const config = new (require("../Configmanager/config"))();
 const MQTT = require("../mqttClient/mqttClient");
@@ -27,7 +27,7 @@ class WS {
   // Außerdem werden die Aktuelle Temperatur und die Kennzahlen jede Sekunde an alle Clients verschickt
   #creatWebsocketServer(webServer) {
     try {
-      this.webSocketServer = new WebSocket.Server({ server: webServer });
+      this.webSocketServer = new webSocket.Server({ server: webServer });
       let ws;
       this.webSocketServer.on("connection", (ws) => {
         ws.on("message", (message) => {
@@ -70,7 +70,6 @@ class WS {
   //Die Methode startInterval gibt einen Timer zurück der mit dem Interval _interval die Daten aus der Datenbank mit this.sendMessage sendet
   //Rückgabe ist die TimerID, die z.B. gebraucht wird um den Timer zu stoppen
   #startInterval(_interval) {
-    
     return setInterval(async () => {
       const latestRow = await this.dbMethodes.sendLatestRow();
       const metrics = await this.dbMethodes.sendMetrics();
@@ -82,16 +81,12 @@ class WS {
   //der letzten 24h über WS. Die Methode verbindet sich außerdem mit dem MQTT Broker und sendet den Öffnungszustand des Kühlschranks über WS
   async #sendRealTimeData() {
     const mqttClient = await new MQTT(config.get('WS-Interface:clientId'));
-
+    // zu Topics subscriben
     const topics = Object.values(this.topicList);
     mqttClient.subscribe(topics);
 
     try {
       var dbRetrievalLoop = this.#startInterval(sendIntervalforDBData);
-      const latestRow = await this.dbMethodes.sendLatestRow();
-      const metrics = await this.dbMethodes.sendMetrics();
-      await this.sendMessage("LatestTemp", latestRow);
-      await this.sendMessage("Metrics", metrics);
       mqttClient.on("message", (topic, message) => {
         if (topic == "timeInterval") {
           sendIntervalforDBData = Number(message.toString());

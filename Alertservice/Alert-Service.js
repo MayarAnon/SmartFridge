@@ -22,10 +22,10 @@ runAlertService = (async function () {
     const mariaDBconnection = require("../DB_Connection/mariaDB");
     const DBconnection = new mariaDBconnection();
     //Logger erstellen
-    const thisLogger = new alertLog(DBconnection, mqttClient);
+    const thisLogger = alertLog(DBconnection, mqttClient);
     await thisLogger.deleteLog();
     //Alert erstellen
-    const thisAlert = new alert(mqttClient);
+    const thisAlert = alert(mqttClient);
     //auf Nachrichten warten und wenn welche kommen dann mit thisAlert-Methoden verarbeiten
     await mqttClient.on("message", async function (topic, message) {
       try {
