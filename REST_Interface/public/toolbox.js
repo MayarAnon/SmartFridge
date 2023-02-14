@@ -56,9 +56,10 @@ class WSClient {
     this.minRef = document.getElementById("min");
     this.avgRef = document.getElementById("avg");
     this.tempInsideRef = document.getElementById("tempInside");
+    this.tempOutsideRef = document.getElementById("tempOutside");
     this.doorStateRef = document.getElementById("doorState");
-    this.websocketUrl =  "ws://"+window.location.hostname+":3001";
-    
+    this.websocketUrl = "ws://" + window.location.hostname + ":3001";
+
     this.ws = new WebSocket(`${this.websocketUrl}`);
     if (!WSClient.instance) {
       WSClient.instance = this;
@@ -102,7 +103,7 @@ class WSClient {
 
 //Die funktion prüft ob der Wert eines HTML Tags eine ganze Zahl oder eine Kommazahl mit einer nachkommastelle ist
 function isNumeric(elem, helperMsg) {
-  var numericExpression = /^[0-9]+(\.[0-9]{1})?$/;
+  var numericExpression = /^[0-9]+(\.[0-9]{1})?$/; //https://www.regular-expressions.info/numericranges.html
   if (elem.value.match(numericExpression)) {
     return true;
   } else {
@@ -114,7 +115,7 @@ function isNumeric(elem, helperMsg) {
 
 //Die funktion prüft ob der Wert eines HTML Tags eine gültige Emailformat hat
 function isEmail(elem, helperMsg) {
-  var emailExpression = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  var emailExpression = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/; //https://www.regular-expressions.info/email.html
   if (elem.value.match(emailExpression)) {
     return true;
   } else {

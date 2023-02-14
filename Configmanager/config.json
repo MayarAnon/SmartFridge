@@ -44,7 +44,8 @@
     "clientId": "WS-Interface",
     "relaventTopics": {
       "doorState": "doorState",
-      "timeInterval": "timeInterval"
+      "timeInterval": "timeInterval",
+      "tempOutside" : "tempOutside"
     }
   },
   "mqttClient": {

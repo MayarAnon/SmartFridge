@@ -1,6 +1,6 @@
 //Die Klasse WS stellt das Websocket dar, wenn die Klasse benutzt wird, wird ein WS erstellt und wird darüber die Echtdaten mit
 //der Methode sendRealTimeData an alle WS-clients geschickt.
-//Echtzeitdaten: Systemzeit, aktuelle tempInside, aktuelle doorstate und Min,Max und Avg 
+//Echtzeitdaten: Systemzeit, aktuelle tempInside, aktuelle doorstate und Min,Max und Avg
 
 const webSocket = require("ws");
 const dbConn = require("./WSDB");
@@ -14,8 +14,8 @@ class WS {
     if (!WS.instance) {
       WS.instance = this;
     }
-    this.clientsNames = []
-    this.topicList = config.get('WS-Interface:relaventTopics');
+    this.clientsNames = [];
+    this.topicList = config.get("WS-Interface:relaventTopics");
     this.dbMethodes = new dbConn();
     this.#creatWebsocketServer(webServer);
     return WS.instance;
@@ -31,9 +31,9 @@ class WS {
         ws.on("message", (message) => {
           // local storage sollte geleert werden wenn wenn eine Seite zum ersten mal geladen wurde
           const pageName = JSON.parse(message).pageName[0];
-          if(!this.clientsNames.includes(pageName)){
+          if (!this.clientsNames.includes(pageName)) {
             this.clientsNames.push(pageName);
-            this.sendMessage("localStorage","delete");
+            this.sendMessage("localStorage", "delete");
             console.log(`${this.clientsNames} connected'`);
           }
         });
@@ -41,9 +41,7 @@ class WS {
 
       this.#sendRealTimeData(ws);
       webServer.listen(3001, () => {
-        console.log(
-          `WebSocket Server wurde gestartet.`
-        );
+        console.log(`WebSocket Server wurde gestartet.`);
       });
     } catch {
       this.handleError();
@@ -78,7 +76,7 @@ class WS {
   //Die Methode verbindet sich mit der Datenbank und sendet die letzte Zeile, sowie das Maximum/Minimun und den Mittelwert der Messdaten
   //der letzten 24h über WS. Die Methode verbindet sich außerdem mit dem MQTT Broker und sendet den Öffnungszustand des Kühlschranks über WS
   async #sendRealTimeData() {
-    const mqttClient = await new MQTT(config.get('WS-Interface:clientId'));
+    const mqttClient = await new MQTT(config.get("WS-Interface:clientId"));
     // zu Topics subscriben
     const topics = Object.values(this.topicList);
     mqttClient.subscribe(topics);
@@ -96,8 +94,11 @@ class WS {
         if (topic == "doorState") {
           this.sendMessage("DoorState", message.toString());
         }
+        if (topic == "tempOutside") {
+          this.sendMessage("tempOutside", message);
+        }
       });
-      // Eine Schleife die die Systemzeit mit dem Interval sendIntervalforSystemtime sendet 
+      // Eine Schleife die die Systemzeit mit dem Interval sendIntervalforSystemtime sendet
       setInterval(() => {
         this.sendMessage("SystemTime", new Date());
       }, sendIntervalforSystemtime);

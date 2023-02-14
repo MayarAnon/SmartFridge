@@ -124,6 +124,11 @@ class WS extends WSClient {
             myChart.update();
             break;
           }
+          case "tempOutside": {
+            const tempOutside = JSON.parse(data.message).value;
+            client.tempOutsideRef.innerHTML = tempOutside + " °C";
+            break;
+          }
           default: {
             break;
           }
@@ -155,7 +160,7 @@ const settimeoption = (() => {
 //mit Daten wird die Tabelle und das Diagramm ausgefüllt
 const getTempHistory = () => {
   axios
-    .get("http://"+window.location.hostname+":3000"+"/api/temphistory")
+    .get("http://" + window.location.hostname + ":3000" + "/api/temphistory")
     .then((response) => {
       const transformedData = response.data.map((item) => {
         tempData.push({
@@ -183,12 +188,12 @@ const filltable = () => {
       let newRow = tableRef.insertRow(tableRef.length);
       let cell1 = newRow.insertCell(0);
       let cell2 = newRow.insertCell(1);
-      cell1.innerHTML = DateFormatter.dateTime(tempData.slice(
-        Math.max(tempData.length - numberOftableRows, 0)
-      )[i].x);
-      cell2.innerHTML = tempData.slice(
-        Math.max(tempData.length - numberOftableRows, 0)
-      )[i].y +" °C";
+      cell1.innerHTML = DateFormatter.dateTime(
+        tempData.slice(Math.max(tempData.length - numberOftableRows, 0))[i].x
+      );
+      cell2.innerHTML =
+        tempData.slice(Math.max(tempData.length - numberOftableRows, 0))[i].y +
+        " °C";
     }
     myChart.update();
   } catch (err) {

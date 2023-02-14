@@ -35,6 +35,11 @@ class WS extends WSClient {
             });
             break;
           }
+          case "tempOutside": {
+            const tempOutside = JSON.parse(data.message).value;
+            client.tempOutsideRef.innerHTML = tempOutside + " °C";
+            break;
+          }
           default: {
             break;
           }
