@@ -2,7 +2,7 @@
 
 #ein Verzeichnis höher wechseln
 
-cd /home/smartfridge/REST_Interface
+cd /home/pi/smartfridge/REST_Interface
 
 #Services und Server starten
 node server.js &

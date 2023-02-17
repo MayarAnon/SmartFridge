@@ -3,9 +3,9 @@ Description= Skript welche alle Services startet
 
 [Service]
 Type=simple
-ExecStart=/bin/sh /home/smartfridge/VM/start.sh
+ExecStart=/bin/sh /home/pi/smartfridge/VM/start.sh
 Restart=always
-User=root
+User=pi
 
 [Install]
 WantedBy=multi-user.target

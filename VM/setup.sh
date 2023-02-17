@@ -18,6 +18,8 @@ dos2unix start.sh
 
 sudo cp smartfridge.service /etc/systemd/system/smartfridge.service
 
+
+
 #Autostart neustarten 
 
 sudo systemctl daemon-reload
@@ -30,4 +32,8 @@ bash Motion.sh
 bash node.sh
 bash Mosquitto.sh
 bash mariaDB.sh
+
+#rechte in smartfridge Verzeichnis nur an pi übertragen 
+
+chmod u+rwx,go= -R /home/pi/smartfridge
 
