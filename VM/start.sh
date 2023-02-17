@@ -9,4 +9,5 @@ node server.js &
 node ../Configmanager/configmanager.js & 
 node ../Alertservice/Alert-Service.js & 
 node ../GPIO-Service/GPIO-Service.js & 
-node ../Email-Service/Email-Service.js
+node ../Email-Service/Email-Service.js&
+node ../Cloudanbindung/cloudservice.js
