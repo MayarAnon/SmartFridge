@@ -55,5 +55,11 @@
   },
   "Log": {
     "path": "/REST_Interface/public/Log.txt"
+  },
+  "cloudservice":{
+    "hostname": "api.thingspeak.com",
+    "tempInside": "/update?api_key=9EKQVWQ1WRM0CI3Y&field2=",
+    "tempOutside": "/update?api_key=9EKQVWQ1WRM0CI3Y&field1=",
+    "doorState": "/update?api_key=9EKQVWQ1WRM0CI3Y&field3="
   }
 }
