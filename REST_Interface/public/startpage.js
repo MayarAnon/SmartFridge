@@ -26,6 +26,11 @@ class WS extends WSClient {
             client.doorStateRef.innerHTML = data.message;
             break;
           }
+          case "tempOutside": {
+            const tempOutside = data.message;
+            client.tempOutsideRef.innerHTML =  tempOutside + " °C";
+            break;
+          }
           case "LatestTemp": {
             const tempInside = JSON.parse(data.message).value;
             client.tempInsideRef.innerHTML = tempInside + " °C";
@@ -35,11 +40,7 @@ class WS extends WSClient {
             });
             break;
           }
-          case "tempOutside": {
-            const tempOutside = JSON.parse(data.message).value;
-            client.tempOutsideRef.innerHTML = tempOutside + " °C";
-            break;
-          }
+         
           default: {
             break;
           }

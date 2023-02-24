@@ -10,6 +10,13 @@ table
     border-collapse: collapse;
 }*/
 
+.zeitraum{
+    display: flex;
+    font-weight: 1000;
+    padding-left: 2rem;
+}
+
+
 img {
     border: 2px solid black;
     max-height: 80vh;
@@ -18,14 +25,20 @@ img {
     display: block;
     margin: 0 auto;
 }
-
+tr{
+    font-size:20px;
+    font-weight: 700;
+    background-color: lightgray;
+}
+td{
+    font-size:20px;
+    line-height: 20px;
+}
 /*Startseite*/
 .flexParent {
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
     margin: auto;
 }
 
@@ -35,25 +48,90 @@ img {
 }
 
 #echtzeitwerte {
-    max-width: 80%;
-    grid-template-columns: 100%;
     height: auto;
-    background-color: lightgrey;
 }
-
-
-
 .gridContainer {
-    height: 80vh;
+    margin-top: 2rem;
+    height: 30vh;
     display: grid;
-    grid-auto-flow: row;
-    grid-template-columns: 100%;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-auto-flow: row;
-    gap: 50px;
-    min-width: 400px;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr ;
+    grid-auto-flow: column;
+    gap: 20px;
+    width:20vw;
+    min-width: fit-content;
 }
-.gridContainerMonitoring{
+.gridContainer p{
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 1000;
+}
+.gridItem {
+    border: 2px solid;
+    background-color: lightgray;
+    width: fit-content;
+    
+}
+
+.flexParent-monitoring {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    padding-left: 2rem;
+}
+
+.flexChild-monitoring {
+    /*background-color:lightgrey;*/
+    flex-basis: 50%;
+}
+@media only screen and (max-width: 799px) {
+    .zeitraum{
+        padding-left: .5rem;
+    }
+    .gridContainer p{
+        display: inline-block;
+        font-size: 10px;
+        height: 8px;
+    }
+    .gridItem {
+        border: 2px solid;
+        background-color: lightgray;
+         padding-top: 1px;
+    }
+    tr{
+        font-size:12px;
+    }
+    td{
+        font-size:12px;
+        line-height: 12px;
+    }
+    /*Startseite*/
+    .flexParent {
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        padding:auto;
+    }
+    .flexParent-monitoring {
+        padding-left: .5rem;
+    }
+    .gridContainer {
+        margin-top: 0;
+        height: 10vh;
+        display: grid;
+        grid-auto-flow: row;
+        grid-template-columns: 100%;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-auto-flow: row;
+        gap: 8px;
+        width:100%
+    }
+  }
+
+
+/* .gridContainerMonitoring{
     height: 40vh;
     display: grid;
     grid-auto-flow: row;
@@ -62,12 +140,9 @@ img {
     grid-auto-flow: row;
     gap: 10px;
     min-width: 400px;
-}
+} */
 
-.gridItem {
-    border: 2px solid;
 
-}
 
 footer {
     position: fixed;
@@ -101,7 +176,7 @@ footer,
 }
 
 /*Monitoring*/
-#container {
+/* #container {
     display: grid;
     grid-template-areas:
       'graph graph graph'
@@ -114,6 +189,6 @@ footer,
     grid-area: echtzeitMonitoring;
   }
   
-  #tableMonitoring { grid-area: tableMonitoring; }
+  #tableMonitoring { grid-area: tableMonitoring; } */
 
  

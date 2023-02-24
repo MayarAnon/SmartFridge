@@ -95,7 +95,7 @@ class WS {
           this.sendMessage("DoorState", message.toString());
         }
         if (topic == "tempOutside") {
-          this.sendMessage("tempOutside", message);
+          this.sendMessage("tempOutside", message.toString());
         }
       });
       // Eine Schleife die die Systemzeit mit dem Interval sendIntervalforSystemtime sendet

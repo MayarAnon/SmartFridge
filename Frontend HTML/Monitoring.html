@@ -47,8 +47,6 @@
     <main class="mdl-layout__content">
       <div class="page-content">
         <!-- Hier kommt der Inhalt der Seite hin-->
-        <div id="container">
-
 
           <div id="graph">
             <div>
@@ -60,56 +58,60 @@
               <input type="button" id="refreshchart" value="refresh Chart" />
             </div>
           </div>
+          <div class="flexParent-monitoring">
+            <div class="flexChild-monitoring">
+              <div class="gridContainer" id="echtzeitwerte">
+                <div class="gridItem">
+                  <p>Zustand:</p> 
+                  <p id="doorState" ></p>
+                </div>
+                <div class="gridItem">
+                  <p >Raumtemperatur:</p> 
+                  <p id="tempOutside" ></p>
+                </div>
+                <div class="gridItem">
+                  <p>Kühlschranktemperatur:</p> 
+                  <p id="tempInside" ></p>
+                </div>
+                <div class="gridItem"><p>Maximum:</p>
+                  <p id="max" ></p>
+                </div>
+                <div class="gridItem"><p>Minimum:</p>
+                  <p id="min"></p>
+                </div>
+                <div class="gridItem"> <p>Mittelwert:</p>
+                  <p id="avg"></p>
+                </div>
+              </div>
+            </div>
+            <div class="flexChild-monitoring">
+              <div>
+                <table id="myTable" border="1">
+                  <tr>
+                    <th>Erfassungszeit</th>
+                    <th>Messwert</th>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="placeHolder"></div>
+          <footer>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <p style="margin-left: 20px;">Team: SmartFridge</p>
+              </div>
+              <div>
+                <p>Version: 0.9</p>
+              </div>
+              <div style="text-align: right;">
+                <p id="systemTime" style="display: inline-block; margin-right: 3px;"></p>
+                <p id="systemDate" style="display: inline-block; margin-right: 20px;"></p>
+              </div>
+            </div>
+          </footer>
 
-          <div class="gridContainerMonitoring" id="echtzeitMonitoring">
-            <div class="gridItem">
-              <p style="display: inline-block; margin-right: 3px;">Zustand:</p>
-              <p id="doorState" style="display: inline-block;"></p>
-            </div>
-            <div class="gridItem">
-              <p style="display: inline-block; margin-right: 3px;">Raumtemperatur:</p>
-              <p id="tempOutside" style="display: inline-block;">Noch nicht verfügbar</p>
-            </div>
-            <div class="gridItem">
-              <p style="display: inline-block; margin-right: 3px;">Kühlschranktemperatur:</p>
-              <p id="tempInside" style="display: inline-block;"></p>
-            </div>
-            <div class="gridItem">Maximum:
-              <p id="max" style="display: inline-block; margin-right: 3px;"></p>
-            </div>
-            <div class="gridItem">Minimum:
-              <p id="min" style="display: inline-block; margin-right: 3px;"></p>
-            </div>
-            <div class="gridItem">Mittelwert:
-              <p id="avg" style="display: inline-block; margin-right: 3px;"></p>
-            </div>
-          </div>
-          <div id="tableMonitoring">
-            <table id="myTable" border="1">
-              <tr>
-                <th>Erfassungszeit</th>
-                <th>Messwert</th>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div class="placeHolder"></div>
-        <footer>
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <p style="margin-left: 20px;">Team: SmartFridge</p>
-            </div>
-            <div>
-              <p>Version: 0.9</p>
-            </div>
-            <div style="text-align: right;">
-              <p id="systemTime" style="display: inline-block; margin-right: 3px;"></p>
-              <p id="systemDate" style="display: inline-block; margin-right: 20px;"></p>
-            </div>
-          </div>
-        </footer>
-
-      </div>
+        
     </main>
   </div>
 
