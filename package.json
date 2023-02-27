@@ -28,6 +28,8 @@
     "fs": "^0.0.1-security",
     "mariadb": "^3.0.2",
     "nconf": "^0.12.0",
+    "node-sass": "^8.0.0",
+    "node-dht-sensor": "^0.4.3",
     "nodemailer": "^6.9.0",
     "ws": "^8.11.0"
   }
