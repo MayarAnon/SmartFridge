@@ -11,14 +11,29 @@
   "metricsPeriod": "1",
   "mailSender": {
     "sender": "smartfridge@gmx.net",
-    "mailPassword": "SmarterKuhlschrank1234"
+    "mailPassword": "SmarterKuhlschrank123"
   },
+
+  "emailService": {
+    "clientId": "EmailService"
+  },
+
+  "gpioService": {
+    "clientId": "GPIOService",
+    "tempSensorType": "11",
+    "tempSensorPin": "4",
+    "doorContactPin": "23",
+    "tempLedPin": "17",
+    "timeLedPin": "18" 
+  },
+
   "loginDataDatabase": {
     "host": "127.0.0.1",
     "user": "HaRoMa",
     "password": "password1234",
     "database": "smartfridge"
   },
+
   "configManager": {
     "clientId": "configManager",
     "relaventTopics": [
@@ -28,6 +43,7 @@
       "tempLimitValue"
     ]
   },
+
   "alertService": {
     "clientId": "AlertService",
     "relaventTopics": {
@@ -40,6 +56,7 @@
       "tempInside": "tempInside"
     }
   },
+
   "WS-Interface": {
     "clientId": "WS-Interface",
     "relaventTopics": {
@@ -48,14 +65,17 @@
       "tempOutside" : "tempOutside"
     }
   },
+
   "mqttClient": {
     "brokerHostUrl": "tcp://localhost:1883",
     "username": "smartfridge",
     "password": "safePassword"
   },
+
   "Log": {
     "path": "/REST_Interface/public/Log.txt"
   },
+
   "cloudservice":{
     "hostname": "api.thingspeak.com",
     "tempInside": "/update?api_key=9EKQVWQ1WRM0CI3Y&field2=",
