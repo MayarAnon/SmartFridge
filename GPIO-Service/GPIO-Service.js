@@ -6,14 +6,13 @@
 /*Referenz für node-dht-sensor: https://github.com/momenso/node-dht-sensor
 Referenz für onoff: https://www.npmjs.com/package/onoff*/
 
-const config = new (require("../Configmanager/config"))();
 const MQTT = require("../mqttClient/mqttClient");
-const dbConnection = new (require("../DB_Connection/mariaDB"))();
-const table = "messergebnisse";
+const Config = require("../Configmanager/config");
+const DataBase = require("../DB_Connection/mariaDB");
+const sensorLib = require("node-dht-sensor");
 
 class UseGpioPorts {
-    constructor() {
-        this.sensorLib = require("node-dht-sensor");
+    constructor(config) {
         this.sensorType = config.get("gpioService:tempSensorType"); // Sensor Typ: DHT11
         this.sensorPin = config.get("gpioService:tempSensorPin"); // Pin-Nummer, an der der Sensor angeschlossen ist
 
@@ -22,23 +21,20 @@ class UseGpioPorts {
         this.reedSensor = new this.Gpio(this.reedPin, 'in');
 
         this.ledPinTemp = config.get("gpioService:tempLedPin"); // GPIO-Pin, an den die erste LED angeschlossen ist
-        this.tempLed = new Gpio(this.ledPinTemp, 'out');
+        this.tempLed = new this.Gpio(this.ledPinTemp, 'out');
         this.ledPinTime = config.get("gpioService:timeLedPin"); // GPIO-Pin, an den die zweite LED angeschlossen ist
-        this.timeLed = new Gpio(this.ledPinTime, 'out');
+        this.timeLed = new this.Gpio(this.ledPinTime, 'out');
     }
 
     //Methode, um mit DHT11 Sensor die Temperatur auszulesen
     readTempSensor() {
-        const temperature = null;
-        const readout = sensorLib.read(this.sensorType, this.sensorPin);
-        temperature = readout.temperature.toFixed(1);
-        console.log("gemessene Temperatur: " + temperature);
-        return temperature;
+      const sensor = sensorLib.read(this.sensorType, this.sensorPin);
+      return sensor.temperature.toFixed(1);
     }
 
     //Muss in setInterval aufgerufen werden mit den anderen (vermutlich alles alle 2s -außer Datenbank mit intervallVar)
     readDoorSensor() {
-        const doorState = this.reedSensor.readSync();
+        let doorState = this.reedSensor.readSync();
         return doorState;
     }
 
@@ -55,7 +51,6 @@ class UseGpioPorts {
                 console.log("setHighOrLow: " + setHighOrLow + " ist ungültig");
             }
         }
-
         else if (topic == "temp"){
             if (setHighOrLow == "high"){
                 this.tempLed.writeSync(1);
@@ -67,97 +62,111 @@ class UseGpioPorts {
                 console.log("setHighOrLow: " + setHighOrLow + " ist ungültig");
             }
         }
-
-        else{
-            console.log("topic: " + topic + " ist ungültig");
-        }
     }
 }
 
-let gpioPorts = new UseGpioPorts();
 
 class GPIOService {
-    constructor() {
+    constructor(config) {
+      this.gpioPorts = new UseGpioPorts(config);
       this.doorState = null;
-      this.tempInside = null;
+      this.tempInside = 0;
       this.timeInterval = config.get("timeIntervalDefault") * 1000;
     }
 
     readSensors(){
-        this.doorState = gpioPorts.readDoorSensor();
-        this.tempInside = gpioPorts.readTempSensor();
-    }
-
-    activateLeds(state, topic) {
-        if (topic == "alertTimeLimit") {
-          if (state == "surpassed") {
-            console.log("Zeit-LED ist aktiv. Die maximale Öffnungszeit wurde überschritten");
-            gpioPorts.ledOnOff("time", "high");
-          } else if (state == "under") {
-            console.log("Zeit-LED ist nicht aktiv. Die Kühlschranktür ist geschlossen");
-            gpioPorts.ledOnOff("time", "low");
-          } else {
-            console.error("Die MQTT für timeMessage Nachricht wurde nicht korrekt verarbeitet");
-          }
-        } else if (topic == "alertTempLimit") {
-          if (state == "surpassed") {
-            console.log("Temp-LED ist aktiv. Die maximale Temperatur wurde überschritten");
-            gpioPorts.ledOnOff("temp", "high");
-          } else if (state == "under") {
-            console.log("Temp-LED ist nicht aktiv. Die Temperatur ist geringer als die maximal zugelassene Temperatur");
-            gpioPorts.ledOnOff("temp", "low");
-          }
+        this.tempInside = this.gpioPorts.readTempSensor();
+        let doorStateNumeric = this.gpioPorts.readDoorSensor();
+        if (doorStateNumeric == 1){
+          this.doorState = "closed";
+        }
+        else if(doorStateNumeric == 0) {
+          this.doorState = "open";
+        }
+        else{
+          console.error("Gemessener Öffnungszustand ungültig");
         }
     }
 
-    timeIntervalToVariable(interval, topic){
+    activateLeds(topic, state) {
+        if (topic == "alertTimeLimit") {
+            if (state == "surpassed") { 
+                console.log("Zeit-LED ist aktiv. Die maximale Öffnungszeit wurde überschritten");
+                this.gpioPorts.ledOnOff("time", "high");
+            } 
+            else if (state == "under") {
+                console.log("Zeit-LED ist nicht aktiv. Die Kühlschranktür ist geschlossen");
+                this.gpioPorts.ledOnOff("time", "low");
+            } 
+            else {
+                console.error("Die MQTT für timeMessage Nachricht wurde nicht korrekt verarbeitet");
+            }
+        } 
+        else if (topic == "alertTempLimit") {
+            if (state == "surpassed") {
+                console.log("Temp-LED ist aktiv. Die maximale Temperatur wurde überschritten");
+                this.gpioPorts.ledOnOff("temp", "high");
+            } 
+            else if (state == "under") {
+                console.log("Temp-LED ist nicht aktiv. Die Temperatur ist geringer als die maximal zugelassene Temperatur");
+                this.gpioPorts.ledOnOff("temp", "low");
+            }
+            else {
+                console.error("Die MQTT für timeMessage Nachricht wurde nicht korrekt verarbeitet");
+            }
+        }
+    }
+
+    timeIntervalToVariable(topic, interval){
       if (topic == "timeInterval")
       {
-        this.timeInterval = interval;
+        this.timeInterval = interval *1000;
       }  
     }
 }
-let gpioServiceObject = new GPIOService();
 
-async function writeInDatabase(tempInside) {
-  //console.log("writeInDataBase:" + tempInsideRounded);
-  const result = await dbConnection.query(
-    `INSERT INTO ${table} (Messwert) VALUES (${tempInside});`
-  );
-  //console.log(result);
-}
+let config = new Config();
+let gpioServiceObject = new GPIOService(config);
 
-//setInterval(Kommentar, 2000);//readSensors, MQTT senden, MQTT hören, activateLeds(state, topic)
-
-// Die Funktion runAlertService führt das Alert-service als MQTTClient aus.
 runGPIOService = (async function () {
-    const mqttClient = await new MQTT("gpioService:clientId");
+  let mqttClient = await new MQTT("gpioService:clientId");
     try {
       //zu topics subscriben
       await mqttClient.subscribe("alertTimeLimit");
       await mqttClient.subscribe("alertTempLimit");
       await mqttClient.subscribe("timeInterval");
-      //db Verbindung erstellen
-      //const mariaDBconnection = require("../DB_Connection/mariaDB");
-      //const DBconnection = new mariaDBconnection();
+
       await mqttClient.on("message", async function (topic, message) {
-        gpioObject.activateLeds(message.toString(), topic.toString());
-        gpioObject.timeIntervalToVariable(message.toString(), topic.toString());
+        gpioServiceObject.activateLeds(topic.toString(), message.toString()); 
+        gpioServiceObject.timeIntervalToVariable(topic.toString(), message.toString());
         console.log("Topic: " + topic + " Message: " + message);
       });
     } catch (e) {
       console.error(`${e.message}`);
     }
+
+    const readInterval = 1000;
+    setInterval(async () => {
+    try {
+        await gpioServiceObject.readSensors();
+        await mqttClient.publish('doorState', gpioServiceObject.doorState.toString()); 
+        await mqttClient.publish('tempInsidet', gpioServiceObject.tempInside.toString());
+    }catch (e) {
+      console.error(`${e.message}`);
+    }
+  }, readInterval);
   })();
 
 // Intervall für das Auslesen und Veröffentlichen der Sensorwerte
-setInterval(async () => {
-    await gpioServiceObject.readSensors();
-    await client.publish('doorState', this.doorState.toString());
-    await client.publish('tempInside', this.tempInside.toString());
-  }, 1000);
 
 
+
+let dbConnection = new DataBase();
+const table = "messergebnisse";
 setInterval(async () => {
-  await writeInDatabase(this.tempInside);
-}, this.timeInterval);
+  try {
+    await dbConnection.query(`INSERT INTO ${table} (Messwert) VALUES (${gpioServiceObject.tempInside});`);
+  }catch (e) {
+    console.error(`${e.message}`);
+  }
+}, gpioServiceObject.timeInterval);
