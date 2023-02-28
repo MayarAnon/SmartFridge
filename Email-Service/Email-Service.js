@@ -32,6 +32,7 @@ class EmailService{
     this.content = null;
     this.variableTime = 0;
     this.variableTemp = 0;
+    this.mailAdressRecipient = config.get("mailAdressRecipient");
   }
 
   connectSmtp() {
@@ -90,7 +91,7 @@ class EmailService{
           "Ihre Kühlschranktür ist länger, als die maximal zugelassene Öffnungszeit von " +
           config.get("timeLimitValue") +
           " Sekunden geöffnet. Bitte schließen Sie ihren Kühlschrank umgehend.";
-          this.send(config.get("mailAdressRecipient"), this.theme, this.content);
+          this.send(this.mailAdressRecipient, this.theme, this.content);
         this.variableTime = 1;
       } else if ( state == "under") {
         this.variableTime = 0;
@@ -103,13 +104,18 @@ class EmailService{
           "Die Temperatur im Inneren Ihres Kühlschranks hat die eingestellte Höchsttemperatur von " +
           config.get("tempLimitValue") +
           " °C überschritten";
-          this.send(config.get("mailAdressRecipient"), this.theme, this.content);
+          this.send(this.mailAdressRecipient, this.theme, this.content);
         this.variableTemp = 1;
       } else if (state == "under") {
         this.variableTemp = 0;
       }
     }
+  }
 
+  setMailAdress(state, topic){
+    if(topic == "mailAdressRecipient"){
+      this.mailAdressRecipient = state;
+    }
   }
 }
 
@@ -122,14 +128,11 @@ runEmailService = (async function () {
 
     await mqttClient.subscribe('alertTimeLimit');
     await mqttClient.subscribe('alertTempLimit');
-   
-    await mqttClient.on('message', async function (topic, message) {
-      emailServiceObject.sendMailDecision(message.toString(),topic.toString())
-    });
+    await mqttClient.subscribe('mailAdressRecipient');
 
-    //Zweiten Aufruf hier vermutlich wegmachen
     await mqttClient.on('message', async function (topic, message) {
-      emailServiceObject.sendMailDecision(message.toString(),topic.toString())
+      emailServiceObject.sendMailDecision(message.toString(),topic.toString());
+      emailServiceObject.setMailAdress(message.toString(),topic.toString());
     });
 
   } catch (e) {
