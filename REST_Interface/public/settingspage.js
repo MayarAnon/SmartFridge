@@ -1,9 +1,4 @@
-import {
-  WSClient,
-  transmit,
-  isEmail,
-  isNumeric,
-} from "/toolbox.js";
+import { WSClient, transmit, isEmail, isNumeric } from "/toolbox.js";
 const tempLimitRef = document.getElementById("tempMax");
 const currentTempLimitRef = document.getElementById("currentTempThreshold");
 
@@ -68,7 +63,6 @@ function handleBtn(element) {
   element = element || window.event;
   var target = element.target || element.srcElement;
   if (target.tagName === "BUTTON" && target.name.match("MemoryButton")) {
-    
     var id = target.id;
     setTimeInterval(target.value);
     buttonColors[id] = "Lightblue";
@@ -95,12 +89,12 @@ window.addEventListener("load", function () {
 // Die Felder aktuelle emailadresse/letzte löschung/eingestellter Schwellwert/ eingestellte maximale Öffnungszeit
 // mit den Werten aus "http://localhost:3000/api/initialValues" initializieren
 axios
-  .get("http://"+window.location.hostname+":3000/api/initialValues")
+  .get("http://" + window.location.hostname + ":3000/api/initialValues")
   .then((response) => {
     emailadresseRef.innerHTML = response.data.mailAdressRecipient;
     lastDeletetRef.innerHTML = response.data.lastDeleteHistory;
     currentTempLimitRef.innerHTML = response.data.tempLimitValue;
-    currentTimeLimitRef.innerHTML = response.data.timeLimitValue;
+    currentTimeLimitRef.innerHTML = response.data.timeLimitValue / 60;
   })
   .catch((error) => {
     console.error(error);
@@ -122,8 +116,8 @@ const setTempLimitValue = () => {
 //die Funktion ist für die Verarbeitung von der Benutzereingabe "maximale öffnungszeit"
 const setTimeLimitValue = () => {
   if (isNumeric(timeLimitRef, "bitte Zeit in Minuten eingeben!!")) {
-    const limit = timeLimitRef.value ;
-    transmit("api/timeLimitValue", limit* 60);
+    const limit = timeLimitRef.value;
+    transmit("api/timeLimitValue", limit * 60);
     currentTimeLimitRef.innerHTML = limit;
   }
 };
@@ -150,7 +144,7 @@ const setEmailAdresse = () => {
 //die funktion ruft einen Link um die LogDatei runterzuladen
 const downloadLogFile = () => {
   window.open(
-    "http://"+window.location.hostname+":3000/api/downloadLog",
+    "http://" + window.location.hostname + ":3000/api/downloadLog",
     "_self",
     "resizable=yes"
   );

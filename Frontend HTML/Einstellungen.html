@@ -1,191 +1,309 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--responsive (Elemente können sich der Bildschirmgröße anpassen)-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <!--Stylesheets und JavaScript, um die MDL-Elemente verwenden zu können-->
+    <link rel="stylesheet" href="mdl/material.min.css" />
+    <script src="mdl/material.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <title>Einstellungen</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <!--responsive (Elemente können sich der Bildschirmgröße anpassen)-->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="style.css">
-  <!--Stylesheets und JavaScript, um die MDL-Elemente verwenden zu können-->
-  <link rel="stylesheet" href="mdl/material.min.css">
-  <script src="mdl/material.min.js"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <title>Einstellungen</title>
-</head>
-
-<body>
-  <!--Fixierte Kopfzeile mit Navigationsleiste und ausklappbarem Navigationsmenü-->
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header">
-      <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title">
-          <h5>Smart Fridge <p>Einstellungen</p>
-          </h5>
-        </span>
-        <!--Platzhalter, damit die Navigationsleiste rechts ist-->
-        <div class="mdl-layout-spacer"></div>
-        <!--Navigationsleiste oben rechts (wird auf kleinen Displays nicht angezeigt)-->
-        <nav class="mdl-navigation mdl-layout--large-screen-only">
-          <a class="mdl-navigation__link" id="startPage" 
-          href="Startseite.html">Startseite</a>
-          <a class="mdl-navigation__link" id="cameraPage" 
-          href="Kamera.html">Kamera</a>
-          <a class="mdl-navigation__link" id="monitoringPage" 
-          href="Monitoring.html">Monitoring</a>
-          <a class="mdl-navigation__link" id="settingsPage" 
-          href="Einstellungen.html">Einstellungen</a>
+  <body>
+    <!--Fixierte Kopfzeile mit Navigationsleiste und ausklappbarem Navigationsmenü-->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">
+            <h5>
+              Smart Fridge
+              <p>Einstellungen</p>
+            </h5>
+          </span>
+          <!--Platzhalter, damit die Navigationsleiste rechts ist-->
+          <div class="mdl-layout-spacer"></div>
+          <!--Navigationsleiste oben rechts (wird auf kleinen Displays nicht angezeigt)-->
+          <nav class="mdl-navigation mdl-layout--large-screen-only">
+            <a
+              class="mdl-navigation__link"
+              id="startPage"
+              href="Startseite.html"
+              >Startseite</a
+            >
+            <a class="mdl-navigation__link" id="cameraPage" href="Kamera.html"
+              >Kamera</a
+            >
+            <a
+              class="mdl-navigation__link"
+              id="monitoringPage"
+              href="Monitoring.html"
+              >Monitoring</a
+            >
+            <a
+              class="mdl-navigation__link"
+              id="settingsPage"
+              href="Einstellungen.html"
+              >Einstellungen</a
+            >
+          </nav>
+        </div>
+      </header>
+      <!--Ausklappbares Navigationsmenü-->
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Menü</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" id="startPage" href="Startseite.html"
+            >Startseite</a
+          >
+          <a class="mdl-navigation__link" id="cameraPage" href="Kamera.html"
+            >Kamera</a
+          >
+          <a
+            class="mdl-navigation__link"
+            id="monitoringPage"
+            href="Monitoring.html"
+            >Monitoring</a
+          >
+          <a
+            class="mdl-navigation__link"
+            id="settingsPage"
+            href="Einstellungen.html"
+            >Einstellungen</a
+          >
         </nav>
       </div>
-    </header>
-    <!--Ausklappbares Navigationsmenü-->
-    <div class="mdl-layout__drawer">
-      <span class="mdl-layout-title">Menü</span>
-      <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" id="startPage" 
-        href="Startseite.html">Startseite</a>
-        <a class="mdl-navigation__link" id="cameraPage" 
-        href="Kamera.html">Kamera</a>
-        <a class="mdl-navigation__link" id="monitoringPage" 
-        href="Monitoring.html">Monitoring</a>
-        <a class="mdl-navigation__link" id="settingsPage" 
-        href="Einstellungen.html">Einstellungen</a>
-      </nav>
-    </div>
-    <main class="mdl-layout__content">
-      <div class="page-content">
-        <!-- Hier kommt der Inhalt der Seite hin-->
-        <!--Speicherintervall auswählen-->
-        <div class="parent">
-          <div class="child">
-            <p>Speicherintervall wählen</p>
-            <button name="MemoryButton" value="1" class="mdl-button mdl-js-button mdl-button--primary"
-              id="1sButtonMemory">
-              1 s
-            </button>
-            <button name="MemoryButton" value="10" class="mdl-button mdl-js-button mdl-button--primary"
-              id="10sButtonMemory">
-              10 s
-            </button>
-            <button name="MemoryButton" value="60" class="mdl-button mdl-js-button mdl-button--primary"
-              id="1minButtonMemory">
-              1 min
-            </button>
-            <button name="MemoryButton" value="300" class="mdl-button mdl-js-button mdl-button--primary"
-              id="5minButtonMemory">
-              5 min
-            </button>
-            <button name="MemoryButton" value="600" class="mdl-button mdl-js-button mdl-button--primary"
-              id="10minButtonMemory">
-              10 min
-            </button>
-            <button name="MemoryButton" value="1800" class="mdl-button mdl-js-button mdl-button--primary"
-              id="30minButtonMemory">
-              30 min
-            </button>
-            <button name="MemoryButton" value="3600" class="mdl-button mdl-js-button mdl-button--primary"
-              id="1hButtonMemory">
-              1 h
-            </button>
-            <button name="MemoryButton" value="7200" class="mdl-button mdl-js-button mdl-button--primary"
-              id="2hButtonMemory">
-              2 h
-            </button>
-            <button name="MemoryButton" value="14400" class="mdl-button mdl-js-button mdl-button--primary"
-              id="4hButtonMemory">
-              4 h
-            </button>
-            <button name="MemoryButton" value="21600" class="mdl-button mdl-js-button mdl-button--primary"
-              id="6hButtonMemory">
-              6 h
-            </button>
-          </div>
-          <!--Temperaturschwellwert anzeigen und Eingabefeld-->
-          <div class="child">
-            <p>Temperaturschwellwert</p>
-            <div style="margin-bottom: -10px;">
-              <p style="display: inline-block; margin-right: 3px;">Aktuell:</p>
-              <p id="currentTempThreshold" style="display: inline-block;"></p>
-              <p style="display: inline-block;">°C</p>
+      <main class="mdl-layout__content">
+        <div class="page-content">
+          <!-- Hier kommt der Inhalt der Seite hin-->
+          <!--Speicherintervall auswählen-->
+          <div class="parent">
+            <div class="child">
+              <p>Speicherintervall wählen</p>
+              <button
+                name="MemoryButton"
+                value="1"
+                class="mdl-button mdl-js-button mdl-button--primary"
+                id="1sButtonMemory"
+              >
+                1 s
+              </button>
+              <button
+                name="MemoryButton"
+                value="10"
+                class="mdl-button mdl-js-button mdl-button--primary"
+                id="10sButtonMemory"
+              >
+                10 s
+              </button>
+              <button
+                name="MemoryButton"
+                value="60"
+                class="mdl-button mdl-js-button mdl-button--primary"
+                id="1minButtonMemory"
+              >
+                1 min
+              </button>
+              <button
+                name="MemoryButton"
+                value="300"
+                class="mdl-button mdl-js-button mdl-button--primary"
+                id="5minButtonMemory"
+              >
+                5 min
+              </button>
+              <button
+                name="MemoryButton"
+                value="600"
+                class="mdl-button mdl-js-button mdl-button--primary"
+                id="10minButtonMemory"
+              >
+                10 min
+              </button>
+              <button
+                name="MemoryButton"
+                value="1800"
+                class="mdl-button mdl-js-button mdl-button--primary"
+                id="30minButtonMemory"
+              >
+                30 min
+              </button>
+              <button
+                name="MemoryButton"
+                value="3600"
+                class="mdl-button mdl-js-button mdl-button--primary"
+                id="1hButtonMemory"
+              >
+                1 h
+              </button>
+              <button
+                name="MemoryButton"
+                value="7200"
+                class="mdl-button mdl-js-button mdl-button--primary"
+                id="2hButtonMemory"
+              >
+                2 h
+              </button>
+              <button
+                name="MemoryButton"
+                value="14400"
+                class="mdl-button mdl-js-button mdl-button--primary"
+                id="4hButtonMemory"
+              >
+                4 h
+              </button>
+              <button
+                name="MemoryButton"
+                value="21600"
+                class="mdl-button mdl-js-button mdl-button--primary"
+                id="6hButtonMemory"
+              >
+                6 h
+              </button>
             </div>
-            <form action="#">
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="tempMax">
-                <label class="mdl-textfield__label" for="sample4">Eingabe:</label>
-                <span class="mdl-textfield__error">Die Eingabe ist keine Zahl</span>
+            <!--Temperaturschwellwert anzeigen und Eingabefeld-->
+            <div class="child">
+              <p>Temperaturschwellwert</p>
+              <div style="margin-bottom: -10px">
+                <p style="display: inline-block; margin-right: 3px">Aktuell:</p>
+                <p id="currentTempThreshold" style="display: inline-block"></p>
+                <p style="display: inline-block">°C</p>
               </div>
-            </form>
-          </div>
-          <!--maximale Öffnungszeit anzeigen und Eingabefeld-->
-          <div class="child">
-            <p>maximale Öffnungszeit</p>
-            <div style="margin-bottom: -10px;">
-              <p style="display: inline-block; margin-right: 3px;">Aktuell:</p>
-              <p id="currentTimeThreshold" style="display: inline-block;"></p>
-              <p style="display: inline-block;">sek</p>
+              <form action="#">
+                <div
+                  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
+                >
+                  <input
+                    class="mdl-textfield__input"
+                    type="text"
+                    pattern="-?[0-9]*(\.[0-9]+)?"
+                    id="tempMax"
+                  />
+                  <label class="mdl-textfield__label" for="sample4"
+                    >Eingabe:</label
+                  >
+                  <span class="mdl-textfield__error"
+                    >Die Eingabe ist keine Zahl</span
+                  >
+                </div>
+              </form>
             </div>
-            <form action="#">
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="timeMax">
-                <label class="mdl-textfield__label" for="sample4">Eingabe:</label>
-                <span class="mdl-textfield__error">Die Eingabe ist keine Zahl</span>
+            <!--maximale Öffnungszeit anzeigen und Eingabefeld-->
+            <div class="child">
+              <p>maximale Öffnungszeit</p>
+              <div style="margin-bottom: -10px">
+                <p style="display: inline-block; margin-right: 3px">Aktuell:</p>
+                <p id="currentTimeThreshold" style="display: inline-block"></p>
+                <p style="display: inline-block">min</p>
               </div>
-            </form>
+              <form action="#">
+                <div
+                  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
+                >
+                  <input
+                    class="mdl-textfield__input"
+                    type="text"
+                    pattern="-?[0-9]*(\.[0-9]+)?"
+                    id="timeMax"
+                  />
+                  <label class="mdl-textfield__label" for="sample4"
+                    >Eingabe:</label
+                  >
+                  <span class="mdl-textfield__error"
+                    >Die Eingabe ist keine Zahl</span
+                  >
+                </div>
+              </form>
+            </div>
+            <!--Datenbankeinträge löschen-->
+            <div class="child">
+              <p>Datenbankeinträge löschen</p>
+              <p style="display: inline-block; margin-right: 3px">
+                letzte Löschung:
+              </p>
+              <p id="lastDelete" style="display: inline-block"></p>
+              <br />
+              <!-- Accent-colored raised button -->
+              <button
+                class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
+                id="deleteDatabase"
+              >
+                löschen
+              </button>
+            </div>
+            <!--Event-E-Mail-Adresse-->
+            <div class="child">
+              <p>Event-E-Mail-Adresse</p>
+              <p style="display: inline-block; margin-right: 3px">Aktuell:</p>
+              <p id="currentEmailAdress" style="display: inline-block"></p>
+              <form action="#">
+                <div
+                  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
+                >
+                  <input
+                    class="mdl-textfield__input"
+                    type="text"
+                    pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"
+                    id="emailAdress"
+                  />
+                  <label class="mdl-textfield__label" for="sample4"
+                    >Eingabe:</label
+                  >
+                  <span class="mdl-textfield__error"
+                    >Eingabe ist keine Email-Adresse!</span
+                  >
+                </div>
+              </form>
+            </div>
+            <div class="child">
+              <p>Benachrichtigungsverlauf herunterladen</p>
+              <!-- Accent-colored raised button -->
+              <button
+                class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
+                id="downloadAlerts"
+              >
+                jetzt herunterladen
+              </button>
+            </div>
+            <div class="placeHolder"></div>
           </div>
-          <!--Datenbankeinträge löschen-->
-          <div class="child">
-            <p>Datenbankeinträge löschen</p>
-            <p style="display: inline-block; margin-right: 3px;">letzte Löschung:</p>
-            <p id="lastDelete" style="display: inline-block;"></p><br>
-            <!-- Accent-colored raised button -->
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="deleteDatabase">
-              löschen
-            </button>
-          </div>
-          <!--Event-E-Mail-Adresse-->
-          <div class="child">
-            <p>Event-E-Mail-Adresse</p>
-            <p style="display: inline-block; margin-right: 3px;">Aktuell:</p>
-            <p id="currentEmailAdress" style="display: inline-block;"></p>
-            <form action="#">
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text"
-                  pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" id="emailAdress">
-                <label class="mdl-textfield__label" for="sample4">Eingabe:</label>
-                <span class="mdl-textfield__error">Eingabe ist keine Email-Adresse!</span>
+          <!--Fußzeile-->
+          <footer>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <div>
+                <p style="margin-left: 20px">Team: SmartFridge</p>
               </div>
-            </form>
-          </div>
-          <div class="child">
-            <p>Benachrichtigungsverlauf herunterladen</p>
-            <!-- Accent-colored raised button -->
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="downloadAlerts">
-              jetzt herunterladen
-            </button>
-          </div>
-          <div class="placeHolder"></div>
+              <div>
+                <p>Version: 0.9</p>
+              </div>
+              <div style="text-align: right">
+                <p
+                  id="systemTime"
+                  style="display: inline-block; margin-right: 3px"
+                ></p>
+                <p
+                  id="systemDate"
+                  style="display: inline-block; margin-right: 20px"
+                ></p>
+              </div>
+            </div>
+          </footer>
         </div>
-        <!--Fußzeile-->
-        <footer>
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <p style="margin-left: 20px;">Team: SmartFridge</p>
-            </div>
-            <div>
-              <p>Version: 0.9</p>
-            </div>
-            <div style="text-align: right;">
-              <p id="systemTime" style="display: inline-block; margin-right: 3px;"></p>
-              <p id="systemDate" style="display: inline-block; margin-right: 20px;"></p>
-            </div>
-          </div>
-        </footer>
-      </div>
-    </main>
-  </div>
-
-</body>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script type="module" src="settingspage.js"></script>
-
+      </main>
+    </div>
+  </body>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="module" src="settingspage.js"></script>
 </html>
