@@ -113,7 +113,7 @@ class WS extends WSClient {
             client.doorStateRef.innerHTML = data.message;
             break;
           }
-          case "LatestTemp": {
+          case "tempInside": {
             const tempInside = data.message;
             client.tempInsideRef.innerHTML = tempInside + " °C";
             tempData.push({

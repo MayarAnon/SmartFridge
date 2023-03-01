@@ -31,7 +31,7 @@ class WS extends WSClient {
             client.tempOutsideRef.innerHTML =  tempOutside + " °C";
             break;
           }
-          case "LatestTemp": {
+          case "tempInside": {
             // const tempInside = JSON.parse(data.message).value;
             const tempInside = data.message;
             client.tempInsideRef.innerHTML = tempInside + " °C";
