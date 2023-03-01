@@ -2,17 +2,20 @@
 const alertLog = require("./AlertLog");
 const configManager = new (require("../Configmanager/config"))();
 const topics = configManager.get("alertService:relaventTopics");
+const timeLimitConfig = configManager.get("timeLimitValue");
+const tempLimitConfig = configManager.get("tempLimitValue");
 //Die Klasse analysiert die Daten vom MQTT-Broker und löst Alarme aus, falls Limits überschritten wurden
 //Der Alert-service-MQTT-Client muss übergeben werden
 class Alert {
   constructor(client) {
-    this.tempLimit = 0.0;
-    this.timeLimit = 0;
+    this.tempLimit = tempLimitConfig || 0.0;
+    this.timeLimit = timeLimitConfig || 0;
     this.startTime = Date.now();
     this.timeDiff = 0;
     this.logger = alertLog();
     this.lastDoorState = "closed";
     this.client = client;
+    this.lastTemp = 0.0;      //hilfsvariable für flankenerkennung
   }
   // Die Methode ermittelt die Schwellwert(tempLimit/timeLimit) aus den MQTT-Nachrichten
   // Topic und Message von MQTT müssen übergeben werden
@@ -29,7 +32,9 @@ class Alert {
   checkTemp(topic, message) {
     if (topic === "tempInside") {
       const temp = parseFloat(JSON.parse(message));
-      if (Math.round(temp) >= Math.round(this.tempLimit)) {
+      //flanken erkennung
+      // es wird nur geloggt wenn die temperatur vor der Überschreitung unter der Grenze war
+      if ((Math.round(this.lastTemp)<Math.round(this.tempLimit)) && (Math.round(temp) >= Math.round(this.tempLimit))) {
         this.client.publish(topics.alertTempLimit, `surpassed`);
         // console.log(`Tempinside= ${temp} Schwellwert: ${this.tempLimit}>>>>> surpassed`)
         this.logger.writeLog(
@@ -41,7 +46,9 @@ class Alert {
         this.client.publish(topics.alertTempLimit, `under`);
         // console.log(`Tempinside= ${temp} Schwellwert: ${this.tempLimit}>>>>> under `)
       }
+      this.lastTemp=temp;
     }
+    
   }
   //Die Methode überprüft, ob der maximalen Öffnungszeit überschritten wurde und löst ein Alarm aus/ schreibt einen Rekord im Log
   // Topic und Message von MQTT müssen übergeben werden
