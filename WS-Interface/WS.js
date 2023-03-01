@@ -67,9 +67,7 @@ class WS {
   //Rückgabe ist die TimerID, die z.B. gebraucht wird um den Timer zu stoppen
   #startInterval(_interval) {
     return setInterval(async () => {
-      const latestRow = await this.dbMethodes.sendLatestRow();
       const metrics = await this.dbMethodes.sendMetrics();
-      await this.sendMessage("LatestTemp", latestRow);
       await this.sendMessage("Metrics", metrics);
     }, _interval * 1000);
   }
@@ -90,9 +88,12 @@ class WS {
           clearInterval(Number(dbRetrievalLoop));
           dbRetrievalLoop = this.#startInterval(sendIntervalforDBData);
         }
-
+       
         if (topic == "doorState") {
           this.sendMessage("DoorState", message.toString());
+        }
+        if (topic == "tempInside") {
+          this.sendMessage("LatestTemp", message.toString());
         }
         if (topic == "tempOutside") {
           this.sendMessage("tempOutside", message.toString());

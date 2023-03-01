@@ -114,7 +114,7 @@ class WS extends WSClient {
             break;
           }
           case "LatestTemp": {
-            const tempInside = JSON.parse(data.message).value;
+            const tempInside = data.message;
             client.tempInsideRef.innerHTML = tempInside + " °C";
             tempData.push({
               x: DateFormatter.getFormattedDate(new Date()),
