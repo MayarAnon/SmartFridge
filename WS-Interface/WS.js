@@ -20,7 +20,7 @@ class WS {
     this.#creatWebsocketServer(webServer);
     return WS.instance;
   }
-  // Die Methode  integriert ein Websocket(Port 3001) in dem webServer, welcher als Parameter übergeben werden muss.
+  // Die Methode  integriert ein Websocket(Port 443) in dem webServer, welcher als Parameter übergeben werden muss.
   // Wenn das Websocket erfolgreich integriert wurde, werden kommenden Nachrichten über WS ausgegeben
   // Außerdem werden die Aktuelle Temperatur und die Kennzahlen jede Sekunde an alle Clients verschickt
   #creatWebsocketServer(webServer) {
@@ -40,7 +40,7 @@ class WS {
       });
 
       this.#sendRealTimeData(ws);
-      webServer.listen(3001, () => {
+      webServer.listen(443, () => {
         console.log(`WebSocket Server wurde gestartet.`);
       });
     } catch {
@@ -88,7 +88,7 @@ class WS {
           clearInterval(Number(dbRetrievalLoop));
           dbRetrievalLoop = this.#startInterval(sendIntervalforDBData);
         }
-       
+
         if (topic == "doorState") {
           this.sendMessage("DoorState", message.toString());
         }

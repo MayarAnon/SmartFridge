@@ -2,7 +2,7 @@
   "name": "smartfridge",
   "webServerHost": "localhost",
   "webServerPort": 3000,
-  "webSocketPort": 3001,
+  "webSocketPort": 443,
   "mailAdressRecipient": "felix.matalik@gmail.com",
   "lastDeleteHistory": "28.02.2023 23:30:35",
   "tempLimitValue": "10.0",
