@@ -120,13 +120,16 @@ class WS extends WSClient {
               x: DateFormatter.getFormattedDate(new Date()),
               y: tempInside,
             });
-            insertIntoTable(tempInside);
             myChart.update();
             break;
           }
+          case "LatestRow": {
+            const latestRow = data.message;
+            insertIntoTable(tempInside);
+          }
           case "tempOutside": {
             const tempOutside = data.message;
-            client.tempOutsideRef.innerHTML =  tempOutside + " °C";
+            client.tempOutsideRef.innerHTML = tempOutside + " °C";
             break;
           }
           default: {

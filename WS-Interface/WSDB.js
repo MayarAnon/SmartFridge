@@ -24,8 +24,35 @@ class WSDB extends MariaDB {
       console.error(error);
     }
   }
+  //Die Methode gibt den letzten Messwert aus der Tabelle zurück
+  async sendLatestRow() {
+    try {
+      const query = "SELECT * FROM messergebnisse ORDER BY ID DESC LIMIT 1";
+      const [row] = await super.query(query);
+
+      if (typeof row != "undefined") {
+        //Zeile formatieren
+        const formattedRow = JSON.stringify({
+          value: row.Messwert,
+          timestamp: row.InDtTm.toISOString()
+            .replace(/T/, " ")
+            .replace(/\..+/, ""),
+        });
+
+        return formattedRow;
+      } else {
+        //wenn Tabelle leer ist, dann sende eine "leere" Zeile
+        return JSON.stringify({
+          value: 0.0,
+          timestamp: 0,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
 }
-  module.exports = WSDB;
+module.exports = WSDB;
 
 //die SQl Tabelle wurde wie folgt erstellt
 
@@ -36,42 +63,7 @@ class WSDB extends MariaDB {
 //     PRIMARY KEY (`ID`)
 //   ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
-
-//Die Methode wird nicht mehr verwendet, da wir jetzt tempInside direkt aus MQTT
-//Die Methode gibt den letzten Messwert aus der Tabelle zurück
-//   async sendLatestRow() {
-//     try {
-//       const query = "SELECT * FROM messergebnisse ORDER BY ID DESC LIMIT 1";
-//       const [row] = await super.query(query);
-     
-//       if(typeof(row)!='undefined'){
-//         //Zeile formatieren
-//         const formattedRow = JSON.stringify({
-//           value: row.Messwert,
-//           timestamp: row.InDtTm.toISOString()
-//             .replace(/T/, " ")
-//             .replace(/\..+/, ""),
-//         });
-
-//         return formattedRow;
-//     }else{
-//        //wenn Tabelle leer ist, dann sende eine "leere" Zeile
-//         return JSON.stringify({
-//           value: 0.0,
-//           timestamp: 0,
-//         });;
-//     }
-//     } catch (err) {
-//       console.error(err);
-//     }
-//   }
-// 
-
-
-
 // const db = new WSDB()
 // db.sendLatestRow().then(x => {
 //     console.log(x);
 //   })
-

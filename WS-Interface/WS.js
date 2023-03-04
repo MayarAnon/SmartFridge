@@ -40,7 +40,7 @@ class WS {
       });
 
       this.#sendRealTimeData(ws);
-      webServer.listen(443, () => {
+      webServer.listen(80, () => {
         console.log(`WebSocket Server wurde gestartet.`);
       });
     } catch {
@@ -68,7 +68,9 @@ class WS {
   #startInterval(_interval) {
     return setInterval(async () => {
       const metrics = await this.dbMethodes.sendMetrics();
+      const latestRow = await this.dbMethodes.sendLatestRow();
       await this.sendMessage("Metrics", metrics);
+      await this.sendMessage("LatestRow", latestRow);
     }, _interval * 1000);
   }
   //Die Methode verbindet sich mit der Datenbank und sendet die letzte Zeile, sowie das Maximum/Minimun und den Mittelwert der Messdaten
@@ -93,7 +95,7 @@ class WS {
           this.sendMessage("DoorState", message.toString());
         }
         if (topic == "tempInside") {
-          this.sendMessage("LatestTemp", message.toString());
+          this.sendMessage("tempInside", message.toString());
         }
         if (topic == "tempOutside") {
           this.sendMessage("tempOutside", message.toString());
