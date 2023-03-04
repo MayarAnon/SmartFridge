@@ -44,6 +44,7 @@ td {
 .flexChild {
   /*background-color:lightgrey;*/
   flex-basis: 50%;
+  padding-top: 2rem;
 }
 
 #echtzeitwerte {
@@ -140,6 +141,9 @@ td {
     flex-direction: column;
     margin: auto;
     padding: auto;
+  }
+  .flexChild {
+    padding-top: 6rem;
   }
   .flexParent-monitoring {
     padding-left: 0.5rem;

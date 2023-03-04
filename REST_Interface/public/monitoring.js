@@ -125,7 +125,8 @@ class WS extends WSClient {
           }
           case "LatestRow": {
             const latestRow = data.message;
-            insertIntoTable(tempInside);
+            insertIntoTable(latestRow);
+            break;
           }
           case "tempOutside": {
             const tempOutside = data.message;
