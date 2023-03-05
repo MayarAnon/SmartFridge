@@ -48,70 +48,73 @@
       <div class="page-content">
         <!-- Hier kommt der Inhalt der Seite hin-->
 
-          <div id="graph">
-            <div style="height: 45vh;">
-              <canvas id="myChart"></canvas>
-            </div>
-            <div class="zeitraum">
-              Anfangszeit: <input type="datetime-local" id="startTime" step="1" />
-              endzeit: <input type="datetime-local" id="endTime" step="1" />
-              <input type="button" id="refreshchart" value="refresh Chart" />
-            </div>
+        <div id="graph">
+          <div style="height: 45vh;">
+            <canvas id="myChart"></canvas>
           </div>
-          <div class="flexParent-monitoring">
-            <div class="flexChild-monitoring">
-              <div class="gridContainer" id="echtzeitwerte">
-                <div class="gridItem">
-                  <p>Zustand:</p> 
-                  <p id="doorState" ></p>
-                </div>
-                <div class="gridItem">
-                  <p >Raumtemperatur:</p> 
-                  <p id="tempOutside" ></p>
-                </div>
-                <div class="gridItem">
-                  <p>Kühlschranktemperatur:</p> 
-                  <p id="tempInside" ></p>
-                </div>
-                <div class="gridItem"><p>Maximum:</p>
-                  <p id="max" ></p>
-                </div>
-                <div class="gridItem"><p>Minimum:</p>
-                  <p id="min"></p>
-                </div>
-                <div class="gridItem"> <p>Mittelwert:</p>
-                  <p id="avg"></p>
-                </div>
+          <div class="zeitraum">
+            Anfangszeit: <input type="datetime-local" id="startTime" step="1" />
+            endzeit: <input type="datetime-local" id="endTime" step="1" />
+            <input type="button" id="refreshchart" value="refresh Chart" />
+          </div>
+        </div>
+        <div class="flexParent-monitoring">
+          <div class="flexChild-monitoring">
+            <div class="gridContainer" id="echtzeitwerte">
+              <div class="gridItem">
+                <p>Zustand:</p>
+                <p id="doorState"></p>
               </div>
-            </div>
-            <div class="flexChild-monitoring">
-              <div>
-                <table id="myTable" border="1">
-                  <tr>
-                    <th>Erfassungszeit</th>
-                    <th>Messwert</th>
-                  </tr>
-                </table>
+              <div class="gridItem">
+                <p>Raumtemperatur:</p>
+                <p id="tempOutside"></p>
+              </div>
+              <div class="gridItem">
+                <p>Kühlschranktemperatur:</p>
+                <p id="tempInside"></p>
+              </div>
+              <div class="gridItem">
+                <p>Maximum:</p>
+                <p id="max"></p>
+              </div>
+              <div class="gridItem">
+                <p>Minimum:</p>
+                <p id="min"></p>
+              </div>
+              <div class="gridItem">
+                <p>Mittelwert:</p>
+                <p id="avg"></p>
               </div>
             </div>
           </div>
-          <div class="placeHolder"></div>
-          <footer>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <p style="margin-left: 20px;">Team: SmartFridge</p>
-              </div>
-              <div>
-                <p>Version: 0.9</p>
-              </div>
-              <div style="text-align: right;">
-                <p id="systemTime" style="display: inline-block; margin-right: 3px;"></p>
-                <p id="systemDate" style="display: inline-block; margin-right: 20px;"></p>
-              </div>
+          <div class="flexChild-monitoring">
+            <div>
+              <table id="myTable" border="1">
+                <tr>
+                  <th>Erfassungszeit</th>
+                  <th>Messwert</th>
+                </tr>
+              </table>
             </div>
-          </footer>
+          </div>
+        </div>
+        <div class="placeHolder"></div>
+        <footer>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <p style="margin-left: 20px;">Team: SmartFridge</p>
+            </div>
+            <div>
+              <p>Version: 0.9</p>
+            </div>
+            <div style="text-align: right;">
+              <p id="systemTime" style="display: inline-block; margin-right: 3px;"></p>
+              <p id="systemDate" style="display: inline-block; margin-right: 20px;"></p>
+            </div>
+          </div>
+        </footer>
 
-        
+
     </main>
   </div>
 
