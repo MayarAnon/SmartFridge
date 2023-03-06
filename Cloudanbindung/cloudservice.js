@@ -48,7 +48,7 @@ class CloudService
           
           const req = https.request(options, res => 
             {
-            console.log(`statusCode: ${res.statusCode}`)
+            //console.log(`statusCode: ${res.statusCode}`)
           
           });
           
