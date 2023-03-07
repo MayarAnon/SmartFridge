@@ -1,7 +1,8 @@
 //Dieses Skript wird in keiner Seite geladen und stellt nur eine Sammlung an häufig verwendete Funktionen
 
 let tempData = [];
-
+const TimezoneConst = 60 * 60 * 1000;
+const wsPort = 80;
 //Das Objekt stellt die Zeit in der richtigen Format und in der richtigen Zeitzone
 const DateFormatter = {
   //Die funktion gibt die Zeit in folgender Format zurück: YYYY-MM-DDThh:mm:ss
@@ -10,7 +11,7 @@ const DateFormatter = {
     if (!(dateToConvert instanceof Date)) {
       dateToConvert = new Date(dateToConvert);
     }
-    dateToConvert.setTime(dateToConvert.getTime() + 60 * 60 * 1000);
+    dateToConvert.setTime(dateToConvert.getTime() + TimezoneConst);
     let isoDate = dateToConvert.toISOString().slice(0, 19);
     return isoDate;
   },
@@ -58,7 +59,7 @@ class WSClient {
     this.tempInsideRef = document.getElementById("tempInside");
     this.tempOutsideRef = document.getElementById("tempOutside");
     this.doorStateRef = document.getElementById("doorState");
-    this.websocketUrl = "ws://" + window.location.hostname + ":80";
+    this.websocketUrl = "ws://" + window.location.hostname + ":" + wsPort;
 
     this.ws = new WebSocket(`${this.websocketUrl}`);
     if (!WSClient.instance) {
@@ -72,7 +73,7 @@ class WSClient {
   #initWebsocket(ws) {
     try {
       ws.onopen = function () {
-        console.log(`Erfolgreich mit WebSocket verbunden`);
+        console.log(`Erfolgreich mit WebSocket:${wsPort} verbunden`);
         ws.send(
           JSON.stringify({
             pageName: location.href.split("/").slice(-1),
@@ -81,7 +82,7 @@ class WSClient {
       };
       ws.onerror = function (err) {
         alert(
-          `Der Websocketserver kann nicht erreicht werden. \n sehe console für mehr information`
+          `Der Websocketserver:${wsPort} kann nicht erreicht werden. \n siehe console für mehr information`
         );
         console.log(`err: ${err}`);
       };

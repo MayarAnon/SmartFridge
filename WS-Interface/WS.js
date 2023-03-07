@@ -8,7 +8,7 @@ const config = new (require("../Configmanager/config"))();
 const MQTT = require("../mqttClient/mqttClient");
 const sendIntervalforSystemtime = 1000; // in ms
 let sendIntervalforDBData = Number(config.get("timeIntervalDefault")); //in ms
-
+const wsPort = Number(config.get("webSocketPort"));
 class WS {
   constructor(webServer) {
     if (!WS.instance) {
@@ -28,7 +28,7 @@ class WS {
       this.webSocketServer = new webSocket.Server({ server: webServer });
       let ws;
       this.webSocketServer.on("connection", (ws) => {
-        ws.on("message", (message) => {
+        ws.on("message", async (message) => {
           // local storage sollte geleert werden wenn wenn eine Seite zum ersten mal geladen wurde
           const pageName = JSON.parse(message).pageName[0];
           if (!this.clientsNames.includes(pageName)) {
@@ -36,11 +36,14 @@ class WS {
             this.sendMessage("localStorage", "delete");
             console.log(`${this.clientsNames} connected'`);
           }
+          // Max,min und avg senden direkt wenn die Seite aufgerufen wird
+          const metrics = await this.dbMethodes.sendMetrics();
+          await this.sendMessage("Metrics", metrics);
         });
       });
 
       this.#sendRealTimeData(ws);
-      webServer.listen(80, () => {
+      webServer.listen(wsPort, () => {
         console.log(`WebSocket Server wurde gestartet.`);
       });
     } catch {
@@ -84,9 +87,10 @@ class WS {
     try {
       var dbRetrievalLoop = this.#startInterval(sendIntervalforDBData);
       mqttClient.on("message", (topic, message) => {
+        //eingestellter timeInterval übernehemn, und neue schleife starten
         if (topic == "timeInterval") {
           sendIntervalforDBData = Number(message.toString());
-          //Der Alte Timer stoppen und einen neuen mit dem aktuellen Interval starten
+          //Der alte Timer stoppen und einen neuen mit dem aktuellen Interval starten
           clearInterval(Number(dbRetrievalLoop));
           dbRetrievalLoop = this.#startInterval(sendIntervalforDBData);
         }

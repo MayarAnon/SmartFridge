@@ -36,7 +36,7 @@ class WSDB extends MariaDB {
           value: row.Messwert,
           timestamp: row.InDtTm.toISOString()
             .replace(/T/, " ")
-            .replace(/\..+/, ""),
+            .replace(/\..+/, ""), //https://stackoverflow.com/questions/49330139/date-toisostring-but-local-time-instead-of-utc
         });
 
         return formattedRow;
