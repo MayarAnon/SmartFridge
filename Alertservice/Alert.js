@@ -15,7 +15,8 @@ class Alert {
     this.logger = alertLog();
     this.lastDoorState = "closed";
     this.client = client;
-    this.lastTemp = 0.0;      //hilfsvariable für flankenerkennung
+    this.tempAlertLogFlag = false; //hilfsvariablen für den Log
+    this.timeAlertLogFlag = false;
   }
   // Die Methode ermittelt die Schwellwert(tempLimit/timeLimit) aus den MQTT-Nachrichten
   // Topic und Message von MQTT müssen übergeben werden
@@ -32,23 +33,28 @@ class Alert {
   checkTemp(topic, message) {
     if (topic === "tempInside") {
       const temp = parseFloat(JSON.parse(message));
-      //flanken erkennung
-      // es wird nur geloggt wenn die temperatur vor der Überschreitung unter der Grenze war
-      if ((Math.round(this.lastTemp)<Math.round(this.tempLimit)) && (Math.round(temp) >= Math.round(this.tempLimit))) {
+
+      //wenn temp>=templimit dann surpassed publishen
+      //und loggen wenn diese Überschreitung noch nicht bereits geloggt wurde
+      if (Math.round(temp) >= Math.round(this.tempLimit)) {
         this.client.publish(topics.alertTempLimit, `surpassed`);
         // console.log(`Tempinside= ${temp} Schwellwert: ${this.tempLimit}>>>>> surpassed`)
-        this.logger.writeLog(
-          "Die Innentemperatur hat den Schwellwert überschritten",
-          topic,
-          message
-        );
+
+        //nur bei steigender flanke im log schreiben
+        if (this.tempAlertLogFlag == false) {
+          this.logger.writeLog(
+            "Die Innentemperatur hat den Schwellwert überschritten",
+            topic,
+            message
+          );
+          this.tempAlertLogFlag = true;
+        }
       } else {
+        this.tempAlertLogFlag = false;
         this.client.publish(topics.alertTempLimit, `under`);
         // console.log(`Tempinside= ${temp} Schwellwert: ${this.tempLimit}>>>>> under `)
       }
-      this.lastTemp=temp;
     }
-    
   }
   //Die Methode überprüft, ob der maximalen Öffnungszeit überschritten wurde und löst ein Alarm aus/ schreibt einen Rekord im Log
   // Topic und Message von MQTT müssen übergeben werden
@@ -63,20 +69,32 @@ class Alert {
       }
       if (message == "closed") {
         this.startTime = Date.now();
+        this.timeAlertLogFlag = false;
       }
       this.timeDiff = Date.now() - this.startTime;
+
+      //wenn timeDiff>timelimit dann surpassed publishen
+      //und loggen wenn diese Überschreitung noch nicht bereits geloggt wurde
       if (this.timeDiff > this.timeLimit * 1000) {
         this.client.publish(topics.alertTimeLimit, `surpassed`);
+
         // console.log(`doorstate= ${message} timeLimit: ${this.timeLimit} TimeDiff: ${
         //   this.timeDiff / 1000
         // }>>>>> surpassed`)
-        this.logger.writeLog(
-          "Die maximale Öffnungszeit wurde überschritten",
-          topic,
-          message
-        );
+
+        //nur bei steigender Flanke in Log schreiben
+        if (this.timeAlertLogFlag == false) {
+          this.logger.writeLog(
+            "Die maximale Öffnungszeit wurde überschritten",
+            topic,
+            message
+          );
+          this.timeAlertLogFlag = ture;
+        }
       } else {
+        this.timeAlertLogFlag = false;
         this.client.publish(topics.alertTimeLimit, `under`);
+
         // console.log(`doorstate= ${message} timeLimit: ${this.timeLimit} TimeDiff: ${
         //   this.timeDiff / 1000
         // }>>>>> under `)
