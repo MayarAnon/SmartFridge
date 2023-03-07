@@ -89,7 +89,7 @@ class Alert {
             topic,
             message
           );
-          this.timeAlertLogFlag = ture;
+          this.timeAlertLogFlag = true;
         }
       } else {
         this.timeAlertLogFlag = false;
