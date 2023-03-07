@@ -78,12 +78,13 @@ class EmailService {
     variableTemp=Hilfsvariable, damit die Mail nach dem Auslösen des Alarms aufgrund der Temperatur 
                  im Kühlschrank nur einmal versendet wird, bis der Status wieder "under" lautet*/
   sendMailDecision(state, topic) {
+    const limitConfig = new (require("../Configmanager/config"))();
     if (topic == "alertTimeLimit") {
       if (state == "surpassed" && this.variableTime == 0) {
         this.theme = "Alarm: Ihr Kühlschrank ist zu lange geöffnet";
         this.content =
           "Ihre Kühlschranktür ist länger, als die maximal zugelassene Öffnungszeit von " +
-          config.get("timeLimitValue") + " Sekunden geöffnet. Bitte schließen Sie ihren Kühlschrank umgehend.";
+          limitConfig.get("timeLimitValue") + " Sekunden geöffnet. Bitte schließen Sie ihren Kühlschrank umgehend.";
         this.send(this.mailAdressRecipient, this.theme, this.content);
         this.variableTime = 1;
       } else if (state == "under") {
@@ -94,7 +95,7 @@ class EmailService {
         this.theme = "Alarm: Ihr Kühlschrank ist zu warm!";
         this.content =
           "Die Temperatur im Inneren Ihres Kühlschranks hat die eingestellte Höchsttemperatur von " +
-          config.get("tempLimitValue") + " °C überschritten";
+          limitConfig.get("tempLimitValue") + " °C überschritten";
         this.send(this.mailAdressRecipient, this.theme, this.content);
         this.variableTemp = 1;
       } else if (state == "under") {
