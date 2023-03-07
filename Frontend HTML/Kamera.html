@@ -1,5 +1,6 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,12 +13,16 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <title>Kamera</title>
 </head>
+
 <body>
   <!--Fixierte Kopfzeile mit Navigationsleiste und ausklappbarem Navigationsmenü-->
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
       <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title"><h5>Smart Fridge <p>Kamera</p></h5></span>
+        <span class="mdl-layout-title">
+          <h5>Smart Fridge <p>Kamera</p>
+          </h5>
+        </span>
         <!--Platzhalter, damit die Navigationsleiste rechts ist-->
         <div class="mdl-layout-spacer"></div>
         <!--Navigationsleiste oben rechts (wird auf kleinen Displays nicht angezeigt)-->
@@ -44,7 +49,7 @@
         <div style="padding-top:6rem ;">
           <img id="cameraStream" src="" frameborder="0"></img>
         </div>
-        <!-- Hier kommt der Inhalt der Seite hin-->
+        <!-- Hier ist der Inhalt der Seite-->
         <div class="placeHolder"></div>
         <footer>
           <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -52,7 +57,7 @@
               <p style="margin-left: 20px;">Team: SmartFridge</p>
             </div>
             <div>
-              <p>Version: 0.9</p> 
+              <p>Version: 0.9</p>
             </div>
             <div style="text-align: right;">
               <p id="systemTime" style="display: inline-block; margin-right: 3px;"></p>
@@ -65,4 +70,5 @@
   </div>
 </body>
 <script type="module" src="camera.js"></script>
+
 </html>
