@@ -14,8 +14,8 @@ DHT dht(4,DHT11);
 
 // Wlan und MQTT Client einrichten/Objekte davon anlegen 
 
-const char *ssid = "iPhone Felix";
-const char *password = "Felix234";
+const char *ssid = "smartfridge";
+const char *password = "password1234";
 const char *mqtt_server = "smartfridge.local";
 const int mqtt_port = 1883;
 WiFiClient espClient;
